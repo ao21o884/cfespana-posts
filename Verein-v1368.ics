@@ -1,0 +1,1563 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:FOOTBALL.CH
+CALSCALE:GREGORIAN
+X-WR-TIMEZONE:Europe/Amsterdam
+X-WR-CALNAME:C.F. España - Vereinsspielplan
+BEGIN:VTIMEZONE
+TZID:TZsfv
+X-LIC-LOCATION:Europe/Amsterdam
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:20061029T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:20070325T030000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260809T110000
+DTEND;TZID=TZsfv:20260809T130000
+UID:4337920@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FC Pieterlen (3.)
+DESCRIPTION:Cup
+  Berner Cup - Runde  1
+ \n\nSpielnummer 510429
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260814T200000
+DTEND;TZID=TZsfv:20260814T220000
+UID:4337805@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Team Region Gantrisch (FC Rüschegg) a (Sen.30+)
+  - C.F. España / Italiana (Sen.30+)
+DESCRIPTION:Cup
+  Berner Cup - Senioren 30+ - Runde  1
+ \n\nSpielnummer 510317
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Pöschen\, Schwarzenburg - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260815T163000
+DTEND;TZID=TZsfv:20260815T183000
+UID:4340971@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Ticino Bern (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128429
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Bodenweid\, Bern - Kunstrasenfeld Bodenweid 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260815T191500
+DTEND;TZID=TZsfv:20260815T211500
+UID:4337163@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Schwarzenburg (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126055
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Pöschen\, Schwarzenburg - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260817T193000
+DTEND;TZID=TZsfv:20260817T213000
+UID:4339079@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.30+)
+  - SC Holligen 94 (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127259
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260821T184500
+DTEND;TZID=TZsfv:20260821T204500
+UID:4339163@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Worb (Sen.40+)
+  - C.F. España / Italiana (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127343
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Worbboden\, Worb - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260823T090000
+DTEND;TZID=TZsfv:20260823T110000
+UID:4351351@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (Jun.D-7)
+  - Team Schlossmatt (AS Italiana) b (Jun.D-7)
+DESCRIPTION:Meisterschaft
+  Junioren D-7 - MFV - Herbstrunde - Gruppe  5
+ \n\nSpielnummer 137535
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Kunstrasenfeld Weissenstein
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260823T110000
+DTEND;TZID=TZsfv:20260823T130000
+UID:4337168@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FC Zollikofen a (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126060
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260823T130000
+DTEND;TZID=TZsfv:20260823T150000
+UID:4340975@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - FC Wyler Bern (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128433
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260824T193000
+DTEND;TZID=TZsfv:20260824T213000
+UID:4339166@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.40+)
+  - FC Ostermundigen (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127346
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260826T193000
+DTEND;TZID=TZsfv:20260826T213000
+UID:4339083@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Sternenberg (Sen.30+)
+  - C.F. España / Italiana (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127263
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Schlatt\, Gasel - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260829T000000
+DTEND;TZID=TZsfv:20260829T020000
+UID:4351360@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:AFC BRO (Jun.D-7)
+  - C.F. España (Jun.D-7)
+DESCRIPTION:Meisterschaft
+  Junioren D-7 - MFV - Herbstrunde - Gruppe  5
+ \n\nSpielnummer 137544
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260829T180000
+DTEND;TZID=TZsfv:20260829T200000
+UID:4337176@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Sternenberg a (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126068
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Schlatt\, Gasel - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260830T113000
+DTEND;TZID=TZsfv:20260830T133000
+UID:4340982@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Bethlehem BE a (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128440
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Brünnen\, Bern - Fussballfeld Brünnen 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260906T100000
+DTEND;TZID=TZsfv:20260906T120000
+UID:4351368@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (Jun.D-7)
+  - SC Worb b (Jun.D-7)
+DESCRIPTION:Meisterschaft
+  Junioren D-7 - MFV - Herbstrunde - Gruppe  5
+ \n\nSpielnummer 137552
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Kunstrasenfeld Weissenstein
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260906T130000
+DTEND;TZID=TZsfv:20260906T150000
+UID:4337179@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - Portugal Futebol Clube (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126071
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260906T150000
+DTEND;TZID=TZsfv:20260906T170000
+UID:4340984@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - FC Bern 1894 (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128442
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260907T193000
+DTEND;TZID=TZsfv:20260907T213000
+UID:4339086@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.30+)
+  - FC Wabern (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127266
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 2
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260911T193000
+DTEND;TZID=TZsfv:20260911T213000
+UID:4339169@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Münchenbuchsee / Ittigen (Sen.40+)
+  - C.F. España / Italiana (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127349
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Hirzenfeld\, Münchenbuchsee - Hirzenfeld
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260913T110000
+DTEND;TZID=TZsfv:20260913T130000
+UID:4351374@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (Jun.D-7)
+  - FC Sternenberg b (Jun.D-7)
+DESCRIPTION:Meisterschaft
+  Junioren D-7 - MFV - Herbstrunde - Gruppe  5
+ \n\nSpielnummer 137558
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Kunstrasenfeld Weissenstein
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260913T130000
+DTEND;TZID=TZsfv:20260913T150000
+UID:4337189@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Jedinstvo (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126081
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Bodenweid\, Bern - Kunstrasenfeld Bodenweid 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260913T153000
+DTEND;TZID=TZsfv:20260913T173000
+UID:4340993@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Jedinstvo (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128451
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Bodenweid\, Bern - Kunstrasenfeld Bodenweid 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260919T193000
+DTEND;TZID=TZsfv:20260919T213000
+UID:4337190@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FC Weissenstein Bern b (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126082
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260927T120000
+DTEND;TZID=TZsfv:20260927T140000
+UID:4341003@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - SC Holligen 94 (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128461
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261002T201500
+DTEND;TZID=TZsfv:20261002T221500
+UID:4339092@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Goldstern (Sen.30+)
+  - C.F. España / Italiana (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127272
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Sportanlage Bremgarten bB\, Bremgarten - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261003T140000
+DTEND;TZID=TZsfv:20261003T160000
+UID:4337203@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Wabern (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126095
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Lerbermatt\, Köniz/Wabern - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261004T103000
+DTEND;TZID=TZsfv:20261004T123000
+UID:4341004@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Köniz (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128462
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Ried - Niederwangen (Gemeinde Köniz)\,   - Kunststoffrasen
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261005T193000
+DTEND;TZID=TZsfv:20261005T213000
+UID:4339093@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.30+)
+  - SC Wohlensee (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127273
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261011T110000
+DTEND;TZID=TZsfv:20261011T130000
+UID:4337212@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - NK Tomislavgrad Bern (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126104
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261011T133000
+DTEND;TZID=TZsfv:20261011T153000
+UID:4341012@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - FC Länggasse (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128470
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261012T193000
+DTEND;TZID=TZsfv:20261012T213000
+UID:4339100@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.30+)
+  - Team Chiesetau (FC GS) (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127280
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261013T193000
+DTEND;TZID=TZsfv:20261013T213000
+UID:4339172@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.40+)
+  - FC Galicia (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127352
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261015T200000
+DTEND;TZID=TZsfv:20261015T220000
+UID:4337201@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FK Drina Bern (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126093
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261016T193000
+DTEND;TZID=TZsfv:20261016T213000
+UID:4341015@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Worb a (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128473
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Worbboden\, Worb - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261017T113000
+DTEND;TZID=TZsfv:20261017T133000
+UID:4351379@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Team Chiesetau (FC GS) c (Jun.D-7)
+  - C.F. España (Jun.D-7)
+DESCRIPTION:Meisterschaft
+  Junioren D-7 - MFV - Herbstrunde - Gruppe  5
+ \n\nSpielnummer 137563
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Mutti\, Biglen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261017T170000
+DTEND;TZID=TZsfv:20261017T190000
+UID:4337216@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Holligen 94 (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126108
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Steigerhubel\, Bern - Fussballfeld Steigerhubel 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261022T200000
+DTEND;TZID=TZsfv:20261022T220000
+UID:4339175@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Weissenstein Bern (Sen.40+)
+  - C.F. España / Italiana (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127355
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261023T193000
+DTEND;TZID=TZsfv:20261023T213000
+UID:4339102@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Ittigen / Münchenbuchsee (Sen.30+)
+  - C.F. España / Italiana (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127282
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Hubelgut\, Worblaufen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261025T110000
+DTEND;TZID=TZsfv:20261025T130000
+UID:4351387@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (Jun.D-7)
+  - FC Stettlen 08 b (Jun.D-7)
+DESCRIPTION:Meisterschaft
+  Junioren D-7 - MFV - Herbstrunde - Gruppe  5
+ \n\nSpielnummer 137571
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Kunstrasenfeld Weissenstein
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261025T133000
+DTEND;TZID=TZsfv:20261025T153000
+UID:4337157@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FC Bern 1894 (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126049
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261025T160000
+DTEND;TZID=TZsfv:20261025T180000
+UID:4340966@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - SC Thörishaus a (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128424
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261031T120000
+DTEND;TZID=TZsfv:20261031T140000
+UID:4351394@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Ittigen b (Jun.D-7)
+  - C.F. España (Jun.D-7)
+DESCRIPTION:Meisterschaft
+  Junioren D-7 - MFV - Herbstrunde - Gruppe  5
+ \n\nSpielnummer 137578
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Hubelgut\, Worblaufen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270327T000000
+DTEND;TZID=TZsfv:20270327T020000
+UID:4341021@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Thörishaus a (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128479
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Stucki\, Thörishaus - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270327T190000
+DTEND;TZID=TZsfv:20270327T210000
+UID:4337223@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Bern 1894 (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126115
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Stadion Neufeld\, Bern - Kunstrasenfeld Neufeld 2
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270404T110000
+DTEND;TZID=TZsfv:20270404T130000
+UID:4337229@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FC Schwarzenburg (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126121
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270404T130000
+DTEND;TZID=TZsfv:20270404T150000
+UID:4341026@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - FC Ticino Bern (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128484
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270409T193000
+DTEND;TZID=TZsfv:20270409T213000
+UID:4339107@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Holligen 94 (Sen.30+)
+  - C.F. España / Italiana (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127287
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Steigerhubel\, Bern - Fussballfeld Steigerhubel 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270411T000000
+DTEND;TZID=TZsfv:20270411T020000
+UID:4337234@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Zollikofen a (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126126
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Schulanlage Geisshubel\, Zollikofen - Gemeindesportplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270411T133000
+DTEND;TZID=TZsfv:20270411T153000
+UID:4341030@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Wyler Bern (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128488
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Wyler\, Bern - Kunstrasenfeld Wyler
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270412T193000
+DTEND;TZID=TZsfv:20270412T213000
+UID:4339178@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.40+)
+  - SC Worb (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127358
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270412T193000
+DTEND;TZID=TZsfv:20270412T213000
+UID:4339111@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.30+)
+  - FC Sternenberg (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127291
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270418T110000
+DTEND;TZID=TZsfv:20270418T130000
+UID:4337242@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FC Sternenberg a (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126134
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270418T130000
+DTEND;TZID=TZsfv:20270418T150000
+UID:4341037@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - FC Bethlehem BE a (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128495
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270419T191500
+DTEND;TZID=TZsfv:20270419T211500
+UID:4339181@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Ostermundigen (Sen.40+)
+  - C.F. España / Italiana (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127361
+ \nneu angesetzt
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Rüti 2\, Ostermundigen - Hauptplatz Rüti 2
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270423T193000
+DTEND;TZID=TZsfv:20270423T213000
+UID:4339114@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Wabern (Sen.30+)
+  - C.F. España / Italiana (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127294
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Lerbermatt\, Köniz/Wabern - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270424T190000
+DTEND;TZID=TZsfv:20270424T210000
+UID:4341039@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Bern 1894 (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128497
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Stadion Neufeld\, Bern - Kunstrasenfeld Neufeld 2
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270425T101500
+DTEND;TZID=TZsfv:20270425T121500
+UID:4337245@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Portugal Futebol Clube (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126137
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Ried - Niederwangen (Gemeinde Köniz)\,   - Kunststoffrasen
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270426T193000
+DTEND;TZID=TZsfv:20270426T213000
+UID:4339120@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.30+)
+  - FC Goldstern (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127300
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270502T110000
+DTEND;TZID=TZsfv:20270502T130000
+UID:4337255@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FC Jedinstvo (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126147
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270502T130000
+DTEND;TZID=TZsfv:20270502T150000
+UID:4341048@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - FC Jedinstvo (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128506
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270503T193000
+DTEND;TZID=TZsfv:20270503T213000
+UID:4339184@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.40+)
+  - SC Münchenbuchsee / Ittigen (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127364
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270507T193000
+DTEND;TZID=TZsfv:20270507T213000
+UID:4339121@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Wohlensee (Sen.30+)
+  - C.F. España / Italiana (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127301
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Ey\, Hinterkappelen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270509T130000
+DTEND;TZID=TZsfv:20270509T150000
+UID:4337256@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Weissenstein Bern b (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126148
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270521T193000
+DTEND;TZID=TZsfv:20270521T213000
+UID:4339128@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Team Chiesetau (FC GS) (Sen.30+)
+  - C.F. España / Italiana (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127308
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Arniacher\, Grosshöchstetten - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270522T160000
+DTEND;TZID=TZsfv:20270522T180000
+UID:4339187@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Galicia (Sen.40+)
+  - C.F. España / Italiana (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127367
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Wyler\, Bern - Fussballfeld Wyler
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270523T130000
+DTEND;TZID=TZsfv:20270523T150000
+UID:4337267@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FK Drina Bern (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126159
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Allmend Bern\, Bern - Kunstrasenfeld Allmend 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270523T150000
+DTEND;TZID=TZsfv:20270523T170000
+UID:4341058@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:SC Holligen 94 (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128516
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Steigerhubel\, Bern - Fussballfeld Steigerhubel 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270524T193000
+DTEND;TZID=TZsfv:20270524T213000
+UID:4339190@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.40+)
+  - FC Weissenstein Bern (Sen.40+)
+DESCRIPTION:Meisterschaft
+  Senioren 40+ - MFV - Gruppe  2
+ \n\nSpielnummer 127370
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270524T193000
+DTEND;TZID=TZsfv:20270524T213000
+UID:4339130@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España / Italiana (Sen.30+)
+  - SC Ittigen / Münchenbuchsee (Sen.30+)
+DESCRIPTION:Meisterschaft
+  Senioren 30+ - MFV - Gruppe  3
+ \n\nSpielnummer 127310
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270530T110000
+DTEND;TZID=TZsfv:20270530T130000
+UID:4337269@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - FC Wabern (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126161
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270530T130000
+DTEND;TZID=TZsfv:20270530T150000
+UID:4341059@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - FC Köniz (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128517
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270605T150000
+DTEND;TZID=TZsfv:20270605T170000
+UID:4337278@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:NK Tomislavgrad Bern (4.)
+  - C.F. España (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126170
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Holenacker\, Bern - Fussballfeld Holenacker 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270606T123000
+DTEND;TZID=TZsfv:20270606T143000
+UID:4341067@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:FC Länggasse (5.)
+  - C.F. España (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128525
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Stadion Neufeld\, Bern - Kunstrasenfeld Neufeld 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270613T110000
+DTEND;TZID=TZsfv:20270613T130000
+UID:4337282@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (4.)
+  - SC Holligen 94 (4.)
+DESCRIPTION:Meisterschaft
+  4. Liga - Gruppe  3
+ \n\nSpielnummer 126174
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20270613T130000
+DTEND;TZID=TZsfv:20270613T150000
+UID:4341070@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:C.F. España (5.)
+  - SC Worb a (5.)
+DESCRIPTION:Meisterschaft
+  5. Liga - Gruppe  3
+ \n\nSpielnummer 128528
+ \nnoch nicht ausgetragen
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260815T093000
+DTEND;TZID=TZsfv:20260815T113000
+UID:106021@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.E - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Ostermundigen - Turnier BRACK.CH pmf (FVBJ\, Jun.E\, 2026/2027)
+ \n\n15.08.202609:30 - 11:30
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Oberfeld\, Ostermundigen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260815T100000
+DTEND;TZID=TZsfv:20260815T120000
+UID:106326@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: C.F. España - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n15.08.202610:00 - 12:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260822T000000
+DTEND;TZID=TZsfv:20260822T000000
+UID:106413@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.G - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Köniz - Turnier BRACK.CH pmf (FVBJ\, Jun.G\, 2026/2027)
+ \n\n22.08.2026
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Liebefeld-Hessgut\, Liebefeld - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260822T090000
+DTEND;TZID=TZsfv:20260822T110000
+UID:106369@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Wyler Bern - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n22.08.202609:00 - 11:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Wyler\, Bern - Fussballfeld Wyler
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260822T110000
+DTEND;TZID=TZsfv:20260822T130000
+UID:106067@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.E - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: C.F. España - Turnier BRACK.CH pmf (FVBJ\, Jun.E\, 2026/2027)
+ \n\n22.08.202611:00 - 13:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260822T113000
+DTEND;TZID=TZsfv:20260822T133000
+UID:106370@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Wyler Bern - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n22.08.202611:30 - 13:30
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Wyler\, Bern - Fussballfeld Wyler
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260829T090000
+DTEND;TZID=TZsfv:20260829T110000
+UID:106332@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Grosshöchstetten-Schlosswil - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n29.08.202609:00 - 11:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Mutti\, Biglen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260829T113000
+DTEND;TZID=TZsfv:20260829T130000
+UID:106336@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Wyler Bern - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n29.08.202611:30 - 13:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Wyler\, Bern - Fussballfeld Wyler
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260829T134500
+DTEND;TZID=TZsfv:20260829T154500
+UID:106025@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.E - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: SC Bümpliz 78 - Turnier BRACK.CH pmf (FVBJ\, Jun.E\, 2026/2027)
+ \n\n29.08.202613:45 - 15:45
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Bodenweid\, Bern - Kunstrasenfeld Bodenweid 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260905T000000
+DTEND;TZID=TZsfv:20260905T000000
+UID:106417@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.G - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Stettlen 08 - Turnier BRACK.CH pmf (FVBJ\, Jun.G\, 2026/2027)
+ \n\n05.09.2026
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Schulhaus\, Walkringen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260905T100000
+DTEND;TZID=TZsfv:20260905T120000
+UID:106372@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: C.F. España - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n05.09.202610:00 - 12:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260905T111500
+DTEND;TZID=TZsfv:20260905T130000
+UID:106069@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.E - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Grosshöchstetten-Schlosswil - Turnier BRACK.CH pmf (FVBJ\, Jun.E\, 2026/2027)
+ \n\n05.09.202611:15 - 13:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Arniacher\, Grosshöchstetten - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260912T000000
+DTEND;TZID=TZsfv:20260912T000000
+UID:106373@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Sternenberg - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n12.09.2026
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Schlatt\, Gasel - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260912T000000
+DTEND;TZID=TZsfv:20260912T000000
+UID:106374@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Stettlen 08 - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n12.09.2026
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Schulhaus\, Walkringen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260912T111500
+DTEND;TZID=TZsfv:20260912T131500
+UID:106073@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.E - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: SC Bümpliz 78 - Turnier BRACK.CH pmf (FVBJ\, Jun.E\, 2026/2027)
+ \n\n12.09.202611:15 - 13:15
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Bodenweid\, Bern - Kunstrasenfeld Bodenweid 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20260913T103000
+DTEND;TZID=TZsfv:20260913T123000
+UID:106419@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.G - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: C.F. España - Turnier BRACK.CH pmf (FVBJ\, Jun.G\, 2026/2027)
+ \n\n13.09.202610:30 - 12:30
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261017T100000
+DTEND;TZID=TZsfv:20261017T120000
+UID:106340@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Laupen - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n17.10.202610:00 - 12:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Gillenau\, Laupen - Nebenplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261018T101500
+DTEND;TZID=TZsfv:20261018T120000
+UID:106030@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.E - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Breitenrain - Turnier BRACK.CH pmf (FVBJ\, Jun.E\, 2026/2027)
+ \n\n18.10.202610:15 - 12:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Spitalacker\, Bern - Kunstrasenfeld Spitalacker
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261018T120000
+DTEND;TZID=TZsfv:20261018T150000
+UID:106342@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Muri-Gümligen - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n18.10.202612:00 - 15:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Sportzentrum Füllerich\, Gümligen - Kunstrasen
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261024T093000
+DTEND;TZID=TZsfv:20261024T110000
+UID:106375@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: SC Worb - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n24.10.202609:30 - 11:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Worbboden\, Worb - Nebenplatz 1 (Spielwiese)
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261024T100000
+DTEND;TZID=TZsfv:20261024T120000
+UID:106376@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: A.S. Italiana - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n24.10.202610:00 - 12:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Lory\, Bern - Fussballfeld Lory
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261024T120000
+DTEND;TZID=TZsfv:20261024T140000
+UID:106076@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.E - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Weissenstein Bern - Turnier BRACK.CH pmf (FVBJ\, Jun.E\, 2026/2027)
+ \n\n24.10.202612:00 - 14:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 1
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261025T100000
+DTEND;TZID=TZsfv:20261025T120000
+UID:106422@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.G - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: C.F. España - Turnier BRACK.CH pmf (FVBJ\, Jun.G\, 2026/2027)
+ \n\n25.10.202610:00 - 12:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Weissenstein\, Bern - Fussballfeld Weissenstein 3
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261031T090000
+DTEND;TZID=TZsfv:20261031T110000
+UID:106343@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: SC Ittigen - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n31.10.202609:00 - 11:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Hubelgut\, Worblaufen - Hauptplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261031T100000
+DTEND;TZID=TZsfv:20261031T120000
+UID:106345@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.F - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: SC Worb - Turnier BRACK.CH pmf (FVBJ\, Jun.F\, 2026/2027)
+ \n\n31.10.202610:00 - 12:00
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Worbboden\, Worb - Nebenplatz 1 (Spielwiese)
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=TZsfv:20261031T103000
+DTEND;TZID=TZsfv:20261031T123000
+UID:106036@football.ch
+DTSTAMP:20260804T220800Z
+SUMMARY:Jun.E - Stärkeklasse 3 - Turnier Junior*innen E-F-G / Brack play more football
+DESCRIPTION:Organisator: FC Belp - Turnier BRACK.CH pmf (FVBJ\, Jun.E\, 2026/2027)
+ \n\n31.10.202610:30 - 12:30
+ \n\nhttps://matchcenter.football.ch/?v=1368&lng=1
+LOCATION:Giessenbad\, Belp - Kunststoffrasenplatz
+CLASS:PUBLIC
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+END:VEVENT
+END:VCALENDAR
