@@ -1,0 +1,62 @@
+name: C.F. España Instagram post
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # Lunes 09:00 hora Zúrich (07:00 UTC) → partidos
+    - cron: '0 19 * * 0'  # Domingo 21:00 hora Zúrich (19:00 UTC) → resultados
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'preview o results'
+        default: preview
+        required: true
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: pip install pillow requests beautifulsoup4
+
+      - name: Decidir modo
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "0 19 * * 0" ]; then
+            echo "mode=results" >> $GITHUB_OUTPUT
+          else
+            echo "mode=preview" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generar imagen y texto
+        run: python cfespana_post.py ${{ steps.mode.outputs.mode }}
+        working-directory: cfespana
+
+      - name: Guardar en repositorio
+        run: |
+          git config user.name  "cfespana-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add cfespana/out/ cfespana/cache/ || true
+          git commit -m "post: ${{ steps.mode.outputs.mode }} $(date +%F)" || true
+          git push
+
+      - name: Enviar por email y/o publicar en Instagram
+        env:
+          EMAIL_FROM:     ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO:       ${{ secrets.EMAIL_TO }}
+          IG_USER_ID:     ${{ secrets.IG_USER_ID }}
+          IG_TOKEN:       ${{ secrets.IG_TOKEN }}
+          IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/main/cfespana/out
+        run: |
+          for f in cfespana/out/*.png; do python cfespana/publish.py "$f"; done
