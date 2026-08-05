@@ -2,8 +2,8 @@ name: C.F. España Instagram post
 
 on:
   schedule:
-    - cron: '0 7 * * 1'   # Lunes 09:00 hora Zúrich (07:00 UTC) → partidos
-    - cron: '0 19 * * 0'  # Domingo 21:00 hora Zúrich (19:00 UTC) → resultados
+    - cron: '0 7 * * 1'   # Dilluns 09:00 Zúrich → partits
+    - cron: '0 19 * * 0'  # Diumenge 21:00 Zúrich → resultats
   workflow_dispatch:
     inputs:
       mode:
@@ -24,10 +24,17 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Instalar dependencias
+      - name: Instal·lar dependències
         run: pip install pillow requests beautifulsoup4
 
-      - name: Decidir modo
+      - name: Descarregar calendari de partits actualitzat
+        run: |
+          curl -L "https://matchcenter.fvbj-afbj.ch/default.aspx?v=1368&oid=6&lng=1&a=kal" \
+               -o Verein-v1368.ics \
+               -H "User-Agent: CFEspanaBern-Matchposts/1.0"
+          echo "Calendari descarregat: $(wc -l < Verein-v1368.ics) línies"
+
+      - name: Decidir mode
         id: mode
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
@@ -38,10 +45,10 @@ jobs:
             echo "mode=preview" >> $GITHUB_OUTPUT
           fi
 
-      - name: Generar imagen y texto
+      - name: Generar imatge i text
         run: python cfespana_post.py ${{ steps.mode.outputs.mode }}
-        
-      - name: Guardar en repositorio
+
+      - name: Guardar al repositori
         run: |
           git config user.name  "cfespana-bot"
           git config user.email "bot@users.noreply.github.com"
@@ -49,13 +56,13 @@ jobs:
           git commit -m "post: ${{ steps.mode.outputs.mode }} $(date +%F)" || true
           git push
 
-      - name: Enviar por email y/o publicar en Instagram
+      - name: Enviar per email
         env:
           EMAIL_FROM:     ${{ secrets.EMAIL_FROM }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO:       ${{ secrets.EMAIL_TO }}
           IG_USER_ID:     ${{ secrets.IG_USER_ID }}
           IG_TOKEN:       ${{ secrets.IG_TOKEN }}
-          IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/main/out        
+          IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/main/out
         run: |
           for f in out/*.png; do python publish.py "$f"; done
