@@ -664,12 +664,23 @@ def _stripes(img, RED, YELLOW):
 
 # shared venue formatter
 def fmt_venue(v):
-    """'Weissenstein - Fussballfeld Weissenstein 3, Bern' → 'Weissenstein, Bern'"""
+    """
+    ICS:  'Weissenstein, Bern - Fussballfeld Weissenstein 3' → 'Weissenstein, Bern'
+    ICS:  'Pöschen, Schwarzenburg - Hauptplatz'              → 'Pöschen, Schwarzenburg'
+    Web:  'Weissenstein - Fussballfeld Weissenstein 3, Bern' → 'Weissenstein, Bern'
+    Web:  'Pöschen - Hauptplatz, Schwarzenburg'              → 'Pöschen, Schwarzenburg'
+    """
     v = (v or "").strip()
+    if not v:
+        return v
+    # ICS format: "Place, City - Fieldname"  → keep "Place, City"
     if " - " in v:
-        prefix = v.split(" - ")[0].strip()
-        city   = v.rsplit(",", 1)[-1].strip() if "," in v else ""
-        return f"{prefix}, {city}" if city else prefix
+        before_dash = v.split(" - ")[0].strip()
+        if "," in before_dash:
+            return before_dash          # "Weissenstein, Bern"
+        # Web format: "Place - Fieldname, City" → "Place, City"
+        city = v.rsplit(",", 1)[-1].strip() if "," in v else ""
+        return f"{before_dash}, {city}" if city else before_dash
     if "," in v:
         parts = v.split(",")
         return f"{parts[0].strip()}, {parts[-1].strip()}"
