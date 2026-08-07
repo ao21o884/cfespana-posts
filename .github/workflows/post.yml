@@ -2,8 +2,8 @@ name: C.F. España Instagram post
 
 on:
   schedule:
-    - cron: '0 7 * * 1'   # Lunes 09:00 hora Zúrich (07:00 UTC) → partidos
-    - cron: '0 19 * * 0'  # Domingo 21:00 hora Zúrich (19:00 UTC) → resultados
+    - cron: '0 7 * * 1'
+    - cron: '0 19 * * 0'
   workflow_dispatch:
     inputs:
       mode:
@@ -27,6 +27,12 @@ jobs:
       - name: Instalar dependencias
         run: pip install pillow requests beautifulsoup4
 
+      - name: Descarregar CSV actualitzat
+        run: |
+          curl -L -o Verein-v1368.csv \
+            "https://matchcenter.fvbj-afbj.ch/default.aspx?v=1368&oid=6&lng=1&a=vs&format=csv" \
+            -H "User-Agent: Mozilla/5.0" || echo "CSV web failed, using local file"
+
       - name: Decidir modo
         id: mode
         run: |
@@ -45,17 +51,14 @@ jobs:
         run: |
           git config user.name  "cfespana-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add out/ cache/ || true
+          git add out/ cache/ Verein-v1368.csv || true
           git commit -m "post: ${{ steps.mode.outputs.mode }} $(date +%F)" || true
           git push
 
-      - name: Enviar por email y/o publicar en Instagram
+      - name: Enviar por email
         env:
           EMAIL_FROM:     ${{ secrets.EMAIL_FROM }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO:       ${{ secrets.EMAIL_TO }}
-          IG_USER_ID:     ${{ secrets.IG_USER_ID }}
-          IG_TOKEN:       ${{ secrets.IG_TOKEN }}
-          IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/main/cfespana/out
         run: |
           for f in out/*.png; do python publish.py "$f"; done
