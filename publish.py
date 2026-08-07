@@ -70,6 +70,7 @@ def post_buffer(png, caption):
           channelId: """ + json_str(channel_id) + """
           schedulingType: automatic
           mode: addToQueue
+          instagramOptions: { type: post }
           assets: [
             {
               image: {
