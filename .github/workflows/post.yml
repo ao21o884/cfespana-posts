@@ -1,127 +1,66 @@
-# -*- coding: utf-8 -*-
-"""
-Publishing layer for C.F. España post generator.
-Sends image + caption via email AND publishes to Instagram via Buffer API.
-"""
-import os, sys, requests
+name: C.F. España Instagram post
 
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+    - cron: '0 19 * * 0'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'preview o results'
+        default: preview
+        required: true
 
-def send_email(png, caption):
-    import smtplib
-    from email.message import EmailMessage
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
-    sender    = os.environ.get("EMAIL_FROM", "")
-    password  = os.environ.get("EMAIL_PASSWORD", "")
-    recipient = os.environ.get("EMAIL_TO", "")
+    steps:
+      - uses: actions/checkout@v4
 
-    if not (sender and password and recipient):
-        print("  · email secrets not set — skipping email")
-        return False
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-    fname   = os.path.basename(png)
-    subject = "⚽ C.F. España — Resultate" if "results" in fname else "⚽ C.F. España — Partits de la setmana"
+      - name: Instalar dependencias
+        run: pip install pillow requests beautifulsoup4
 
-    msg = EmailMessage()
-    msg["Subject"] = subject
-    msg["From"]    = sender
-    msg["To"]      = recipient
-    msg.set_content(caption)
+      - name: Descarregar CSV actualitzat
+        run: |
+          curl -L -o Verein-v1368.csv \
+            "https://matchcenter.fvbj-afbj.ch/default.aspx?v=1368&oid=6&lng=1&a=vs&format=csv" \
+            -H "User-Agent: Mozilla/5.0" || echo "CSV web failed, using local file"
 
-    with open(png, "rb") as fh:
-        msg.add_attachment(fh.read(), maintype="image", subtype="png",
-                           filename=os.path.basename(png))
+      - name: Decidir modo
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "0 19 * * 0" ]; then
+            echo "mode=results" >> $GITHUB_OUTPUT
+          else
+            echo "mode=preview" >> $GITHUB_OUTPUT
+          fi
 
-    with smtplib.SMTP("smtp.gmail.com", 587) as s:
-        s.starttls()
-        s.login(sender, password)
-        s.send_message(msg)
+      - name: Generar imagen y texto
+        run: python cfespana_post.py ${{ steps.mode.outputs.mode }}
 
-    print(f"  → email sent to {recipient}")
-    return True
+      - name: Guardar en repositorio
+        run: |
+          git config user.name  "cfespana-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add out/ cache/ Verein-v1368.csv || true
+          git commit -m "post: ${{ steps.mode.outputs.mode }} $(date +%F)" || true
+          git push
 
-
-def post_buffer(png, caption):
-    """Publish image + caption to Instagram via Buffer API."""
-    token      = os.environ.get("BUFFER_TOKEN", "")
-    channel_id = os.environ.get("BUFFER_CHANNEL_ID", "")
-    repo       = os.environ.get("GITHUB_REPOSITORY", "")
-
-    if not (token and channel_id):
-        print("  · BUFFER_TOKEN / BUFFER_CHANNEL_ID not set — skipping Buffer")
-        return False
-
-    # Build public raw GitHub URL for the image
-    fname     = os.path.basename(png)
-    image_url = f"https://raw.githubusercontent.com/{repo}/main/out/{fname}"
-    print(f"  · image URL: {image_url}")
-
-    url     = "https://api.buffer.com"
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type":  "application/json",
-    }
-
-    # Use correct Buffer API v2 mutation with assets
-    mutation = """
-    mutation CreatePost {
-      createPost(
-        input: {
-          text: """ + json_str(caption) + """
-          channelId: """ + json_str(channel_id) + """
-          schedulingType: automatic
-          mode: publishNow
-          assets: [
-            {
-              image: {
-                url: """ + json_str(image_url) + """
-              }
-            }
-          ]
-        }
-      ) {
-        ... on PostActionSuccess {
-          post {
-            id
-            text
-          }
-        }
-        ... on MutationError {
-          message
-        }
-      }
-    }
-    """
-
-    r = requests.post(url, json={"query": mutation},
-                      headers=headers, timeout=120)
-    r.raise_for_status()
-    data = r.json()
-    print(f"  · Buffer response: {data}")
-
-    result = data.get("data", {}).get("createPost", {})
-    if "message" in result:
-        print(f"  ! Buffer error: {result['message']}")
-        return False
-
-    post_id = result.get("post", {}).get("id")
-    print(f"  → published to Instagram via Buffer (post id: {post_id})")
-    return True
-
-
-def json_str(s):
-    """Escape a string for inline GraphQL."""
-    import json
-    return json.dumps(s)
-
-
-if __name__ == "__main__":
-    png      = sys.argv[1]
-    cap_path = png.replace(".png", ".txt")
-    caption  = open(cap_path, encoding="utf-8").read() if os.path.exists(cap_path) else ""
-
-    ok = False
-    ok = send_email(png, caption)  or ok
-    ok = post_buffer(png, caption) or ok
-
-    if not ok:
-        print("No channel configured — image saved in out/ only.")
+      - name: Enviar por email i publicar
+        env:
+          EMAIL_FROM:         ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASSWORD:     ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO:           ${{ secrets.EMAIL_TO }}
+          BUFFER_TOKEN:       ${{ secrets.BUFFER_TOKEN }}
+          BUFFER_CHANNEL_ID:  ${{ secrets.BUFFER_CHANNEL_ID }}
+        run: |
+          for f in out/*.png; do python publish.py "$f"; done
