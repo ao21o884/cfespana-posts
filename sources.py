@@ -1,151 +1,282 @@
 # -*- coding: utf-8 -*-
 """
-Data sources for the C.F. España post generator.
-
-  ics_matches()     -> full season from the official Vereinsspielplan export
-                       (Match center -> Verein -> Spielplan download)
-  widget_scores()   -> recent results from the club's own SFV widget
-                       (Match center -> Verein -> Club-Widget Konfiguration)
-
-The main match center rejects automated requests, so it is never called here.
-The widget is the endpoint the federation generates for the club to publish its
-own data; we identify ourselves honestly and fetch at most twice a week.
+Data source for C.F. España matches.
+Scrapes directly from matchcenter.fvbj-afbj.ch — no ICS file needed.
 """
-import os
 import re
 import datetime as dt
+import requests
+from bs4 import BeautifulSoup
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-CLUB_V = 1368
-ICS_DEFAULT = os.path.join(HERE, "Verein-v1368.ics")
-WIDGET_URL = f"https://widget.football.ch/Widgets.aspx/v-{CLUB_V}/a-as/"
-UA = "CFEspanaBern-Matchposts/1.0 (Vereinsnr 10336; c.f.espana1994@gmail.com)"
+URL = "https://matchcenter.fvbj-afbj.ch/default.aspx?v=1368&oid=6&lng=1&a=vs"
 
-DOW = {0: "Mo", 1: "Di", 2: "Mi", 3: "Do", 4: "Fr", 5: "Sa", 6: "So"}
+DOW_MAP = {
+    "Mo": "Mo", "Di": "Di", "Mi": "Mi", "Do": "Do",
+    "Fr": "Fr", "Sa": "Sa", "So": "So",
+}
 
+def _parse_date(s):
+    """'So 09.08.2026' → ('So', '09.08.2026')"""
+    m = re.match(r'(Mo|Di|Mi|Do|Fr|Sa|So)\s+(\d{2}\.\d{2}\.\d{4})', s.strip())
+    if m:
+        return m.group(1), m.group(2)
+    return None, None
 
-def _unescape(s):
-    return (s.replace("\\\\n", "\n").replace("\\n", "\n")
-             .replace("\\,", ",").replace("\\;", ";").replace("\\\\", "\\")).strip()
+def _is_espana(name):
+    return bool(re.search(r'espa[ñn]a', name, re.I))
 
+def load_matches(url=URL):
+    """Fetch and parse all C.F. España matches from the matchcenter web page."""
+    try:
+        r = requests.get(url, timeout=20,
+                         headers={"User-Agent": "CFEspana-Matchpost/2.0"})
+        r.raise_for_status()
+        html = r.text
+    except Exception as e:
+        print(f"  ! web fetch failed: {e} — falling back to ICS")
+        return _load_from_ics()
 
-def _field(block, key):
-    m = re.search(rf"^{key}[^:]*:(.*)$", block, re.M)
-    return m.group(1).strip() if m else ""
+    soup = BeautifulSoup(html, "html.parser")
+    # Find the Vereinsspielplan section
+    section = soup.find(string=re.compile("Vereinsspielplan"))
+    if section is None:
+        print("  ! Vereinsspielplan section not found — falling back to ICS")
+        return _load_from_ics()
 
+    # Get all text lines after that heading
+    container = section.find_parent()
+    while container and container.name not in ("div","section","td","body"):
+        container = container.find_parent()
+    if container is None:
+        container = soup
 
-def _strip_team_suffix(name):
-    """'C.F. España (4.)' -> 'C.F. España'"""
-    return re.sub(r"\s*\((?:\d+\.|Sen\.\d+\+|Jun\.[^)]*)\)\s*$", "", name).strip()
-
-
-def _venue(loc):
-    """iCal writes 'Weissenstein\\, Bern - Fussballfeld Weissenstein 3'.
-    We want 'Fussballfeld Weissenstein 3, Bern'."""
-    loc = _unescape(loc)
-    if " - " in loc:
-        area, pitch = loc.split(" - ", 1)
-        town = area.split(",")[-1].strip()
-        return f"{pitch.strip()}, {town}" if town else pitch.strip()
-    return loc
-
-
-def ics_matches(path=None):
-    path = path or ICS_DEFAULT
-    raw = open(path, encoding="utf-8", newline="").read()
-    raw = re.sub(r"\r?\n[ \t]", "", raw)          # RFC 5545 line unfolding
-    out = []
-    for block in re.findall(r"BEGIN:VEVENT\r?\n(.*?)\r?\nEND:VEVENT", raw, re.S):
-        start = _field(block, "DTSTART")
-        if "T" not in start:
-            continue
-        when = dt.datetime.strptime(start, "%Y%m%dT%H%M%S")
-        desc = _unescape(_field(block, "DESCRIPTION"))
-        summary = _unescape(_field(block, "SUMMARY"))
-        head = desc.split("\n")[0].strip()
-        uid = _field(block, "UID").split("@")[0]
-        snr = re.search(r"Spielnummer\s+(\d+)", desc)
-
-        rec = dict(dow=DOW[when.weekday()], date=when.strftime("%d.%m.%Y"),
-                   time="" if when.strftime("%H:%M") == "00:00" else when.strftime("%H:%M"), venue=_venue(_field(block, "LOCATION")),
-                   uid=uid, spielnummer=snr.group(1) if snr else None, score=None,
-                   home_v=None, away_v=None)
-
-        if head.startswith("Organisator:"):
-            org = head.split("-", 1)[0].replace("Organisator:", "").strip()
-            kat = re.search(r"(Jun\.[A-G])", head)
-            rec.update(is_tournament=True, home=org, away="",
-                       competition="Turnier",
-                       label=f"Turnier {kat.group(1)}" if kat else summary.split(" - ")[0])
-        else:
-            if " - " not in summary:
-                continue
-            home, away = summary.split(" - ", 1)
-            rec.update(is_tournament=False,
-                       home=_strip_team_suffix(home), away=_strip_team_suffix(away),
-                       competition=head)
-        out.append(rec)
-    out.sort(key=lambda r: (dt.datetime.strptime(r["date"], "%d.%m.%Y"), r["time"]))
-    return out
+    text = container.get_text(separator="\n")
+    return _parse_text(text)
 
 
-# ---------------------------------------------------------------- results
-DATE_LINE = re.compile(r"^(Mo|Di|Mi|Do|Fr|Sa|So)\s+(\d{2}\.\d{2}\.\d{4})$")
-TIME_LINE = re.compile(r"^\d{2}:\d{2}$")
+def _parse_text(text):
+    lines = [l.strip() for l in text.splitlines() if l.strip()]
+    matches = []
+    cur_dow = cur_date = None
+    i = 0
 
-
-def widget_scores():
-    """Return {spielnummer: '2:2'} plus {v_id: club name} for crest lookups."""
-    import requests
-    from bs4 import BeautifulSoup
-    r = requests.get(WIDGET_URL, timeout=30, headers={"User-Agent": UA})
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-
-    vmap = {}
-    for a in soup.find_all("a", href=True):
-        m = re.search(r"/v-(\d+)/?$", a["href"])
-        if m and a.get_text(strip=True):
-            vmap[a.get_text(strip=True)] = int(m.group(1))
-
-    lines = [l.strip() for l in soup.get_text("\n").split("\n") if l.strip()]
-    scores, i = {}, 0
+    # find start of schedule
     while i < len(lines):
-        if TIME_LINE.match(lines[i]):
-            blk = lines[i:i + 16]
-            snr = next((re.search(r"Spielnummer\s+(\d+)", b) for b in blk
-                        if "Spielnummer" in b), None)
-            digits = [j for j, b in enumerate(blk) if re.fullmatch(r"\d{1,2}", b)]
-            sc = None
-            for j in digits:
-                if j + 2 < len(blk) and blk[j + 1] == ":" and re.fullmatch(r"\d{1,2}", blk[j + 2]):
-                    sc = f"{blk[j]}:{blk[j + 2]}"
-                    break
-            if snr and sc:
-                scores[snr.group(1)] = sc
+        if lines[i] == "Vereinsspielplan":
+            i += 1
+            break
         i += 1
-    return scores, vmap
+
+    time_re  = re.compile(r'^\d{2}:\d{2}$')
+    date_re  = re.compile(r'^(Mo|Di|Mi|Do|Fr|Sa|So)\s+\d{2}\.\d{2}\.\d{4}$')
+    tour_re  = re.compile(r'Turnier', re.I)
+    spiel_re = re.compile(r'Spielnummer\s+(\d+)')
+    jun_re   = re.compile(r'Jun\.([A-G])\b', re.I)
+
+    while i < len(lines):
+        line = lines[i]
+
+        # Date header
+        dow, date = _parse_date(line)
+        if dow:
+            cur_dow = dow; cur_date = date
+            i += 1
+            continue
+
+        if cur_date is None:
+            i += 1
+            continue
+
+        # Tournament block
+        if tour_re.search(line) and "Junior" in line:
+            # next line: Jun.X category
+            jun_letter = ""
+            peek = lines[i+1] if i+1 < len(lines) else ""
+            jm = jun_re.search(peek)
+            if jm:
+                jun_letter = jm.group(1).upper()
+                i += 1  # consume the Jun.X line
+
+            # next lines: turnier name, Organisator:..., venue
+            i += 1
+            time_val = ""
+            venue = ""
+            organisator = ""
+            # Look for optional time, then sub-category, then org, then venue
+            for _ in range(8):
+                if i >= len(lines): break
+                l = lines[i]
+                if time_re.match(l) and not time_val:
+                    time_val = l; i += 1; continue
+                if l.startswith("Organisator:"):
+                    organisator = l.replace("Organisator:","").strip(); i += 1; continue
+                if re.match(r'^Spielnummer', l): i += 1; break
+                if re.search(r'Hauptplatz|Kunstrasen|Fussballfeld|Sportanlage|Terrain|platz', l, re.I):
+                    venue = l; i += 1; continue
+                if l.startswith("Bemerkung:"): i += 1; break
+                if re.match(r'^(Mo|Di|Mi|Do|Fr|Sa|So)\s+\d', l): break
+                if time_re.match(l): break
+                if tour_re.search(l) and "Junior" in l: break
+                i += 1
+
+            matches.append({
+                "dow": cur_dow, "date": cur_date, "time": time_val,
+                "home": "C.F. España", "away": "",
+                "competition": "Turnier",
+                "label": f"Turnier Jun.{jun_letter}" if jun_letter else "Turnier",
+                "venue": venue,
+                "is_tournament": True,
+                "spielnummer": None, "score": None,
+                "home_v": None, "away_v": None,
+                "uid": f"tour_{cur_date}_{jun_letter}_{time_val}",
+            })
+            continue
+
+        # Time + match block
+        if time_re.match(line):
+            time_val = line; i += 1
+            if i >= len(lines): break
+
+            # Home team
+            home = lines[i].strip(); i += 1
+            # dash separator
+            if i < len(lines) and lines[i] == "-":
+                i += 1
+            # Away team
+            away = lines[i].strip() if i < len(lines) else ""; i += 1
+
+            # Rest of block: competition, Spielnummer, venue
+            competition = ""; spielnummer = None; venue = ""
+            for _ in range(6):
+                if i >= len(lines): break
+                l = lines[i]
+                if re.match(r'^(Mo|Di|Mi|Do|Fr|Sa|So)\s+\d', l): break
+                if time_re.match(l): break
+                if tour_re.search(l) and "Junior" in l: break
+                sm = spiel_re.search(l)
+                if sm:
+                    spielnummer = sm.group(1)
+                    # venue often on same line as Spielnummer or just after
+                    # format: "Meisterschaft...\nSpielNr\nVENUE"
+                    i += 1
+                    if i < len(lines) and not time_re.match(lines[i]) and not re.match(r'^(Mo|Di|Mi|Do|Fr|Sa|So)', lines[i]):
+                        venue = lines[i]; i += 1
+                    break
+                if re.search(r'Meisterschaft|Berner Cup|Liga|Cup', l, re.I) and not competition:
+                    competition = l
+                i += 1
+
+            # Only keep if España involved
+            if not (_is_espana(home) or _is_espana(away)):
+                continue
+
+            matches.append({
+                "dow": cur_dow, "date": cur_date, "time": time_val,
+                "home": home, "away": away,
+                "competition": competition,
+                "label": "",
+                "venue": venue,
+                "is_tournament": False,
+                "spielnummer": spielnummer,
+                "score": None,
+                "home_v": None, "away_v": None,
+                "uid": spielnummer or f"{cur_date}_{time_val}_{home[:8]}",
+            })
+            continue
+
+        i += 1
+
+    return matches
 
 
-def load_matches(ics_path=None, with_scores=False):
-    ms = ics_matches(ics_path)
-    if with_scores:
+def _load_from_ics():
+    """Fallback: parse Verein-v1368.ics when web scraping is unavailable."""
+    import os
+    HERE = os.path.dirname(os.path.abspath(__file__))
+    ics_path = os.path.join(HERE, "Verein-v1368.ics")
+    if not os.path.exists(ics_path):
+        print("  ! ICS file not found either")
+        return []
+
+    try:
+        text = open(ics_path, encoding="utf-8", errors="replace").read()
+    except Exception as e:
+        print(f"  ! ICS read error: {e}")
+        return []
+
+    US = "C.F. España"
+    matches = []
+    DOW_DE = {"MO":"Mo","TU":"Di","WE":"Mi","TH":"Do","FR":"Fr","SA":"Sa","SU":"So"}
+
+    for event in re.split(r'BEGIN:VEVENT', text)[1:]:
+        def get(key):
+            m = re.search(rf'{key}[^:]*:(.*)', event)
+            return m.group(1).strip() if m else ""
+
+        dtstart = get("DTSTART")
+        if len(dtstart) < 8:
+            continue
         try:
-            scores, vmap = widget_scores()
-            for m in ms:
-                if m.get("spielnummer") in scores:
-                    m["score"] = scores[m["spielnummer"]]
-                m["home_v"] = vmap.get(m.get("home"))
-                m["away_v"] = vmap.get(m.get("away"))
-        except Exception as e:
-            print(f"  ! widget unavailable, no scores this run: {e}")
-    return ms
+            d = dt.date(int(dtstart[:4]), int(dtstart[4:6]), int(dtstart[6:8]))
+        except ValueError:
+            continue
+        time_val = f"{dtstart[9:11]}:{dtstart[11:13]}" if len(dtstart) > 12 else ""
+
+        summary  = get("SUMMARY")
+        location = get("LOCATION")
+        desc     = get("DESCRIPTION")
+        uid      = get("UID")
+
+        # day of week
+        dow = DOW_DE.get(d.strftime("%A")[:2].upper(),
+                         ["Mo","Di","Mi","Do","Fr","Sa","So"][d.weekday()])
+
+        # Parse home/away from summary "Home - Away" or "Home\n-\nAway"
+        parts = re.split(r'\s+-\s+', summary, maxsplit=1)
+        if len(parts) == 2:
+            home, away = parts[0].strip(), parts[1].strip()
+        else:
+            home, away = summary.strip(), ""
+
+        if not (_is_espana(home) or _is_espana(away) or
+                "turnier" in summary.lower() or "turnier" in desc.lower()):
+            continue
+
+        is_tour = "turnier" in summary.lower() or "turnier" in desc.lower()
+        label = ""
+        if is_tour:
+            jm = re.search(r'Jun\.([A-G])\b', desc + summary, re.I)
+            label = f"Turnier Jun.{jm.group(1).upper()}" if jm else "Turnier"
+
+        competition = ""
+        for line in desc.replace("\\n","\n").splitlines():
+            if re.search(r'Meisterschaft|Berner Cup|Liga', line, re.I):
+                competition = line.strip(); break
+
+        spielnummer = ""
+        sm = re.search(r'Spielnummer\s*(\d+)', desc)
+        if sm:
+            spielnummer = sm.group(1)
+
+        matches.append({
+            "dow": dow,
+            "date": d.strftime("%d.%m.%Y"),
+            "time": time_val,
+            "home": home, "away": away,
+            "competition": competition,
+            "label": label,
+            "venue": location,
+            "is_tournament": is_tour,
+            "spielnummer": spielnummer,
+            "score": None,
+            "home_v": None, "away_v": None,
+            "uid": uid,
+        })
+
+    matches.sort(key=lambda m: (m["date"].split(".")[::-1], m["time"]))
+    return matches
 
 
-if __name__ == "__main__":
-    ms = ics_matches()
-    print(f"{len(ms)} events, {ms[0]['date']} .. {ms[-1]['date']}")
-    for m in ms[:8]:
-        print(" ", m["dow"], m["date"], m["time"],
-              m.get("label") or f"{m['home']} – {m['away']}", "|", m["competition"],
-              "|", m["venue"])
+def week_scores(anchor=None):
+    """Fetch current scores — stub, returns empty dict."""
+    return {}
