@@ -52,7 +52,7 @@ def post_buffer(png, caption):
 
     # Build public raw GitHub URL for the image
     fname     = os.path.basename(png)
-    image_url = f"https://raw.githubusercontent.com/{repo}/main/out/{fname}"
+    image_url = f"https://ao21o884.github.io/cfespana-posts/out/{fname}"
     print(f"  · image URL: {image_url}")
 
     url     = "https://api.buffer.com"
