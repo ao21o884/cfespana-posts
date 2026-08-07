@@ -41,7 +41,7 @@ def send_email(png, caption):
 
 
 def post_buffer(png, caption):
-    """Publish image + caption to Instagram via Buffer API using public GitHub URL."""
+    """Publish image + caption to Instagram via Buffer API."""
     token      = os.environ.get("BUFFER_TOKEN", "")
     channel_id = os.environ.get("BUFFER_CHANNEL_ID", "")
     repo       = os.environ.get("GITHUB_REPOSITORY", "")
@@ -55,51 +55,63 @@ def post_buffer(png, caption):
     image_url = f"https://raw.githubusercontent.com/{repo}/main/out/{fname}"
     print(f"  · image URL: {image_url}")
 
-    url     = "https://api.buffer.com/graphql"
+    url     = "https://api.buffer.com"
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type":  "application/json",
     }
 
+    # Use correct Buffer API v2 mutation with assets
     mutation = """
-    mutation CreatePost($input: CreatePostInput!) {
-      createPost(input: $input) {
-        post {
-          id
-          status
+    mutation CreatePost {
+      createPost(
+        input: {
+          text: """ + json_str(caption) + """
+          channelId: """ + json_str(channel_id) + """
+          schedulingType: automatic
+          mode: publishNow
+          assets: [
+            {
+              image: {
+                url: """ + json_str(image_url) + """
+              }
+            }
+          ]
         }
-        errors {
+      ) {
+        ... on PostActionSuccess {
+          post {
+            id
+            text
+          }
+        }
+        ... on MutationError {
           message
         }
       }
     }
     """
 
-    variables = {
-        "input": {
-            "channelId":  channel_id,
-            "text":       caption,
-            "media": [{
-                "type": "image",
-                "url":  image_url,
-            }],
-            "publishNow": True,
-        }
-    }
-
-    r = requests.post(url, json={"query": mutation, "variables": variables},
+    r = requests.post(url, json={"query": mutation},
                       headers=headers, timeout=120)
     r.raise_for_status()
     data = r.json()
+    print(f"  · Buffer response: {data}")
 
-    errors = data.get("data", {}).get("createPost", {}).get("errors", [])
-    if errors:
-        print(f"  ! Buffer error: {errors}")
+    result = data.get("data", {}).get("createPost", {})
+    if "message" in result:
+        print(f"  ! Buffer error: {result['message']}")
         return False
 
-    post_id = data.get("data", {}).get("createPost", {}).get("post", {}).get("id")
+    post_id = result.get("post", {}).get("id")
     print(f"  → published to Instagram via Buffer (post id: {post_id})")
     return True
+
+
+def json_str(s):
+    """Escape a string for inline GraphQL."""
+    import json
+    return json.dumps(s)
 
 
 if __name__ == "__main__":
