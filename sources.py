@@ -29,7 +29,12 @@ def load_matches(url=URL):
     """Fetch and parse all C.F. España matches from the matchcenter web page."""
     try:
         r = requests.get(url, timeout=20,
-                         headers={"User-Agent": "CFEspana-Matchpost/2.0"})
+                 headers={
+                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                     "Accept-Language": "de-CH,de;q=0.9,en;q=0.8",
+                     "Referer": "https://matchcenter.fvbj-afbj.ch/",
+                 })
         r.raise_for_status()
         html = r.text
     except Exception as e:
