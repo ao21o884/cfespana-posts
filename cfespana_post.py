@@ -108,7 +108,7 @@ def tidy_comp(c):
     return re.sub(r"\s{2,}", " ", c).strip()
 
 
-TAGS = ("#CFEspaña #VamosEspaña #Spieltag #FussballBern #Bern #Amateurfussball "
+TAGS = ("#CFEspaña #VamosEspaña #MatchDay #FussballBern #Bern #Amateurfussball "
         "#FVBJ #Matchday #Schweiz")
 
 
@@ -118,8 +118,8 @@ def caption_preview(ms):
         m = real[0]
         opp = m["away"] if m["home"].startswith(US) else m["home"]
         where = "Heimspiel" if m["home"].startswith(US) else "Auswärtsspiel"
-        L = ["🔴🟡 SPIELTAG! 🟡🔴", "",
-             f"{where} gegen {opp} — wir zählen auf euch!", "",
+        L = ["🔴🟡 MATCH DAY! 🟡🔴", "",
+             f"{where} vs {opp} — wir zählen auf euch!", "",
              f"📅 {DAY.get(m['dow'], m['dow'])}, {m['date']}",
              f"⏰ {m['time']} Uhr",
              f"📍 {m['venue']}",
@@ -158,6 +158,31 @@ def caption_results(ms):
     return "\n".join(L)
 
 
+# Photo background — stored in assets/pitch.jpg
+PITCH = os.path.join(HERE, "assets", "pitch.jpg")
+
+
+MAX_PER_POST = 6   # max rows per image; more → split into two posts
+
+
+def dedup_tournaments(matches):
+    """Remove duplicate tournament entries: same day + same junior letter."""
+    import re
+    seen = set()
+    out  = []
+    for m in matches:
+        if m.get("is_tournament"):
+            label  = m.get("label","") or m.get("competition","")
+            mt     = re.search(r'Jun(?:ioren)?[\.\s]*([A-G])', label, re.I)
+            letter = mt.group(1).upper() if mt else "?"
+            key    = (m["date"], letter)
+            if key in seen:
+                continue
+            seen.add(key)
+        out.append(m)
+    return out
+
+
 # ---------------------------------------------------------------- build
 def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_crests=True):
     outdir = outdir or os.path.join(HERE, "out")
@@ -167,38 +192,70 @@ def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_cres
         print("No matches this week — nothing to post.")
         return None, None
 
+    # Deduplicate tournament entries (same junior letter on same day)
+    ms = dedup_tournaments(ms)
+
     real = [m for m in ms if not m.get("is_tournament")]
     lo, hi = week_window(anchor)
     rng = f"{lo.strftime('%d.')} – {hi.strftime('%d. %B %Y')}"
     tag = ("results" if results else "preview") + "_" + lo.isoformat()
     png = os.path.join(outdir, f"cfespana_{tag}.png")
 
+    def team_label(m):
+        comp = m.get("competition", "")
+        if "Junioren D" in comp: return "Junioren D"
+        if "Junioren E" in comp: return "Junioren E"
+        if "Senioren 30" in comp: return "Senioren 30+"
+        if "Senioren 40" in comp: return "Senioren 40+"
+        if "Senioren 50" in comp: return "Senioren 50+"
+        return "1. Mannschaft"
+
+    def do_render(match_list, out_path, title, subtitle, is_results):
+        render.render_list_photo(match_list, out_path, photo_path=PITCH,
+                                 title=title, subtitle=subtitle,
+                                 daterange=rng, results=is_results)
+
+    def save_cap(txt, base_png):
+        cap = base_png.replace(".png", ".txt")
+        open(cap, "w", encoding="utf-8").write(txt)
+        print(f"→ {base_png}\n→ {cap}")
+        return base_png, cap
+
+    def maybe_split(match_list, title, subtitle, is_results, txt):
+        """Render one or two images depending on list length."""
+        if len(match_list) <= MAX_PER_POST:
+            do_render(match_list, png, title, subtitle, is_results)
+            return save_cap(txt, png)
+        # Split into two equal halves
+        mid   = (len(match_list) + 1) // 2
+        png_b = png.replace(".png", "_2.png")
+        do_render(match_list[:mid], png,   title, subtitle + " (1/2)", is_results)
+        do_render(match_list[mid:], png_b, title, subtitle + " (2/2)", is_results)
+        save_cap(txt, png)
+        cap_b = png_b.replace(".png", ".txt")
+        open(cap_b, "w", encoding="utf-8").write(txt)
+        print(f"→ {png_b}\n→ {cap_b}")
+        return [png, png_b], cap_b
+
     if results:
         for m in ms:
             m["outcome"] = outcome(m)
-        render.render_list(ms, png, title="RESULTATE", subtitle="UNSERE WOCHE",
-                           daterange=rng, results=True, photo=photo)
-        txt = caption_results(ms)
+        ms_results = [m for m in ms if not m.get("is_tournament")]
+        txt = caption_results(ms_results)
+        return maybe_split(ms_results, "RESULTATE", "UNSERE WOCHE", True, txt)
+
     elif len(real) == 1 and len(ms) == 1:
         m = dict(real[0])
-        if fetch_crests:
-            m["home_crest"] = fetch_crest(m.get("home_v"), m["home"])
-            m["away_crest"] = fetch_crest(m.get("away_v"), m["away"])
-        else:
-            m["home_crest"] = os.path.join(HERE, "assets", "cfespana_big.png") if m["home"].startswith(US) else None
-            m["away_crest"] = os.path.join(HERE, "assets", "cfespana_big.png") if m["away"].startswith(US) else None
-        m["home_liga"] = m["away_liga"] = ""
-        render.render_single(m, png, photo=photo)
+        m["team_label"] = team_label(m)
+        m["home_crest"] = None
+        m["away_crest"] = None
+        render.render_single_photo(m, png, photo_path=PITCH)
         txt = caption_preview(ms)
-    else:
-        render.render_list(ms, png, title="SPIELPLAN", subtitle="SPIELE DER WOCHE",
-                           daterange=rng, results=False, photo=photo)
-        txt = caption_preview(ms)
+        return save_cap(txt, png)
 
-    cap = png.replace(".png", ".txt")
-    open(cap, "w", encoding="utf-8").write(txt)
-    print(f"→ {png}\n→ {cap}")
-    return png, cap
+    else:
+        txt = caption_preview(ms)
+        return maybe_split(ms, "MATCH DAY", "SPIELE DER WOCHE", False, txt)
 
 
 
@@ -213,6 +270,6 @@ if __name__ == "__main__":
     p.add_argument("--outdir")
     a = p.parse_args()
     anchor = dt.date.fromisoformat(a.week) if a.week else None
-    ms = sources.load_matches(a.ics, with_scores=(a.cmd == "results"))
+    ms = sources.load_matches()
     build(ms, anchor=anchor, results=(a.cmd == "results"),
           outdir=a.outdir, photo=a.photo, fetch_crests=not a.no_crests)
