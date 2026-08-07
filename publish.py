@@ -3,10 +3,7 @@
 Publishing layer for C.F. España post generator.
 Sends image + caption via email AND publishes to Instagram via Buffer API.
 """
-import os
-import sys
-import base64
-import requests
+import os, sys, requests
 
 
 def send_email(png, caption):
@@ -44,26 +41,26 @@ def send_email(png, caption):
 
 
 def post_buffer(png, caption):
-    """Publish image + caption to Instagram via Buffer API."""
+    """Publish image + caption to Instagram via Buffer API using public GitHub URL."""
     token      = os.environ.get("BUFFER_TOKEN", "")
     channel_id = os.environ.get("BUFFER_CHANNEL_ID", "")
+    repo       = os.environ.get("GITHUB_REPOSITORY", "")
 
     if not (token and channel_id):
         print("  · BUFFER_TOKEN / BUFFER_CHANNEL_ID not set — skipping Buffer")
         return False
 
-    # Buffer GraphQL API endpoint
+    # Build public raw GitHub URL for the image
+    fname     = os.path.basename(png)
+    image_url = f"https://raw.githubusercontent.com/{repo}/main/out/{fname}"
+    print(f"  · image URL: {image_url}")
+
     url     = "https://api.buffer.com/graphql"
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type":  "application/json",
     }
 
-    # Step 1: upload image as base64
-    with open(png, "rb") as f:
-        img_b64 = base64.b64encode(f.read()).decode()
-
-    # Buffer createPost mutation with image
     mutation = """
     mutation CreatePost($input: CreatePostInput!) {
       createPost(input: $input) {
@@ -80,12 +77,11 @@ def post_buffer(png, caption):
 
     variables = {
         "input": {
-            "channelId": channel_id,
-            "text":      caption,
+            "channelId":  channel_id,
+            "text":       caption,
             "media": [{
-                "type":  "image",
-                "url":   None,
-                "data":  img_b64,
+                "type": "image",
+                "url":  image_url,
             }],
             "publishNow": True,
         }
@@ -107,13 +103,13 @@ def post_buffer(png, caption):
 
 
 if __name__ == "__main__":
-    png     = sys.argv[1]
+    png      = sys.argv[1]
     cap_path = png.replace(".png", ".txt")
     caption  = open(cap_path, encoding="utf-8").read() if os.path.exists(cap_path) else ""
 
     ok = False
-    ok = send_email(png, caption)    or ok
-    ok = post_buffer(png, caption)   or ok
+    ok = send_email(png, caption)  or ok
+    ok = post_buffer(png, caption) or ok
 
     if not ok:
         print("No channel configured — image saved in out/ only.")
