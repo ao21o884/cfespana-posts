@@ -40,13 +40,12 @@ jobs:
 
       - name: Generar imagen y texto
         run: python cfespana_post.py ${{ steps.mode.outputs.mode }}
-        working-directory: cfespana
 
       - name: Guardar en repositorio
         run: |
           git config user.name  "cfespana-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add cfespana/out/ cfespana/cache/ || true
+          git add out/ cache/ || true
           git commit -m "post: ${{ steps.mode.outputs.mode }} $(date +%F)" || true
           git push
 
@@ -59,4 +58,4 @@ jobs:
           IG_TOKEN:       ${{ secrets.IG_TOKEN }}
           IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/main/cfespana/out
         run: |
-          for f in cfespana/out/*.png; do python cfespana/publish.py "$f"; done
+          for f in out/*.png; do python publish.py "$f"; done
