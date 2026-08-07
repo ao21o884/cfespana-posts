@@ -145,7 +145,7 @@ def render_single(m, out, **kw):
 
     kick = short_liga(m["competition"])
     d.text((92, 72), kick, font=fit(d, kick, lambda s: bc(s, "Bold"), 600, 40, 20), fill=RED)
-    d.text((92, 114), "SPIELTAG", font=anton(120), fill=INK)
+    d.text((92, 114), "MATCH DAY", font=anton(120), fill=INK)
     d.line([(92, 262), (W - 92, 262)], fill=LINE, width=3)
 
     # ---- date block + fixture
@@ -157,14 +157,14 @@ def render_single(m, out, **kw):
 
     dd, mm, yy = m["date"].split(".")
     dcx, dmid = 246, (top + bot) / 2
-    d.text((dcx, dmid - 168), DAY_DE.get(m["dow"], m["dow"]), font=bc(42, "Bold"),
+    d.text((dcx, dmid - 168), DAY_DE.get(m["dow"], m["dow"]), font=bc(38, "Bold"),
            fill=(255, 208, 208), anchor="mm")
-    d.text((dcx, dmid - 26), dd, font=anton(190), fill=(255, 255, 255), anchor="mm")
+    d.text((dcx, dmid - 20), dd, font=anton(160), fill=(255, 255, 255), anchor="mm")
     mon = MONTH.get(int(mm), mm)
-    d.text((dcx, dmid + 120), mon,
-           font=fit(d, mon, lambda s: bc(s, "Bold"), 240, 46, 20),
+    d.text((dcx, dmid + 108), mon,
+           font=fit(d, mon, lambda s: bc(s, "Bold"), 240, 42, 18),
            fill=(255, 255, 255), anchor="mm")
-    d.text((dcx, dmid + 174), yy, font=bc(36, "SemiBold"), fill=(255, 190, 190), anchor="mm")
+    d.text((dcx, dmid + 158), yy, font=bc(34, "SemiBold"), fill=(255, 190, 190), anchor="mm")
 
     fx = 442
     fw = (W - 92) - fx - 40
@@ -179,7 +179,7 @@ def render_single(m, out, **kw):
 
     rows = [(m["home"], hc), (m["away"], ac)]
     indent = 108 if both else 0
-    nsize = 58
+    nsize = 62
     while nsize > 22 and any(tw(d, n.upper(), anton(nsize))[0] > fw - indent for n, _ in rows):
         nsize -= 2
     nf = anton(nsize)
@@ -202,7 +202,7 @@ def render_single(m, out, **kw):
     # GEGEN sits exactly halfway between the two names
     gx = fx + indent
     d.line([(gx, mid), (gx + 54, mid)], fill=YELLOW, width=6)
-    d.text((gx + 70, mid), "GEGEN", font=bc(34, "Bold"), fill=INK3, anchor="lm")
+    d.text((gx + 70, mid), "VS", font=bc(34, "Bold"), fill=INK3, anchor="lm")
 
     # ---- kickoff + venue (content centred inside each card)
     iy, ih = 786, 186
@@ -212,12 +212,12 @@ def render_single(m, out, **kw):
 
     kcx = (92 + 480) / 2
     d.text((kcx, iy + 40), "ANPFIFF", font=bc(32, "Bold"), fill=INK3, anchor="mm")
-    tf, uf = anton(92), bc(38, "Bold")
+    tf, uf = anton(86), bc(36, "Bold")
     tW, uW = tw(d, m["time"], tf)[0], tw(d, "UHR", uf)[0]
     gapx = 16
     x0 = kcx - (tW + gapx + uW) / 2
-    d.text((x0, iy + 116), m["time"], font=tf, fill=(255, 255, 255), anchor="lm")
-    d.text((x0 + tW + gapx, iy + 132), "UHR", font=uf, fill=YELLOW, anchor="lm")
+    d.text((x0, iy + 112), m["time"], font=tf, fill=(255, 255, 255), anchor="lm")
+    d.text((x0 + tW + gapx, iy + 128), "UHR", font=uf, fill=YELLOW, anchor="lm")
 
     vcx = (502 + W - 92) / 2
     ven = short_venue(m["venue"])
@@ -351,3 +351,697 @@ def footer(d):
     d.line([(W / 2, y + 78), (W / 2 + w / 2, y + 78)], fill=YELLOW, width=6)
     d.text((W / 2, y + 86), "@cfespanadeberna  ·  cfespana.ch", font=bc(28, "SemiBold"),
            fill=INK2, anchor="ma")
+
+
+
+PITCH = os.path.join(ASSETS, "pitch.jpg")
+
+def _photo_bg(style="photo"):
+    """Background: real photo with dark overlay (style='photo')
+       or warm paper with red/yellow stripes (style='paper')."""
+    from PIL import ImageFilter
+    if style == "photo" and os.path.exists(PITCH):
+        img = Image.open(PITCH).convert("RGB").resize((W, H), Image.LANCZOS)
+        # dark gradient overlay so text reads clearly
+        ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        d  = ImageDraw.Draw(ov)
+        # top: lighter; bottom: heavier
+        for y in range(H):
+            t = y / H
+            a = int(140 + t * 100)   # 140 → 240 alpha — strong overlay
+            d.line([(0, y), (W, y)], fill=(0, 0, 0, a))
+        img = Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
+    else:
+        img = background()   # warm paper fallback
+    return img
+
+def _draw_stripes(img):
+    """Red top stripe + yellow accent, red bottom stripe + yellow accent."""
+    d = ImageDraw.Draw(img)
+    d.rectangle([0, 0, W, 16], fill=RED)
+    d.rectangle([0, 16, W, 26], fill=YELLOW)
+    d.rectangle([0, H - 26, W, H - 16], fill=YELLOW)
+    d.rectangle([0, H - 16, W, H], fill=RED)
+
+def _info_row(d, m, y_centre, col_fill, label_fill, font_size=48):
+    """Three equal columns: DATUM | ANPFIFF | SPIELORT."""
+    dd, mm_s, yy = m["date"].split(".")
+    day_label = DAY_DE.get(m["dow"], m["dow"])
+    mon_label  = MONTH.get(int(mm_s), mm_s)
+    ven = short_venue(m["venue"])
+    v1, _, v2 = ven.partition(",")
+
+    col_w = (W - 120) / 3
+    cols  = [60 + col_w * i + col_w / 2 for i in range(3)]
+    lf    = bc(24, "Bold")
+    vf    = bc(font_size, "Bold")   # same size for all three
+
+    # labels
+    for cx, lbl in zip(cols, ["DATUM", "ANPFIFF", "SPIELORT"]):
+        d.text((cx, y_centre - 52), lbl, font=lf, fill=label_fill, anchor="mm")
+
+    # separators
+    for i in [0, 1]:
+        sx = cols[i] + col_w / 2
+        d.line([(sx, y_centre - 38), (sx, y_centre + 52)], fill=label_fill, width=1)
+
+    # date
+    date_str = f"{day_label[:2]}  {dd}. {mon_label}"
+    d.text((cols[0], y_centre + 8), date_str,
+           font=fit(d, date_str, lambda s: bc(s, "Bold"), col_w - 24, font_size, 18),
+           fill=col_fill, anchor="mm")
+    d.text((cols[0], y_centre + 46), yy, font=bc(26, "SemiBold"), fill=label_fill, anchor="mm")
+
+    # time
+    d.text((cols[1], y_centre + 4), m["time"], font=vf, fill=col_fill, anchor="mm")
+    d.text((cols[1], y_centre + 46), "UHR", font=bc(28, "Bold"), fill=YELLOW, anchor="mm")
+
+    # venue
+    v1s = v1.strip()
+    d.text((cols[2], y_centre + 4), v1s,
+           font=fit(d, v1s, lambda s: bc(s, "Bold"), col_w - 24, font_size, 18),
+           fill=col_fill, anchor="mm")
+    if v2.strip():
+        d.text((cols[2], y_centre + 46), v2.strip().upper(),
+               font=fit(d, v2.strip(), lambda s: bc(s, "SemiBold"), col_w - 24, 28, 14),
+               fill=RED if col_fill != (255,255,255) else YELLOW, anchor="mm")
+
+
+# =========================================================================
+# LAYOUT C — one match, photo background (dark overlay)
+# =========================================================================
+def render_single_open(m, out, style="photo", **kw):
+    img = _photo_bg(style)
+    _draw_stripes(img)
+    d   = ImageDraw.Draw(img)
+
+    col_fill   = (255, 255, 255)
+    label_fill = (180, 180, 180)
+
+    # ── club crest top-left
+    club = load_crest(os.path.join(ASSETS, "cfespana_big.png"), 110)
+    if club:
+        img.paste(club, (60, 38), club)
+        d = ImageDraw.Draw(img)
+
+    # ── MATCH DAY top right
+    liga = short_liga(m["competition"])
+    d.text((W - 60, 50), "MATCH DAY", font=anton(64), fill=(255,255,255), anchor="ra")
+    d.text((W - 60, 116), liga,
+           font=fit(d, liga, lambda s: bc(s, "Bold"), 500, 30, 14),
+           fill=RED, anchor="ra")
+
+    # ── HEIMSPIEL / AUSWÄRTSSPIEL pill
+    home_is_us = m["home"].upper().startswith("C.F. ESPAÑA")
+    pill = "HEIMSPIEL" if home_is_us else "AUSWÄRTSSPIEL"
+    pf   = bc(28, "Bold")
+    pw   = tw(d, pill, pf)[0] + 36
+    d.rounded_rectangle([60, 174, 60 + pw, 174 + 42], radius=21,
+                        fill=YELLOW_L, outline=YELLOW, width=2)
+    d.text((60 + pw / 2, 195), pill, font=pf, fill=(130, 90, 0), anchor="mm")
+
+    # ── separator
+    d.line([(60, 236), (W - 60, 236)], fill=(255, 255, 255, 60), width=1)
+
+    # ── teams — huge, centred on photo
+    hc = load_crest(m.get("home_crest"), 90)
+    ac = load_crest(m.get("away_crest"), 90)
+    both = hc is not None and ac is not None
+
+    def draw_team(name, crest, cy):
+        indent = 110 if (both and crest) else 0
+        nf = fit(d, name.upper(), anton, W - 120 - indent, 130, 30)
+        if both and crest:
+            img.paste(crest, (60, int(cy - crest.height / 2)), crest)
+            d2 = ImageDraw.Draw(img)
+        else:
+            d2 = d
+        x = 60 + indent
+        for part in es_split(name.upper()):
+            d2.text((x, cy), part, font=nf,
+                    fill=RED if is_es(part) else (255, 255, 255), anchor="lm")
+            x += tw(d2, part, nf)[0]
+
+    draw_team(m["home"], hc, 460)
+    # VS
+    d.text((W / 2, 580), "VS", font=anton(80), fill=(255, 255, 255), anchor="mm")
+    d.line([(60, 580), (W / 2 - 72, 580)], fill=(255, 255, 255, 40), width=1)
+    d.line([(W / 2 + 72, 580), (W - 60, 580)], fill=(255, 255, 255, 40), width=1)
+    draw_team(m["away"], ac, 700)
+
+    # ── separator before info
+    d.line([(60, 790), (W - 60, 790)], fill=(255, 255, 255, 60), width=1)
+
+    # ── info row — equal font size
+    _info_row(d, m, 920, col_fill=(255,255,255), label_fill=(170,170,170), font_size=46)
+
+    # ── footer
+    d.line([(60, H - 110), (W - 60, H - 110)], fill=(255, 255, 255, 40), width=1)
+    d.text((W / 2, H - 74), "¡VAMOS ESPAÑA!", font=anton(52), fill=(255,255,255), anchor="mm")
+    fw2 = d.textbbox((0, 0), "¡VAMOS ESPAÑA!", font=anton(52))[2]
+    d.line([(W/2 - fw2//2, H - 34), (W/2, H - 34)], fill=RED, width=5)
+    d.line([(W/2, H - 34), (W/2 + fw2//2, H - 34)], fill=YELLOW, width=5)
+
+    img.save(out, quality=95)
+    return out
+
+
+# =========================================================================
+# LAYOUT C2 — same as C but with warm paper background
+# =========================================================================
+def render_single_open_paper(m, out, **kw):
+    return render_single_open(m, out, style="paper", **kw)
+
+
+# =========================================================================
+# LAYOUT D — multiple matches, photo background
+# =========================================================================
+def render_list_open(matches, out, title="MATCH DAY", subtitle="SPIELE DER WOCHE",
+                     daterange="", results=False, style="photo", **kw):
+    img = _photo_bg(style)
+    _draw_stripes(img)
+
+    club = load_crest(os.path.join(ASSETS, "cfespana_big.png"), 120)
+    if club:
+        img.paste(club, (60, 36), club)
+    d = ImageDraw.Draw(img)
+
+    col_text  = (255, 255, 255)
+    col_muted = (170, 170, 170)
+
+    # title
+    tf = fit(d, title, anton, W - 64 - (club.width + 80 if club else 0), 110, 50)
+    tx = 60 + (club.width + 20 if club else 0)
+    d.text((tx, 48), title, font=tf, fill=col_text)
+    ty = 48 + tw(d, title, tf)[1] + 8
+
+    # subtitle pill
+    sf  = bc(30, "Bold")
+    spw = tw(d, subtitle, sf)[0] + 32
+    d.rounded_rectangle([tx, ty, tx + spw, ty + 42], radius=21, fill=RED)
+    d.text((tx + spw / 2, ty + 21), subtitle, font=sf, fill=(255,255,255), anchor="mm")
+    if daterange:
+        d.text((tx, ty + 52), daterange, font=bc(30, "SemiBold"), fill=col_muted)
+
+    top    = ty + (96 if daterange else 60)
+    bottom = H - 110
+    n      = max(1, len(matches))
+    rh     = min(148, max(72, int((bottom - top) / n) - 10))
+    gap    = max(8, int((bottom - top - n * rh) / max(n - 1, 1)))
+    C1, C2, C3 = 230, 760, W - 60
+
+    for i, m in enumerate(matches):
+        ry    = top + i * (rh + gap)
+        tour  = m.get("is_tournament")
+        mid_y = ry + rh / 2
+
+        # semi-transparent row strip for readability
+        row_ov = Image.new("RGBA", (W, H), (0,0,0,0))
+        ImageDraw.Draw(row_ov).rounded_rectangle(
+            [60, ry, W - 60, ry + rh], radius=12, fill=(0, 0, 0, 100))
+        img = Image.alpha_composite(img.convert("RGBA"), row_ov).convert("RGB")
+        d   = ImageDraw.Draw(img)
+
+        # left accent bar
+        d.rounded_rectangle([60, ry + 8, 66, ry + rh - 8], radius=3,
+                            fill=RED if not tour else col_muted)
+
+        # day + time col
+        wcx = 60 + 90
+        d.text((wcx, mid_y - 20), DAY_SHORT.get(m["dow"], m["dow"]),
+               font=bc(min(30, max(18, rh // 3)), "Bold"), fill=col_muted, anchor="mm")
+        if m.get("time"):
+            d.text((wcx, mid_y + 20), m["time"],
+                   font=anton(min(52, max(28, rh // 2))), fill=col_text, anchor="mm")
+        else:
+            d.text((wcx, mid_y + 18), "TBD", font=bc(26, "SemiBold"), fill=col_muted, anchor="mm")
+
+        d.line([(60 + 172, ry + 14), (60 + 172, ry + rh - 14)], fill=(255,255,255,40), width=1)
+
+        # fixture
+        tx2  = 60 + 192
+        fw2  = C2 - tx2 - 20
+        fs   = min(42, rh // 2 + 8)
+        fixture = (m.get("label", "TURNIER").upper() if tour
+                   else f"{m['home']}  –  {m['away']}")
+        while fs > 14 and tw(d, fixture, bc(fs, "Bold"))[0] > fw2:
+            fs -= 1
+        FIXF = bc(fs, "Bold")
+        sub  = (short_liga(m.get("competition", "")) if results
+                else short_venue(m.get("venue", "")))
+        fy   = mid_y - (14 if sub else 0)
+        if tour:
+            d.text((tx2, fy), fixture, font=FIXF, fill=col_muted, anchor="lm")
+        else:
+            x = tx2
+            for part in es_split(fixture):
+                d.text((x, fy), part, font=FIXF,
+                       fill=RED if is_es(part) else col_text, anchor="lm")
+                x += tw(d, part, FIXF)[0]
+        if sub:
+            d.text((tx2, mid_y + 22), sub,
+                   font=bc(max(14, fs - 10), "Medium"), fill=col_muted, anchor="lm")
+
+        d.line([(C2, ry + 14), (C2, ry + rh - 14)], fill=(255,255,255,40), width=1)
+        MIDR = (C2 + C3) / 2
+        if results:
+            if tour or not m.get("score"):
+                d.text((MIDR, mid_y), "–", font=bc(46, "Bold"), fill=col_muted, anchor="mm")
+            else:
+                oc  = m.get("outcome")
+                bg2 = {("W"): GREEN_L, ("L"): RED_L}.get(oc, (60, 60, 60))
+                fg  = {("W"): GREEN, ("L"): RED}.get(oc, col_muted)
+                d.rounded_rectangle([MIDR - 88, mid_y - 36, MIDR + 88, mid_y + 36],
+                                    radius=14, fill=bg2)
+                d.text((MIDR, mid_y), m["score"], font=anton(54), fill=fg, anchor="mm")
+        else:
+            lg = short_liga(m.get("competition", ""))
+            d.text((MIDR, mid_y), lg,
+                   font=fit(d, lg, lambda s: bc(s, "SemiBold"), C3 - C2 - 28, min(34, rh//2), 14),
+                   fill=col_muted, anchor="mm")
+
+    # footer
+    d.line([(60, H - 98), (W - 60, H - 98)], fill=(255,255,255,40), width=1)
+    d.text((W / 2, H - 68), "¡VAMOS ESPAÑA!", font=anton(46), fill=(255,255,255), anchor="mm")
+    fw3 = d.textbbox((0, 0), "¡VAMOS ESPAÑA!", font=anton(46))[2]
+    d.line([(W/2 - fw3//2, H - 30), (W/2, H - 30)], fill=RED,    width=5)
+    d.line([(W/2,          H - 30), (W/2 + fw3//2, H - 30)], fill=YELLOW, width=5)
+
+    img.save(out, quality=95)
+    return out
+
+
+# =========================================================================
+# LAYOUT D2 — multiple matches, paper background
+# =========================================================================
+def render_list_open_paper(matches, out, **kw):
+    return render_list_open(matches, out, style="paper", **kw)
+# -*- coding: utf-8 -*-
+"""
+New render functions — photo-background style (V3 final).
+Drop-in replacements for render_single and render_list.
+"""
+
+def _photo_overlay(raw_img, top_alpha=40, bot_alpha=150):
+    from PIL import Image, ImageDraw
+    W, H = raw_img.size
+    ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d  = ImageDraw.Draw(ov)
+    for y in range(H):
+        t = y / H
+        d.line([(0, y), (W, y)], fill=(0, 0, 0, int(top_alpha + t * (bot_alpha - top_alpha))))
+    return Image.alpha_composite(raw_img.convert("RGBA"), ov).convert("RGB")
+
+
+def _stripes(img, RED, YELLOW):
+    from PIL import ImageDraw
+    d = ImageDraw.Draw(img)
+    W, H = img.size
+    d.rectangle([0, 0, W, 16],      fill=RED);    d.rectangle([0, 16, W, 26],    fill=YELLOW)
+    d.rectangle([0, H-26, W, H-16], fill=YELLOW); d.rectangle([0, H-16, W, H],   fill=RED)
+
+
+
+# shared venue formatter
+def fmt_venue(v):
+    """'Weissenstein - Fussballfeld Weissenstein 3, Bern' → 'Weissenstein, Bern'"""
+    v = (v or "").strip()
+    if " - " in v:
+        prefix = v.split(" - ")[0].strip()
+        city   = v.rsplit(",", 1)[-1].strip() if "," in v else ""
+        return f"{prefix}, {city}" if city else prefix
+    if "," in v:
+        parts = v.split(",")
+        return f"{parts[0].strip()}, {parts[-1].strip()}"
+    return v
+
+
+# shared footer — no horizontal lines, well spaced from bottom
+#   stripe:    H-26
+#   @sub:      H-44
+#   underline: H-60
+#   ¡VAMOS!:   H-96
+#   UNTERSÜTZ: H-172
+#   KOMM:      H-222
+
+def _footer_photo(d, img, W, H, RED, YELLOW, INK2, bc, anton):
+    SUB_CY   = H - 44
+    UNDERL   = H - 60
+    VAMOS_CY = H - 96
+    KOMM2_CY = H - 172
+    KOMM1_CY = H - 222
+
+    d.text((W//2, KOMM1_CY), "KOMM VORBEI UND",  font=anton(46), fill=(255,255,255), anchor="mm")
+    d.text((W//2, KOMM2_CY), "UNTERSTÜTZE UNS!", font=anton(46), fill=RED,           anchor="mm")
+    d.text((W//2, VAMOS_CY), "¡VAMOS ESPAÑA!",   font=anton(48), fill=(255,255,255), anchor="mm")
+    fw = d.textbbox((0,0), "¡VAMOS ESPAÑA!", font=anton(48))[2]
+    d.line([(W//2-fw//2, UNDERL), (W//2,       UNDERL)], fill=RED,    width=5)
+    d.line([(W//2,       UNDERL), (W//2+fw//2, UNDERL)], fill=YELLOW, width=5)
+    d.text((W//2, SUB_CY), "@cfespanadeberna  ·  cfespana.ch",
+           font=bc(26, "SemiBold"), fill=(200,200,200), anchor="mm")
+
+FOOTER_RESERVE = 222 + 36   # KOMM1_CY offset from bottom + top gap = 258
+
+
+def render_single_photo(m, out, photo_path, **kw):
+    """Single-match post on photo background — V3 final design."""
+    import re
+    from PIL import Image, ImageDraw
+
+    W2, H2 = W, H
+    raw = Image.open(photo_path).convert("RGB").resize((W2, H2), Image.LANCZOS)
+    img = _photo_overlay(raw, top_alpha=40, bot_alpha=150)
+    _stripes(img, RED, YELLOW)
+    d = ImageDraw.Draw(img)
+
+    # ONE crest top-right
+    club = load_crest(os.path.join(ASSETS, "cfespana_big.png"), 110)
+    CREST_Y = 32
+    if club:
+        img.paste(club, (W2 - 52 - club.width, CREST_Y), club)
+        d = ImageDraw.Draw(img)
+    CREST_BOT = CREST_Y + (club.height if club else 110)
+
+    # Liga + team label top-left — bigger font
+    liga_str   = short_liga(m.get("competition", ""))
+    team_label = m.get("team_label", "1. Mannschaft")
+    d.text((52, 44), liga_str,
+           font=fit(d, liga_str, lambda s: bc(s, "Bold"), W2//2 - 60, 38, 16),
+           fill=RED, anchor="lm")
+    d.text((52, 88), team_label, font=bc(32, "Bold"), fill=(200, 200, 200), anchor="lm")
+
+    # MATCH DAY — no separator line
+    MD_Y   = CREST_BOT + 20
+    md_fnt = anton(120)
+    md_bb  = d.textbbox((92, MD_Y), "MATCH DAY", font=md_fnt)
+    MD_BOT = md_bb[3]
+    d.text((92, MD_Y), "MATCH DAY", font=md_fnt, fill=(255, 255, 255))
+
+    # Cards start right after MATCH DAY
+    CARD_TOP = MD_BOT + 20
+    CARD_H   = 460
+    CARD_BOT = CARD_TOP + CARD_H
+
+    # Red date block
+    d.rounded_rectangle([92, CARD_TOP, 440, CARD_BOT], radius=18, fill=RED)
+    dd2, mm_s2, yy2 = m["date"].split(".")
+    day_l2 = DAY_DE.get(m["dow"], m["dow"])
+    mon_l2 = MONTH.get(int(mm_s2), mm_s2)
+    dcx  = (92 + 440) // 2
+    dmid = CARD_TOP + CARD_H // 2
+    d.text((dcx, dmid-155), day_l2,  font=bc(40, "Bold"),  fill=(255,208,208), anchor="mm")
+    d.text((dcx, dmid-18),  dd2,     font=anton(175),       fill=(255,255,255), anchor="mm")
+    d.text((dcx, dmid+108), mon_l2,
+           font=fit(d, mon_l2, lambda s: bc(s, "Bold"), 240, 42, 18),
+           fill=(255, 255, 255), anchor="mm")
+    d.text((dcx, dmid+158), yy2, font=bc(34, "SemiBold"), fill=(255,190,190), anchor="mm")
+
+    # White team card
+    TL, TR = 462, W2-92
+    d.rounded_rectangle([TL, CARD_TOP, TR, CARD_BOT], radius=18,
+                        fill=(255,255,255), outline=(230,230,230), width=1)
+
+    # Pill
+    home_is_us = m["home"].upper().startswith("C.F. ESPAÑA")
+    pill = "HEIMSPIEL" if home_is_us else "AUSWÄRTSSPIEL"
+    pf   = bc(30, "Bold"); pw = tw(d, pill, pf)[0] + 40
+    PX = TL + 20; PT = CARD_TOP + 26; PH = 44
+    d.rounded_rectangle([PX, PT, PX+pw, PT+PH], radius=22, fill=YELLOW_L, outline=YELLOW, width=3)
+    d.text((PX + pw//2, PT + PH//2), pill, font=pf, fill=(150, 106, 0), anchor="mm")
+
+    # Teams — equal spacing
+    TX = TL + 20; FW2 = TR - TX - 20
+    nsize = 64
+    while nsize > 22 and (tw(d, m["home"].upper(), anton(nsize))[0] > FW2 or
+                           tw(d, m["away"].upper(), anton(nsize))[0] > FW2):
+        nsize -= 2
+    nf = anton(nsize)
+    home_bb = d.textbbox((0,0), m["home"].upper(), font=nf)
+    away_bb = d.textbbox((0,0), m["away"].upper(), font=nf)
+    vs_bb   = d.textbbox((0,0), "vs", font=bc(30, "Bold"))
+    home_h  = home_bb[3]-home_bb[1]; away_h = away_bb[3]-away_bb[1]; vs_h = vs_bb[3]-vs_bb[1]
+    ZONE_TOP = PT+PH+12; ZONE_BOT = CARD_BOT-20
+    zone_h   = ZONE_BOT-ZONE_TOP; total_h = home_h+vs_h+away_h; gap = (zone_h-total_h)//4
+    home_y = ZONE_TOP+gap; vs_y = home_y+home_h+gap; away_y = vs_y+vs_h+gap
+    d.text((TX, home_y), m["home"].upper(), font=nf, fill=RED if home_is_us else INK, anchor="lt")
+    d.text((TX, vs_y),   "vs", font=bc(30, "Bold"), fill=INK3, anchor="lt")
+    d.text((TX, away_y), m["away"].upper(), font=nf, fill=INK if home_is_us else RED, anchor="lt")
+
+    # ANPFIFF + SPIELORT
+    IY = CARD_BOT + 20; IH = 210
+    d.rounded_rectangle([92, IY, 480, IY+IH], radius=18, fill=INK)
+    kcx = (92+480)//2
+    d.text((kcx, IY+34), "ANPFIFF", font=bc(30, "Bold"), fill=INK3, anchor="mm")
+    tf, uf = anton(88), bc(36, "Bold")
+    tW2b   = tw(d, m["time"], tf)[0]; uW = tw(d, "UHR", uf)[0]
+    x0 = kcx - (tW2b + 14 + uW) // 2
+    d.text((x0,        IY+108), m["time"], font=tf, fill=(255,255,255), anchor="lm")
+    d.text((x0+tW2b+14,IY+122), "UHR",    font=uf, fill=YELLOW,        anchor="lm")
+
+    d.rounded_rectangle([500, IY, W2-92, IY+IH], radius=18,
+                        fill=(255,255,255), outline=(230,230,230), width=1)
+    ven2 = fmt_venue(m.get("venue", "")); v1_2, _, v2_2 = ven2.partition(",")
+    vcx2 = (500 + W2-92)//2
+    d.text((vcx2, IY+34),  "SPIELORT", font=bc(30, "Bold"), fill=INK2, anchor="mm")
+    d.text((vcx2, IY+108), v1_2.strip(),
+           font=fit(d, v1_2.strip(), lambda s: bc(s, "Bold"), (W2-92-500)-30, 50, 18),
+           fill=INK, anchor="mm")
+    if v2_2.strip():
+        d.text((vcx2, IY+162), v2_2.strip().upper(),
+               font=fit(d, v2_2.strip(), lambda s: bc(s, "SemiBold"), (W2-92-500)-30, 30, 13),
+               fill=RED, anchor="mm")
+
+    _footer_photo(d, img, W2, H2, RED, YELLOW, INK2, bc, anton)
+    img.save(out, quality=95)
+    return out
+
+
+DAY_SHORT_MAP = {"Mo":"MO","Di":"DI","Mi":"MI","Do":"DO","Fr":"FR","Sa":"SA","So":"SO"}
+
+
+def _is_tournament_row(m):
+    return "Turnier" in (m.get("competition","") or "") or m.get("is_tournament", False)
+
+
+def _is_senior_row(m):
+    c = m.get("competition","")
+    return ("Senioren" in c or "Senior" in c) and not _is_tournament_row(m)
+
+
+def _junior_label(competition, label=""):
+    import re
+    # First try the label field (e.g. "Turnier Jun.E")
+    src = label or competition or ""
+    mt = re.search(r'Jun(?:ioren)?[\.\s]*([A-G])', src, re.I)
+    return f"Jun. {mt.group(1).upper()}" if mt else ""
+
+
+def render_list_photo(matches, out, photo_path, title="MATCH DAY",
+                      subtitle="SPIELE DER WOCHE", daterange="",
+                      results=False, **kw):
+    """Multi-match post on photo background."""
+    import re
+    from PIL import Image, ImageDraw
+
+    W2, H2 = W, H
+    raw = Image.open(photo_path).convert("RGB").resize((W2, H2), Image.LANCZOS)
+    img = _photo_overlay(raw, top_alpha=40, bot_alpha=160)
+    _stripes(img, RED, YELLOW)
+    d = ImageDraw.Draw(img)
+
+    # ONE crest top-right
+    club = load_crest(os.path.join(ASSETS, "cfespana_big.png"), 110)
+    CREST_Y = 32
+    if club:
+        img.paste(club, (W2 - 52 - club.width, CREST_Y), club)
+        d = ImageDraw.Draw(img)
+    CREST_BOT = CREST_Y + (club.height if club else 110)
+
+    # Subtitle + daterange top-left — bigger font
+    d.text((52, 44), subtitle,
+           font=fit(d, subtitle, lambda s: bc(s, "Bold"), W2//2 - 60, 38, 16),
+           fill=RED, anchor="lm")
+    if daterange:
+        d.text((52, 88), daterange, font=bc(28, "Bold"), fill=(200,200,200), anchor="lm")
+
+    # MATCH DAY / RESULTATE — no separator line
+    MD_Y   = CREST_BOT + 20
+    md_fnt = anton(120)
+    md_bb  = d.textbbox((92, MD_Y), title, font=md_fnt)
+    MD_BOT = md_bb[3]
+    d.text((92, MD_Y), title, font=md_fnt, fill=(255, 255, 255))
+
+    ROWS_TOP    = MD_BOT + 20
+    FOOTER_TOP  = H2 - FOOTER_RESERVE   # rows must end before footer
+
+    n            = max(1, len(matches))
+    gap2         = 8
+    # Start with equal base height for all rows
+    avail        = FOOTER_TOP - ROWS_TOP - gap2*(n-1)
+    base_h       = max(72, avail // n)
+
+    # Pre-calculate which rows need extra height (text too long for single line)
+    RIGHT_W = 200
+    DIVX    = 256
+    FX_test = DIVX + 14
+    FEND_test = W2 - 72 - RIGHT_W
+
+    def needs_two_lines(m):
+        """True if fixture text won't fit on one line at a readable font size (min 24px)."""
+        if _is_tournament_row(m):
+            return False
+        home = m.get("home",""); away = m.get("away","")
+        fixture = f"{home}  –  {away}"
+        tmp = Image.new("RGB",(W2,H2)); tmp_d = ImageDraw.Draw(tmp)
+        # min readable font = 24px; if it doesn't fit at that size, use two lines
+        return tw(tmp_d, fixture, bc(24,"Bold"))[0] > FEND_test - FX_test - 10
+
+    EXTRA = 35   # extra px for rows that need two lines
+    n_extra = sum(1 for m in matches if needs_two_lines(m))
+    if n_extra > 0:
+        avail2 = FOOTER_TOP - ROWS_TOP - gap2*(n-1) - EXTRA*n_extra
+        base_h = max(72, avail2 // n)
+    tall_h = base_h + EXTRA
+    RIGHT_W      = 200
+    DIVX         = 256
+
+    for i, m in enumerate(matches):
+        row_h = tall_h if needs_two_lines(m) else base_h
+        ry    = ROWS_TOP + sum(
+            (tall_h if needs_two_lines(matches[j]) else base_h) + gap2
+            for j in range(i))
+        mid   = ry + row_h // 2
+        tour  = _is_tournament_row(m)
+
+        # Semi-transparent white card
+        row_ov = Image.new("RGBA", (W2, H2), (0,0,0,0))
+        ImageDraw.Draw(row_ov).rounded_rectangle(
+            [72, ry, W2-72, ry+row_h], radius=14, fill=(255,255,255,210))
+        img = Image.alpha_composite(img.convert("RGBA"), row_ov).convert("RGB")
+        d   = ImageDraw.Draw(img)
+
+        # Left accent bar
+        d.rounded_rectangle([72, ry+8, 78, ry+row_h-8], radius=3,
+                            fill=RED if not tour else INK3)
+
+        # Day + time — generous vertical gap between them
+        d.text((160, mid-22), DAY_SHORT_MAP.get(m.get("dow",""), ""),
+               font=bc(22, "Bold"), fill=INK3, anchor="mm")
+        d.text((160, mid+20), m.get("time",""),
+               font=anton(min(44, max(24, row_h//2))), fill=INK, anchor="mm")
+
+        # Centre divider
+        d.line([(DIVX, ry+12), (DIVX, ry+row_h-12)], fill=LINE, width=2)
+
+        FX   = DIVX + 14
+        FEND = W2 - 72 - RIGHT_W
+
+        if tour:
+            line1   = "Turnier Junior*innen E-F-G"
+            venue_s = fmt_venue(m.get("venue",""))
+            fs = 30
+            while fs > 12 and tw(d, line1, bc(fs,"Bold"))[0] > FEND-FX-10:
+                fs -= 1
+            fy = mid - (14 if venue_s else 0)
+            d.text((FX, fy), line1, font=bc(fs,"Bold"), fill=INK2, anchor="lm")
+            if venue_s:
+                d.text((FX, mid+18), venue_s, font=bc(max(12,fs-10),"Medium"), fill=INK2, anchor="lm")
+
+        elif needs_two_lines(m):
+            home    = m.get("home",""); away = m.get("away","")
+            venue_s = fmt_venue(m.get("venue",""))
+            # Fit each team name independently
+            fs2 = 28
+            while fs2 > 14 and (tw(d, home, bc(fs2,"Bold"))[0] > FEND-FX-10 or
+                                  tw(d, away, bc(fs2,"Bold"))[0] > FEND-FX-10):
+                fs2 -= 1
+            FF2 = bc(fs2,"Bold")
+            lh  = int(fs2 * 1.35)          # line height
+            venue_fs = 15                   # fixed readable venue size
+            venue_lh = int(venue_fs * 1.4)
+
+            total_h = lh * 2 + (venue_lh if venue_s else 0)
+            ly = mid - total_h // 2
+
+            def draw_tline(text, y):
+                x = FX
+                for part in re.split(r'(C\.F\. España(?:\s*/\s*Italiana)?)', text):
+                    col = RED if is_es(part) else INK
+                    d.text((x, y), part, font=FF2, fill=col, anchor="lm")
+                    x += tw(d, part, FF2)[0]
+
+            draw_tline(home, ly)
+            draw_tline(away, ly + lh)
+            if venue_s:
+                d.text((FX, ly + lh*2 + 4), venue_s,
+                       font=bc(venue_fs, "Medium"), fill=INK2, anchor="lm")
+
+        else:
+            home    = m.get("home",""); away = m.get("away","")
+            venue_s = fmt_venue(m.get("venue",""))
+            fixture = f"{home}  –  {away}"
+            fs = min(32, row_h//2+2)
+            while fs > 12 and tw(d, fixture, bc(fs,"Bold"))[0] > FEND-FX-10:
+                fs -= 1
+            FF = bc(fs,"Bold")
+            fy = mid - (14 if venue_s else 0)
+            x  = FX
+            for part in re.split(r'(C\.F\. España(?:\s*/\s*Italiana)?)', fixture):
+                col = RED if is_es(part) else INK
+                d.text((x, fy), part, font=FF, fill=col, anchor="lm")
+                x += tw(d, part, FF)[0]
+            if venue_s:
+                d.text((FX, mid+18), venue_s, font=bc(max(12,fs-10),"Medium"), fill=INK2, anchor="lm")
+
+        # Right column
+        d.line([(W2-72-RIGHT_W, ry+12), (W2-72-RIGHT_W, ry+row_h-12)], fill=LINE, width=2)
+        RCX = W2 - 72 - RIGHT_W//2
+
+        if tour:
+            jl = _junior_label(m.get("competition",""), m.get("label",""))
+            rl = jl if jl else "TURNIER"
+            d.text((RCX, mid), rl,
+                   font=fit(d, rl, lambda s: bc(s,"SemiBold"), RIGHT_W-20, 28, 12),
+                   fill=INK2, anchor="mm")
+        elif needs_two_lines(m):
+            if results:
+                score = m.get("score","")
+                if score:
+                    oc = m.get("outcome","")
+                    fg = RED if oc=="L" else GREEN if oc=="W" else INK2
+                    d.text((RCX, mid), score, font=anton(min(48,row_h//2)), fill=fg, anchor="mm")
+                else:
+                    d.text((RCX, mid), "–", font=bc(38,"Bold"), fill=INK3, anchor="mm")
+            else:
+                comp  = short_liga(m.get("competition",""))
+                words = comp.split(); mid_w = max(1, len(words)//2)
+                la = " ".join(words[:mid_w]); lb = " ".join(words[mid_w:])
+                fs_r = 18
+                while fs_r > 10 and (tw(d,la,bc(fs_r,"SemiBold"))[0] > RIGHT_W-16 or
+                                      tw(d,lb,bc(fs_r,"SemiBold"))[0] > RIGHT_W-16):
+                    fs_r -= 1
+                d.text((RCX, mid-int(fs_r*0.8)), la, font=bc(fs_r,"SemiBold"), fill=INK2, anchor="mm")
+                d.text((RCX, mid+int(fs_r*0.8)), lb, font=bc(fs_r,"SemiBold"), fill=INK2, anchor="mm")
+        else:
+            if results:
+                score = m.get("score","")
+                if score:
+                    oc = m.get("outcome","")
+                    fg = RED if oc=="L" else GREEN if oc=="W" else INK2
+                    d.rounded_rectangle([RCX-72, mid-30, RCX+72, mid+30], radius=12,
+                                        fill=RED_L if oc=="L" else GREEN_L if oc=="W" else (238,236,231))
+                    d.text((RCX, mid), score, font=anton(48), fill=fg, anchor="mm")
+                else:
+                    d.text((RCX, mid), "–", font=bc(38,"Bold"), fill=INK3, anchor="mm")
+            else:
+                rl = short_liga(m.get("competition",""))
+                d.text((RCX, mid), rl,
+                       font=fit(d, rl, lambda s: bc(s,"SemiBold"), RIGHT_W-20, 28, 12),
+                       fill=INK2, anchor="mm")
+
+    if not results:
+        pass  # Komm vorbei only for preview — already in footer
+    _footer_photo(d, img, W2, H2, RED, YELLOW, INK2, bc, anton)
+
+    img.save(out, quality=95)
+    return out
