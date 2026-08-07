@@ -69,7 +69,7 @@ def post_buffer(png, caption):
           text: """ + json_str(caption) + """
           channelId: """ + json_str(channel_id) + """
           schedulingType: automatic
-          mode: publishNow
+          mode: addToQueue
           assets: [
             {
               image: {
