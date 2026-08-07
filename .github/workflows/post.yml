@@ -55,10 +55,12 @@ jobs:
           git commit -m "post: ${{ steps.mode.outputs.mode }} $(date +%F)" || true
           git push
 
-      - name: Enviar por email
+      - name: Enviar por email i publicar
         env:
-          EMAIL_FROM:     ${{ secrets.EMAIL_FROM }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          EMAIL_TO:       ${{ secrets.EMAIL_TO }}
+          EMAIL_FROM:         ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASSWORD:     ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO:           ${{ secrets.EMAIL_TO }}
+          BUFFER_TOKEN:       ${{ secrets.BUFFER_TOKEN }}
+          BUFFER_CHANNEL_ID:  ${{ secrets.BUFFER_CHANNEL_ID }}
         run: |
           for f in out/*.png; do python publish.py "$f"; done
