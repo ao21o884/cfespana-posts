@@ -29,12 +29,7 @@ def load_matches(url=URL):
     """Fetch and parse all C.F. España matches from the matchcenter web page."""
     try:
         r = requests.get(url, timeout=20,
-                 headers={
-                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                     "Accept-Language": "de-CH,de;q=0.9,en;q=0.8",
-                     "Referer": "https://matchcenter.fvbj-afbj.ch/",
-                 })
+                         headers={"User-Agent": "CFEspana-Matchpost/2.0"})
         r.raise_for_status()
         html = r.text
     except Exception as e:
@@ -195,86 +190,117 @@ def _parse_text(text):
 
 
 def _load_from_ics():
-    """Fallback: parse Verein-v1368.ics when web scraping is unavailable."""
-    import os
+    """Parse Verein-v1368.ics — robust parser for football.ch ICS format."""
+    import os, re, datetime as dt
     HERE = os.path.dirname(os.path.abspath(__file__))
     ics_path = os.path.join(HERE, "Verein-v1368.ics")
     if not os.path.exists(ics_path):
-        print("  ! ICS file not found either")
+        print("  ! ICS file not found")
         return []
 
-    try:
-        text = open(ics_path, encoding="utf-8", errors="replace").read()
-    except Exception as e:
-        print(f"  ! ICS read error: {e}")
-        return []
+    text = open(ics_path, encoding="utf-8", errors="replace").read()
+    DOW = ["Mo","Di","Mi","Do","Fr","Sa","So"]
 
-    US = "C.F. España"
     matches = []
-    DOW_DE = {"MO":"Mo","TU":"Di","WE":"Mi","TH":"Do","FR":"Fr","SA":"Sa","SU":"So"}
+    for raw in re.split(r'BEGIN:VEVENT', text)[1:]:
+        lines = raw.split('\n')
 
-    for event in re.split(r'BEGIN:VEVENT', text)[1:]:
-        def get(key):
-            m = re.search(rf'{key}[^:]*:(.*)', event)
-            return m.group(1).strip() if m else ""
+        # Unfold ICS lines (continuation lines start with space/tab)
+        unfolded = []
+        for l in lines:
+            l = l.rstrip('\r')
+            if l.startswith((' ', '\t')) and unfolded:
+                unfolded[-1] += l[1:]
+            else:
+                unfolded.append(l)
 
-        dtstart = get("DTSTART")
-        if len(dtstart) < 8:
+        def get_field(key):
+            for l in unfolded:
+                if re.match(rf'{key}[;:]', l):
+                    val = re.sub(rf'^{key}[^:]*:', '', l)
+                    return val.replace('\\,', ',').replace('\\n', '\n').replace('\\\\n', '\n').strip()
+            return ""
+
+        # Date + time
+        dtstart = get_field("DTSTART")
+        m = re.search(r'(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})', dtstart)
+        if not m:
             continue
+        y,mo,d,h,mi = int(m.group(1)),int(m.group(2)),int(m.group(3)),int(m.group(4)),int(m.group(5))
         try:
-            d = dt.date(int(dtstart[:4]), int(dtstart[4:6]), int(dtstart[6:8]))
+            date_obj = dt.date(y, mo, d)
         except ValueError:
             continue
-        time_val = f"{dtstart[9:11]}:{dtstart[11:13]}" if len(dtstart) > 12 else ""
+        time_val = f"{h:02d}:{mi:02d}"
+        dow      = DOW[date_obj.weekday()]
+        date_str = date_obj.strftime("%d.%m.%Y")
+        uid      = get_field("UID")
 
-        summary  = get("SUMMARY")
-        location = get("LOCATION")
-        desc     = get("DESCRIPTION")
-        uid      = get("UID")
+        # SUMMARY: may be on one line "Home - Away" or split across two raw lines
+        # Raw lines: "SUMMARY:Home (4.)" then "  - Away (3.)"
+        home_raw = ""; away_raw = ""
+        for i, l in enumerate(lines):
+            l = l.rstrip('\r')
+            if l.startswith('SUMMARY:'):
+                home_raw = l[8:].strip()
+                # Check next raw lines for away (start with spaces + "- ")
+                for j in range(i+1, min(i+4, len(lines))):
+                    nxt = lines[j].rstrip('\r')
+                    m2 = re.match(r'^\s+-\s+(.*)', nxt)
+                    if m2:
+                        away_raw = m2.group(1).strip()
+                        break
+                    elif nxt and not nxt[0].isspace():
+                        break
+                break
 
-        # day of week
-        dow = DOW_DE.get(d.strftime("%A")[:2].upper(),
-                         ["Mo","Di","Mi","Do","Fr","Sa","So"][d.weekday()])
+        # Strip suffix like "(4.)" "(Sen.30+)" from names
+        def clean(s):
+            return re.sub(r'\s*\([^)]*\)\s*$', '', s).strip()
 
-        # Parse home/away from summary "Home - Away" or "Home\n-\nAway"
-        parts = re.split(r'\s+-\s+', summary, maxsplit=1)
-        if len(parts) == 2:
-            home, away = parts[0].strip(), parts[1].strip()
-        else:
-            home, away = summary.strip(), ""
+        home = clean(home_raw)
+        away = clean(away_raw)
 
-        if not (_is_espana(home) or _is_espana(away) or
-                "turnier" in summary.lower() or "turnier" in desc.lower()):
+        # Tournament detection
+        is_tour = "Turnier" in home_raw or "Turnier" in away_raw
+
+        # Skip non-España non-tournament
+        if not is_tour and not (_is_espana(home) or _is_espana(away)):
             continue
 
-        is_tour = "turnier" in summary.lower() or "turnier" in desc.lower()
-        label = ""
-        if is_tour:
-            jm = re.search(r'Jun\.([A-G])\b', desc + summary, re.I)
-            label = f"Turnier Jun.{jm.group(1).upper()}" if jm else "Turnier"
-
+        # DESCRIPTION: get competition
+        desc = get_field("DESCRIPTION")
+        desc_lines = [l.strip() for l in desc.split('\n') if l.strip()]
         competition = ""
-        for line in desc.replace("\\n","\n").splitlines():
-            if re.search(r'Meisterschaft|Berner Cup|Liga', line, re.I):
-                competition = line.strip(); break
+        for dl in desc_lines:
+            if re.search(r'Meisterschaft|Berner Cup|Liga|Futsal|Cup', dl, re.I):
+                competition = re.sub(r'\s+', ' ', dl).strip()
+                break
 
         spielnummer = ""
-        sm = re.search(r'Spielnummer\s*(\d+)', desc)
+        sm = re.search(r'Spielnummer\s+(\d+)', desc)
         if sm:
             spielnummer = sm.group(1)
 
+        # LOCATION: "Place\, City - Fieldname"
+        location = get_field("LOCATION")
+
+        # Tournament label (Jun.E/F/G)
+        label = ""
+        if is_tour:
+            raw_block = raw  # full event text
+            jm = re.search(r'Jun\.([A-G])\b', raw_block, re.I)
+            label = f"Turnier Jun.{jm.group(1).upper()}" if jm else "Turnier"
+            home = "C.F. España"; away = ""
+
         matches.append({
-            "dow": dow,
-            "date": d.strftime("%d.%m.%Y"),
-            "time": time_val,
+            "dow": dow, "date": date_str, "time": time_val,
             "home": home, "away": away,
-            "competition": competition,
-            "label": label,
+            "competition": competition, "label": label,
             "venue": location,
             "is_tournament": is_tour,
             "spielnummer": spielnummer,
-            "score": None,
-            "home_v": None, "away_v": None,
+            "score": None, "home_v": None, "away_v": None,
             "uid": uid,
         })
 
