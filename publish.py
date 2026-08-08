@@ -35,7 +35,7 @@ def post_buffer(png, caption):
     from PIL import Image
     img = Image.open(png).convert("RGB")
     buf = io.BytesIO()
-    img.save(buf, format="JPEG", quality=60, optimize=True)
+    img.save(buf, format="JPEG", quality=85, optimize=True)
     img_bytes = buf.getvalue()
     img_b64   = base64.b64encode(img_bytes).decode()
     print(f"  · compressed size: {len(img_bytes)//1024}KB")
