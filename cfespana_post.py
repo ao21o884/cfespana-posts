@@ -108,53 +108,104 @@ def tidy_comp(c):
     return re.sub(r"\s{2,}", " ", c).strip()
 
 
-TAGS = ("#CFEspaña #VamosEspaña #MatchDay #FussballBern #Bern #Amateurfussball "
-        "#FVBJ #Matchday #Schweiz")
+def _runde(comp):
+    import re
+    m = re.search(r'Runde\s*(\d+)', comp or "", re.I)
+    return int(m.group(1)) if m else None
+
+def _liga_short(comp):
+    import re
+    m = re.search(r'(\d+)\.\s*Liga', comp or "", re.I)
+    if m: return f"{m.group(1)}. Liga"
+    if "Senioren 30" in (comp or ""): return "Senioren 30+"
+    if "Senioren 40" in (comp or ""): return "Senioren 40+"
+    if "Berner Cup" in (comp or ""): return "Berner Cup"
+    return tidy_comp(comp)
+
+def _match_context(m):
+    runde = _runde(m.get("competition",""))
+    liga  = _liga_short(m.get("competition",""))
+    opp   = m["away"] if m["home"].startswith(US) else m["home"]
+    home  = m["home"].startswith(US)
+    if runde == 1:
+        ctx = f"Die Saison beginnt! Runde 1 in der {liga} — der erste Schritt in eine neue Saison."
+    elif runde == 2:
+        ctx = f"Runde 2 in der {liga} — die Chance, früh ein Zeichen zu setzen."
+    elif runde:
+        ctx = f"Runde {runde} in der {liga} — jeder Punkt zählt."
+    else:
+        ctx = f"Ein wichtiges Spiel in der {liga}."
+    if home:
+        ctx += f" Heute empfangen wir {opp} auf eigenem Rasen."
+    else:
+        ctx += f" Auswärts bei {opp} — Zeit zu zeigen, was wir können."
+    return ctx
 
 
 def caption_preview(ms):
     real = [m for m in ms if not m.get("is_tournament")]
     if len(real) == 1:
-        m = real[0]
-        opp = m["away"] if m["home"].startswith(US) else m["home"]
-        where = "Heimspiel" if m["home"].startswith(US) else "Auswärtsspiel"
-        L = ["🔴🟡 MATCH DAY! 🟡🔴", "",
-             f"{where} vs {opp} — wir zählen auf euch!", "",
-             f"📅 {DAY.get(m['dow'], m['dow'])}, {m['date']}",
-             f"⏰ {m['time']} Uhr",
-             f"📍 {m['venue']}",
-             f"🏆 {tidy_comp(m['competition'])}", ""]
+        m   = real[0]
+        ctx = _match_context(m)
+        ort = render.fmt_venue(m.get("venue",""))
+        L = [
+            "⚽ MATCH DAY", "",
+            ctx, "",
+            f"📅 {DAY.get(m['dow'], m['dow'])}, {m['date']}",
+            f"⏰ {m['time']} Uhr",
+            f"📍 {ort}", "",
+            "Kommt vorbei, macht Lärm und zeigt, was C.F. España ausmacht! 🔴🟡",
+            "", "¡Vamos España!",
+        ]
     else:
-        L = ["🔴🟡 UNSERE SPIELE DIESE WOCHE 🟡🔴", "",
-             f"{len(ms)} Termine stehen an — kommt vorbei und unterstützt unsere Teams!", ""]
+        n_real = len(real)
+        n_tour = len([m for m in ms if m.get("is_tournament")])
+        intro  = f"Eine volle Woche steht bevor — {n_real} Pflichtspiele"
+        if n_tour:
+            intro += f" und {n_tour} Turnier{'e' if n_tour > 1 else ''} für unsere Junioren"
+        intro += ". Kommt vorbei und unterstützt unsere Teams!"
+        L = ["⚽ UNSERE WOCHE", "", intro, ""]
         last = None
         for m in ms:
             if m["date"] != last:
                 L.append(f"📅 {DAY.get(m['dow'], m['dow'])}, {m['date']}")
                 last = m["date"]
             if m.get("is_tournament"):
-                L.append(f"   ⏰ {m['time']} · {m['label']} (Turnier) · {m['venue']}")
+                L.append(f"   ⏰ {m['time']} · {m.get('label','Turnier')} (Turnier)")
             else:
+                ort = render.fmt_venue(m.get("venue",""))
                 L.append(f"   ⏰ {m['time']} · {m['home']} – {m['away']}")
-                L.append(f"      📍 {m['venue']}")
-        L.append("")
-    L += ["Kommt zahlreich, macht Lärm und zeigt, was C.F. España ausmacht! 🙌", "",
-          "¡Vamos España! 💥", "", TAGS]
+                if ort: L.append(f"      📍 {ort}")
+        L += ["", "¡Vamos España! 🔴🟡"]
     return "\n".join(L)
 
 
 def caption_results(ms):
-    L = ["🔴🟡 RESULTATE DER WOCHE 🟡🔴", ""]
+    scored = [m for m in ms if not m.get("is_tournament") and m.get("score")]
+    wins   = [m for m in scored if outcome(m) == "W"]
+    losses = [m for m in scored if outcome(m) == "L"]
+    draws  = [m for m in scored if outcome(m) == "D"]
+    if wins and not losses and not draws:
+        mood = f"Was für eine Woche! {len(wins)} Sieg{'e' if len(wins)>1 else ''} — der Verein läuft!"
+    elif losses and not wins and not draws:
+        mood = "Eine schwierige Woche liegt hinter uns. Aber wir stehen auf, analysieren und kommen stärker zurück."
+    elif wins and losses:
+        mood = f"{len(wins)} Sieg{'e' if len(wins)>1 else ''}, {len(losses)} Niederlage{'n' if len(losses)>1 else ''} — gemischte Gefühle, aber der Kampfgeist bleibt."
+    elif draws:
+        mood = "Unentschieden liegen in der Luft — nah dran, aber noch nicht ganz. Weiter so!"
+    else:
+        mood = "Die Resultate der Woche — Danke an alle die dabei waren!"
+    L = ["📊 RESULTATE DER WOCHE", "", mood, ""]
     for m in ms:
-        if m.get("is_tournament"):
-            L.append(f"🏅 {m['label']} — Turnier (keine Resultate)")
-        elif m.get("score"):
-            ic = {"W": "✅", "D": "➖", "L": "❌"}.get(outcome(m), "⚽")
-            L.append(f"{ic} {m['home']} {m['score']} {m['away']}")
+        if m.get("is_tournament"): continue
+        oc = outcome(m)
+        if m.get("score"):
+            ic   = {"W": "✅", "D": "➖", "L": "❌"}.get(oc, "⚽")
+            liga = _liga_short(m.get("competition",""))
+            L.append(f"{ic} {m['home']} {m['score']} {m['away']}  ({liga})")
         else:
             L.append(f"⏳ {m['home']} – {m['away']} (noch kein Resultat)")
-    L += ["", "Danke an alle Spieler, Trainer und Fans für die Unterstützung! 🙌", "",
-          "¡Vamos España! 💥", "", TAGS.replace("#Spieltag", "#Resultate")]
+    L += ["", "Danke an alle Spieler, Trainer und Fans! 🙌", "", "¡Vamos España! 🔴🟡"]
     return "\n".join(L)
 
 
