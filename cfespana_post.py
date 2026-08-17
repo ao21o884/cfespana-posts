@@ -289,7 +289,14 @@ def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_cres
         return [png, png_b], cap_b
 
     if results:
+        # Load scores from web
+        scores = sources.week_scores()
         for m in ms:
+            spielnr = m.get("spielnummer","")
+            if spielnr and spielnr in scores:
+                m["score"] = scores[spielnr]["score"]
+                m["home_goals"] = scores[spielnr]["home_goals"]
+                m["away_goals"] = scores[spielnr]["away_goals"]
             m["outcome"] = outcome(m)
         ms_results = [m for m in ms if not m.get("is_tournament")]
         txt = caption_results(ms_results)
