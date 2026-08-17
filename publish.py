@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Publishing layer for C.F. España post generator.
-- Email delivery
-- Buffer: immediate post + story
-- Story repeats: Wednesday 9:00 and Friday 9:00 if first match is later
+Modes:
+  preview    → email + post + story  (dilluns)
+  story_only → story sempre + post si hi ha canvis (dimecres/divendres)
+  results    → email + post + story  (diumenge)
 """
-import os, sys, requests, base64, io, datetime, json
+import os, sys, requests, base64, io, json, hashlib, shutil
 
 
 def send_email(png, caption):
@@ -15,7 +15,7 @@ def send_email(png, caption):
     password  = os.environ.get("EMAIL_PASSWORD", "")
     recipient = os.environ.get("EMAIL_TO", "")
     if not (sender and password and recipient):
-        print("  · email secrets not set — skipping email"); return False
+        print("  · email not set — skipping"); return False
     fname   = os.path.basename(png)
     subject = "⚽ C.F. España — Resultate" if "results" in fname else "⚽ C.F. España — Partits de la setmana"
     msg = EmailMessage()
@@ -32,160 +32,136 @@ def send_email(png, caption):
 
 
 def upload_to_imgur(png):
-    """Upload image to Imgur and return public URL."""
     from PIL import Image
     img = Image.open(png).convert("RGB")
     buf = io.BytesIO()
     img.save(buf, format="JPEG", quality=85, optimize=True)
     img_b64 = base64.b64encode(buf.getvalue()).decode()
-    print(f"  · compressed size: {len(buf.getvalue())//1024}KB")
-
+    print(f"  · size: {len(buf.getvalue())//1024}KB")
     r = requests.post(
         "https://api.imgur.com/3/image",
         headers={"Authorization": "Client-ID 546c25a59c58ad7"},
-        data={"image": img_b64, "type": "base64"},
-        timeout=60
+        data={"image": img_b64, "type": "base64"}, timeout=60
     )
     if r.status_code == 200:
         url = r.json()["data"]["link"]
-        print(f"  · uploaded to imgur: {url}")
-        return url
-    print(f"  ! imgur upload failed: {r.text}")
-    return None
+        print(f"  · imgur: {url}"); return url
+    print(f"  ! imgur failed: {r.text}"); return None
 
 
 def buffer_create(channel_id, token, image_url, caption, is_story=False):
-    """Create a post or story via Buffer API."""
     url     = "https://api.buffer.com"
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
-
-    media_type = "story" if is_story else "post"
-
-    mutation = """
-    mutation CreatePost {
-      createPost(
-        input: {
-          text: """ + json.dumps(caption if not is_story else "") + """
-          channelId: """ + json.dumps(channel_id) + """
-          schedulingType: automatic
-          mode: addToQueue
-          metadata: {
-            instagram: {
-              type: """ + media_type + """
-            }
-          }
-          assets: [{ image: { url: """ + json.dumps(image_url) + """ } }]
-        }
-      ) {
+    mtype   = "story" if is_story else "post"
+    mutation = """mutation CreatePost {
+      createPost(input: {
+        text: """ + json.dumps(caption if not is_story else "") + """
+        channelId: """ + json.dumps(channel_id) + """
+        schedulingType: automatic
+        mode: addToQueue
+        metadata: { instagram: { type: """ + mtype + """ } }
+        assets: [{ image: { url: """ + json.dumps(image_url) + """ } }]
+      }) {
         ... on PostActionSuccess { post { id } }
         ... on MutationError { message }
       }
-    }
-    """
-
+    }"""
     r = requests.post(url, json={"query": mutation}, headers=headers, timeout=120)
     r.raise_for_status()
-    data   = r.json()
-    result = data.get("data", {}).get("createPost", {})
+    result = r.json().get("data", {}).get("createPost", {})
     if "message" in result:
-        print(f"  ! Buffer error ({media_type}): {result['message']}"); return False
-    post_id = result.get("post", {}).get("id")
-    print(f"  → Buffer {media_type} created (id: {post_id})"); return True
+        print(f"  ! Buffer ({mtype}): {result['message']}"); return False
+    print(f"  → Buffer {mtype} ok (id: {result.get('post',{}).get('id')})"); return True
 
 
-def first_match_dt():
-    """Read first match datetime from out/*.txt caption or CSV."""
-    import glob, re, datetime as dt
-    # Try to find first match date from CSV
-    csv_path = os.path.join(os.path.dirname(__file__) if '__file__' in dir() else ".", "Verein-v1368.csv")
-    if not os.path.exists(csv_path):
-        return None
+def csv_fingerprint(path):
+    """Hash of match-relevant CSV fields."""
+    import csv as _csv, io as _io
+    if not os.path.exists(path): return None
     try:
-        import csv, io as _io
-        text = open(csv_path, encoding="latin-1", errors="replace").read()
-        reader = csv.DictReader(_io.StringIO(text), delimiter=';')
-        today = dt.date.today()
-        # Get Monday of current week
-        monday = today - dt.timedelta(days=today.weekday())
-        sunday = monday + dt.timedelta(days=6)
-        earliest = None
+        text   = open(path, encoding="latin-1", errors="replace").read()
+        reader = _csv.DictReader(_io.StringIO(text), delimiter=';')
+        rows   = []
         for row in reader:
-            datum = row.get("Spieldatum","").strip()
-            zeit  = row.get("Spielzeit","").strip()
-            if not datum or not zeit: continue
-            try:
-                d_parts = datum.split(".")
-                d = dt.date(int(d_parts[2]), int(d_parts[1]), int(d_parts[0]))
-                if not (monday <= d <= sunday): continue
-                h, m = map(int, zeit.split(":"))
-                match_dt = dt.datetime(d.year, d.month, d.day, h, m)
-                if earliest is None or match_dt < earliest:
-                    earliest = match_dt
-            except Exception:
-                continue
-        return earliest
+            rows.append("|".join([
+                row.get("Spieldatum","").strip(),
+                row.get("Spielzeit","").strip(),
+                row.get("Teamname A","").strip(),
+                row.get("Teamname B","").strip(),
+                row.get("Spielort","").strip(),
+            ]))
+        return hashlib.md5("\n".join(sorted(rows)).encode()).hexdigest()
     except Exception as e:
-        print(f"  ! could not read first match: {e}")
-        return None
+        print(f"  ! fingerprint error: {e}"); return None
 
 
-def post_buffer(png, caption, is_results=False):
-    """Publish post + story to Instagram via Buffer."""
-    token      = os.environ.get("BUFFER_TOKEN", "")
-    channel_id = os.environ.get("BUFFER_CHANNEL_ID", "")
-    if not (token and channel_id):
-        print("  · BUFFER_TOKEN / BUFFER_CHANNEL_ID not set — skipping Buffer"); return False
-
-    image_url = upload_to_imgur(png)
-    if not image_url: return False
-
-    ok = True
-    # Post normal
-    ok = buffer_create(channel_id, token, image_url, caption, is_story=False) and ok
-
-    # Story (not for results)
-    if not is_results:
-        ok = buffer_create(channel_id, token, image_url, "", is_story=True) and ok
-
-    return ok
+def has_changes():
+    """Compare current CSV with Wednesday snapshot (or Monday if no Wednesday)."""
+    here    = os.path.dirname(os.path.abspath(__file__))
+    current = os.path.join(here, "Verein-v1368.csv")
+    # Friday compares with Wednesday, Wednesday compares with Monday
+    wed_snap = os.path.join(here, "cache", "Verein-v1368-wednesday.csv")
+    mon_snap = os.path.join(here, "cache", "Verein-v1368-monday.csv")
+    snapshot = wed_snap if os.path.exists(wed_snap) else mon_snap
+    cur_fp  = csv_fingerprint(current)
+    snap_fp = csv_fingerprint(snapshot)
+    print(f"  · current: {cur_fp}  snapshot: {snap_fp}")
+    if cur_fp is None or snap_fp is None:
+        print("  · cannot compare — assuming changes"); return True
+    changed = cur_fp != snap_fp
+    print(f"  · changed: {changed}"); return changed
 
 
-def post_story_only(png):
-    """Publish only a story (for Wednesday/Friday repeats)."""
-    token      = os.environ.get("BUFFER_TOKEN", "")
-    channel_id = os.environ.get("BUFFER_CHANNEL_ID", "")
-    if not (token and channel_id):
-        print("  · BUFFER_TOKEN / BUFFER_CHANNEL_ID not set — skipping story"); return False
-
-    image_url = upload_to_imgur(png)
-    if not image_url: return False
-    return buffer_create(channel_id, token, image_url, "", is_story=True)
+def save_snapshot(day):
+    """Save CSV snapshot for comparison. day = 'monday' or 'wednesday'."""
+    here     = os.path.dirname(os.path.abspath(__file__))
+    src      = os.path.join(here, "Verein-v1368.csv")
+    cache    = os.path.join(here, "cache")
+    os.makedirs(cache, exist_ok=True)
+    dst      = os.path.join(cache, f"Verein-v1368-{day}.csv")
+    if os.path.exists(src):
+        shutil.copy2(src, dst)
+        print(f"  · snapshot saved: cache/Verein-v1368-{day}.csv")
 
 
 if __name__ == "__main__":
-    import datetime as dt
-
     png      = sys.argv[1]
+    mode     = sys.argv[2] if len(sys.argv) > 2 else "preview"
     cap_path = png.replace(".png", ".txt")
     caption  = open(cap_path, encoding="utf-8").read() if os.path.exists(cap_path) else ""
-    mode     = sys.argv[2] if len(sys.argv) > 2 else "preview"
-    is_story_only = (mode == "story")
-    is_results    = ("results" in os.path.basename(png))
 
-    ok = False
+    token      = os.environ.get("BUFFER_TOKEN", "")
+    channel_id = os.environ.get("BUFFER_CHANNEL_ID", "")
+    image_url  = upload_to_imgur(png) if (token and channel_id) else None
 
-    if is_story_only:
-        # Wednesday / Friday repeat — check if first match is later today
-        first_match = first_match_dt()
-        now         = dt.datetime.now()
-        print(f"  · First match: {first_match}")
-        print(f"  · Now: {now}")
-        if first_match and first_match <= now:
-            print("  · First match already started — skipping story"); sys.exit(0)
-        ok = post_story_only(png)
+    if mode == "results":
+        # Diumenge: email + post al perfil + story amb resultats
+        send_email(png, caption)
+        if image_url:
+            buffer_create(channel_id, token, image_url, caption, is_story=False)
+            buffer_create(channel_id, token, image_url, "", is_story=True)
+
+    elif mode == "story_only":
+        # Dimecres: story sempre + post si hi ha canvis vs dilluns
+        # Divendres: story sempre + post si hi ha canvis vs dimecres
+        changes = has_changes()
+        if image_url:
+            if changes:
+                print("  · changes found — publishing post + story")
+                post_caption = "🔄 Änderungen diese Woche!\n\n" + caption
+                buffer_create(channel_id, token, image_url, post_caption, is_story=False)
+            else:
+                print("  · no changes — story only")
+            buffer_create(channel_id, token, image_url, "", is_story=True)
+        # Save snapshot for next comparison
+        import datetime as dt
+        if dt.datetime.now().weekday() == 2:   # dimecres
+            save_snapshot("wednesday")
+
     else:
-        ok = send_email(png, caption) or ok
-        ok = post_buffer(png, caption, is_results=is_results) or ok
-
-    if not ok:
-        print("No channel configured.")
+        # Dilluns: email + post + story + snapshot
+        send_email(png, caption)
+        if image_url:
+            buffer_create(channel_id, token, image_url, caption, is_story=False)
+            buffer_create(channel_id, token, image_url, "", is_story=True)
+        save_snapshot("monday")
