@@ -3,8 +3,8 @@ name: C.F. España Instagram post
 on:
   schedule:
     - cron: '0 7 * * 1'   # Dilluns 09:00 Zúrich → post + story
-    - cron: '0 7 * * 3'   # Dimecres 09:00 Zúrich → story si primer partit és més tard
-    - cron: '0 7 * * 5'   # Divendres 09:00 Zúrich → story si primer partit és més tard
+    - cron: '0 7 * * 3'   # Dimecres 09:00 Zúrich → post actualitzat + story
+    - cron: '0 7 * * 5'   # Divendres 09:00 Zúrich → post actualitzat + story
     - cron: '0 19 * * 0'  # Diumenge 21:00 Zúrich → resultats
   workflow_dispatch:
     inputs:
@@ -42,27 +42,22 @@ jobs:
             echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
           elif [ "${{ github.event.schedule }}" = "0 19 * * 0" ]; then
             echo "mode=results" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "0 7 * * 3" ] || [ "${{ github.event.schedule }}" = "0 7 * * 5" ]; then
-            echo "mode=story" >> $GITHUB_OUTPUT
           else
             echo "mode=preview" >> $GITHUB_OUTPUT
           fi
 
       - name: Generar imagen y texto
-        if: steps.mode.outputs.mode != 'story'
         run: python cfespana_post.py ${{ steps.mode.outputs.mode }}
 
       - name: Guardar en repositorio
-        if: steps.mode.outputs.mode != 'story'
         run: |
           git config user.name  "cfespana-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add out/ cache/ Verein-v1368.csv || true
+          git add -f out/ cache/ Verein-v1368.csv || true
           git commit -m "post: ${{ steps.mode.outputs.mode }} $(date +%F)" || true
           git push
 
       - name: Enviar per email i publicar
-        if: steps.mode.outputs.mode != 'story'
         env:
           EMAIL_FROM:         ${{ secrets.EMAIL_FROM }}
           EMAIL_PASSWORD:     ${{ secrets.EMAIL_PASSWORD }}
@@ -70,12 +65,12 @@ jobs:
           BUFFER_TOKEN:       ${{ secrets.BUFFER_TOKEN }}
           BUFFER_CHANNEL_ID:  ${{ secrets.BUFFER_CHANNEL_ID }}
         run: |
-          for f in out/*.png; do python publish.py "$f"; done
-
-      - name: Publicar story de recordatori
-        if: steps.mode.outputs.mode == 'story'
-        env:
-          BUFFER_TOKEN:       ${{ secrets.BUFFER_TOKEN }}
-          BUFFER_CHANNEL_ID:  ${{ secrets.BUFFER_CHANNEL_ID }}
-        run: |
-          for f in out/*.png; do python publish.py "$f" story; done
+          for f in out/*.png; do
+            if [ "${{ steps.mode.outputs.mode }}" = "results" ]; then
+              python publish.py "$f" results
+            elif [ "${{ github.event.schedule }}" = "0 7 * * 1" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              python publish.py "$f" preview
+            else
+              python publish.py "$f" story_only
+            fi
+          done
