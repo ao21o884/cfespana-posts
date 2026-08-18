@@ -115,7 +115,7 @@ def short_liga(c):
     c = c.replace("Meisterschaft ", "").replace(" - MFV", "")
     c = re.sub(r"\s{2,}", " ", c)
     c = re.sub(r"\s*-\s*(Herbstrunde|Frühjahrsrunde)", "", c)
-    c = re.sub(r"\s*-\s*Gruppe\s*\d+", "", c)
+    c = re.sub(r"\s*[-/]\s*Gruppe\s*\d+", "", c)
     return c.strip().upper()
 
 
@@ -937,7 +937,7 @@ def render_list_photo(matches, out, photo_path, title="MATCH DAY",
 
         # Day + time — generous vertical gap between them
         d.text((160, mid-22), DAY_SHORT_MAP.get(m.get("dow",""), ""),
-               font=bc(22, "Bold"), fill=INK3, anchor="mm")
+               font=bc(30, "Bold"), fill=INK3, anchor="mm")
         d.text((160, mid+20), m.get("time",""),
                font=anton(min(44, max(24, row_h//2))), fill=INK, anchor="mm")
 
@@ -1017,12 +1017,27 @@ def render_list_photo(matches, out, photo_path, title="MATCH DAY",
         elif needs_two_lines(m):
             if results:
                 score = m.get("score","")
+                liga  = short_liga(m.get("competition",""))
                 if score:
-                    oc = m.get("outcome","")
-                    fg = RED if oc=="L" else GREEN if oc=="W" else INK2
-                    d.text((RCX, mid), score, font=anton(min(48,row_h//2)), fill=fg, anchor="mm")
+                    LIGA_FS = 24
+                    # Check if liga fits in one line
+                    if tw(d, liga, bc(LIGA_FS,"SemiBold"))[0] > RIGHT_W-12:
+                        # Two lines for category
+                        words = liga.split(); mid_w = max(1, len(words)//2)
+                        la = " ".join(words[:mid_w]); lb = " ".join(words[mid_w:])
+                        fs_r = LIGA_FS
+                        while fs_r > 12 and (tw(d,la,bc(fs_r,"SemiBold"))[0] > RIGHT_W-12 or
+                                             tw(d,lb,bc(fs_r,"SemiBold"))[0] > RIGHT_W-12):
+                            fs_r -= 1
+                        lh = int(fs_r * 1.3)
+                        d.text((RCX, mid-40-lh//2), la, font=bc(fs_r,"SemiBold"), fill=INK2, anchor="mm")
+                        d.text((RCX, mid-40+lh//2), lb, font=bc(fs_r,"SemiBold"), fill=INK2, anchor="mm")
+                    else:
+                        d.text((RCX, mid-36), liga, font=bc(LIGA_FS,"SemiBold"), fill=INK2, anchor="mm")
+                    d.text((RCX, mid+22), score, font=anton(min(46,row_h//2)), fill=INK, anchor="mm")
                 else:
-                    d.text((RCX, mid), "–", font=bc(38,"Bold"), fill=INK3, anchor="mm")
+                    d.text((RCX, mid-14), liga, font=bc(13,"SemiBold"), fill=INK2, anchor="mm")
+                    d.text((RCX, mid+12), "–",  font=bc(34,"Bold"),     fill=INK3, anchor="mm")
             else:
                 comp  = short_liga(m.get("competition",""))
                 words = comp.split(); mid_w = max(1, len(words)//2)
@@ -1036,14 +1051,25 @@ def render_list_photo(matches, out, photo_path, title="MATCH DAY",
         else:
             if results:
                 score = m.get("score","")
+                liga  = short_liga(m.get("competition",""))
                 if score:
-                    oc = m.get("outcome","")
-                    fg = RED if oc=="L" else GREEN if oc=="W" else INK2
-                    d.rounded_rectangle([RCX-72, mid-30, RCX+72, mid+30], radius=12,
-                                        fill=RED_L if oc=="L" else GREEN_L if oc=="W" else (238,236,231))
-                    d.text((RCX, mid), score, font=anton(48), fill=fg, anchor="mm")
+                    LIGA_FS = 24
+                    if tw(d, liga, bc(LIGA_FS,"SemiBold"))[0] > RIGHT_W-12:
+                        words = liga.split(); mid_w = max(1, len(words)//2)
+                        la = " ".join(words[:mid_w]); lb = " ".join(words[mid_w:])
+                        fs_r = LIGA_FS
+                        while fs_r > 12 and (tw(d,la,bc(fs_r,"SemiBold"))[0] > RIGHT_W-12 or
+                                             tw(d,lb,bc(fs_r,"SemiBold"))[0] > RIGHT_W-12):
+                            fs_r -= 1
+                        lh = int(fs_r * 1.3)
+                        d.text((RCX, mid-40-lh//2), la, font=bc(fs_r,"SemiBold"), fill=INK2, anchor="mm")
+                        d.text((RCX, mid-40+lh//2), lb, font=bc(fs_r,"SemiBold"), fill=INK2, anchor="mm")
+                    else:
+                        d.text((RCX, mid-36), liga, font=bc(LIGA_FS,"SemiBold"), fill=INK2, anchor="mm")
+                    d.text((RCX, mid+22), score, font=anton(44), fill=INK, anchor="mm")
                 else:
-                    d.text((RCX, mid), "–", font=bc(38,"Bold"), fill=INK3, anchor="mm")
+                    d.text((RCX, mid-14), liga, font=bc(13,"SemiBold"), fill=INK2, anchor="mm")
+                    d.text((RCX, mid+12), "–",  font=bc(34,"Bold"),     fill=INK3, anchor="mm")
             else:
                 rl = short_liga(m.get("competition",""))
                 d.text((RCX, mid), rl,
