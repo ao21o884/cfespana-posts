@@ -112,7 +112,7 @@ def short_venue(v):
 def short_liga(c):
     c = (c or "")
     c = re.sub(r"^Cup\s+", "", c)
-    c = c.replace("Meisterschaft ", "").replace(" - MFV", "")
+    c = c.replace("Meisterschaft ", "").replace(" - MFV", "").replace(" / MFV", "")
     c = re.sub(r"\s{2,}", " ", c)
     c = re.sub(r"\s*-\s*(Herbstrunde|Frühjahrsrunde)", "", c)
     c = re.sub(r"\s*[-/]\s*Gruppe\s*\d+", "", c)
@@ -938,7 +938,7 @@ def render_list_photo(matches, out, photo_path, title="MATCH DAY",
         # Day + time — generous vertical gap between them
         d.text((160, mid-22), DAY_SHORT_MAP.get(m.get("dow",""), ""),
                font=bc(30, "Bold"), fill=INK3, anchor="mm")
-        d.text((160, mid+20), m.get("time",""),
+        d.text((160, mid+20), m.get("time","") or "--:--",
                font=anton(min(44, max(24, row_h//2))), fill=INK, anchor="mm")
 
         # Centre divider
