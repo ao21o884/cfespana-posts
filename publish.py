@@ -4,6 +4,12 @@ Modes:
   preview    → email + post + story  (dilluns)
   story_only → story sempre + post si hi ha canvis (dimecres/divendres)
   results    → email + post + story  (diumenge)
+
+CANVIS respecte de la versió anterior:
+  · buffer_create() ara detecta els errors GraphQL que arriben amb HTTP 200
+    i llança excepció en comptes d'imprimir "ok (id: None)".
+  · Si Imgur falla, el script surt amb codi != 0 en comptes de callar.
+  · has_changes() ja no assumeix "hi ha canvis" quan no pot comparar.
 """
 import os, sys, requests, base64, io, json, hashlib, shutil
 
@@ -40,16 +46,23 @@ def upload_to_imgur(png):
     print(f"  · size: {len(buf.getvalue())//1024}KB")
     r = requests.post(
         "https://api.imgur.com/3/image",
-        headers={"Authorization": "Client-ID 546c25a59c58ad7"},
+        headers={"Authorization": f"Client-ID {os.environ.get('IMGUR_CLIENT_ID', '546c25a59c58ad7')}"},
         data={"image": img_b64, "type": "base64"}, timeout=60
     )
     if r.status_code == 200:
         url = r.json()["data"]["link"]
         print(f"  · imgur: {url}"); return url
-    print(f"  ! imgur failed: {r.text}"); return None
+    raise RuntimeError(f"Imgur {r.status_code}: {r.text[:400]}")
 
 
 def buffer_create(channel_id, token, image_url, caption, is_story=False):
+    """
+    Crea un post a la cua de Buffer. Llança RuntimeError si no s'ha creat res.
+
+    Buffer respon HTTP 200 fins i tot quan el token ha caducat: l'error va
+    dins de payload['errors'] i 'data' ve buit o nul. Sense aquesta
+    comprovació, un token mort sembla una publicació correcta.
+    """
     url     = "https://api.buffer.com"
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     mtype   = "story" if is_story else "post"
@@ -62,16 +75,41 @@ def buffer_create(channel_id, token, image_url, caption, is_story=False):
         metadata: { instagram: { type: """ + mtype + """ } }
         assets: [{ image: { url: """ + json.dumps(image_url) + """ } }]
       }) {
+        __typename
         ... on PostActionSuccess { post { id } }
         ... on MutationError { message }
       }
     }"""
+
     r = requests.post(url, json={"query": mutation}, headers=headers, timeout=120)
-    r.raise_for_status()
-    result = r.json().get("data", {}).get("createPost", {})
-    if "message" in result:
-        print(f"  ! Buffer ({mtype}): {result['message']}"); return False
-    print(f"  → Buffer {mtype} ok (id: {result.get('post',{}).get('id')})"); return True
+
+    if r.status_code != 200:
+        raise RuntimeError(f"Buffer HTTP {r.status_code}: {r.text[:600]}")
+
+    try:
+        payload = r.json()
+    except ValueError:
+        raise RuntimeError(f"Buffer: resposta no-JSON: {r.text[:600]}")
+
+    if payload.get("errors"):
+        raise RuntimeError(f"Buffer GraphQL errors ({mtype}): "
+                           f"{json.dumps(payload['errors'], ensure_ascii=False)[:800]}")
+
+    result = (payload.get("data") or {}).get("createPost")
+    if not result:
+        raise RuntimeError(f"Buffer: resposta sense createPost ({mtype}): "
+                           f"{json.dumps(payload, ensure_ascii=False)[:800]}")
+
+    if result.get("__typename") == "MutationError" or "message" in result:
+        raise RuntimeError(f"Buffer {mtype} rebutjat: {result.get('message')}")
+
+    post_id = (result.get("post") or {}).get("id")
+    if not post_id:
+        raise RuntimeError(f"Buffer {mtype}: sense id a la resposta: "
+                           f"{json.dumps(payload, ensure_ascii=False)[:800]}")
+
+    print(f"  → Buffer {mtype} ok (id: {post_id})")
+    return True
 
 
 def csv_fingerprint(path):
@@ -96,10 +134,13 @@ def csv_fingerprint(path):
 
 
 def has_changes():
-    """Compare current CSV with Wednesday snapshot (or Monday if no Wednesday)."""
+    """
+    Compara el CSV actual amb la instantània de dimecres (o dilluns).
+    Si no es pot comparar, retorna False: publicar un post de canvis
+    fals cada setmana és pitjor que no publicar-lo.
+    """
     here    = os.path.dirname(os.path.abspath(__file__))
     current = os.path.join(here, "Verein-v1368.csv")
-    # Friday compares with Wednesday, Wednesday compares with Monday
     wed_snap = os.path.join(here, "cache", "Verein-v1368-wednesday.csv")
     mon_snap = os.path.join(here, "cache", "Verein-v1368-monday.csv")
     snapshot = wed_snap if os.path.exists(wed_snap) else mon_snap
@@ -107,7 +148,8 @@ def has_changes():
     snap_fp = csv_fingerprint(snapshot)
     print(f"  · current: {cur_fp}  snapshot: {snap_fp}")
     if cur_fp is None or snap_fp is None:
-        print("  · cannot compare — assuming changes"); return True
+        print("  ! no es pot comparar (falta CSV) — no es publica post de canvis")
+        return False
     changed = cur_fp != snap_fp
     print(f"  · changed: {changed}"); return changed
 
@@ -122,9 +164,11 @@ def save_snapshot(day):
     if os.path.exists(src):
         shutil.copy2(src, dst)
         print(f"  · snapshot saved: cache/Verein-v1368-{day}.csv")
+    else:
+        print("  ! no hi ha CSV per desar com a instantània")
 
 
-if __name__ == "__main__":
+def main():
     png      = sys.argv[1]
     mode     = sys.argv[2] if len(sys.argv) > 2 else "preview"
     cap_path = png.replace(".png", ".txt")
@@ -132,36 +176,37 @@ if __name__ == "__main__":
 
     token      = os.environ.get("BUFFER_TOKEN", "")
     channel_id = os.environ.get("BUFFER_CHANNEL_ID", "")
-    image_url  = upload_to_imgur(png) if (token and channel_id) else None
+
+    if not (token and channel_id):
+        print("  ! BUFFER_TOKEN / BUFFER_CHANNEL_ID no configurats")
+        send_email(png, caption)
+        raise SystemExit(1)
+
+    image_url = upload_to_imgur(png)
 
     if mode == "results":
-        # Diumenge: email + post al perfil + story amb resultats
         send_email(png, caption)
-        if image_url:
-            buffer_create(channel_id, token, image_url, caption, is_story=False)
-            buffer_create(channel_id, token, image_url, "", is_story=True)
+        buffer_create(channel_id, token, image_url, caption, is_story=False)
+        buffer_create(channel_id, token, image_url, "", is_story=True)
 
     elif mode == "story_only":
-        # Dimecres: story sempre + post si hi ha canvis vs dilluns
-        # Divendres: story sempre + post si hi ha canvis vs dimecres
-        changes = has_changes()
-        if image_url:
-            if changes:
-                print("  · changes found — publishing post + story")
-                post_caption = "🔄 Änderungen diese Woche!\n\n" + caption
-                buffer_create(channel_id, token, image_url, post_caption, is_story=False)
-            else:
-                print("  · no changes — story only")
-            buffer_create(channel_id, token, image_url, "", is_story=True)
-        # Save snapshot for next comparison
+        if has_changes():
+            print("  · changes found — publishing post + story")
+            buffer_create(channel_id, token, image_url,
+                          "🔄 Änderungen diese Woche!\n\n" + caption, is_story=False)
+        else:
+            print("  · no changes — story only")
+        buffer_create(channel_id, token, image_url, "", is_story=True)
         import datetime as dt
-        if dt.datetime.now().weekday() == 2:   # dimecres
+        if dt.datetime.now().weekday() == 2:
             save_snapshot("wednesday")
 
     else:
-        # Dilluns: email + post + story + snapshot
         send_email(png, caption)
-        if image_url:
-            buffer_create(channel_id, token, image_url, caption, is_story=False)
-            buffer_create(channel_id, token, image_url, "", is_story=True)
+        buffer_create(channel_id, token, image_url, caption, is_story=False)
+        buffer_create(channel_id, token, image_url, "", is_story=True)
         save_snapshot("monday")
+
+
+if __name__ == "__main__":
+    main()
