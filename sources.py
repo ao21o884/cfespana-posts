@@ -212,44 +212,4 @@ def _load_from_ics():
     return matches
 
 
-def week_scores(anchor=None):
-    """
-    Fetch results from matchcenter 'Aktuelle Spiele' page.
-    Returns dict: spielnummer -> {'score': 'X:Y', 'home_goals': X, 'away_goals': Y}
-    """
-    import re
-    url = "https://matchcenter.fvbj-afbj.ch/default.aspx?v=1368&oid=6&lng=1&a=as"
-    try:
-        from bs4 import BeautifulSoup
-        r = requests.get(url, timeout=20, headers={
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-        })
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        text = soup.get_text(separator="\n")
-    except Exception as e:
-        print(f"  ! week_scores fetch failed: {e}")
-        return {}
-
-    scores = {}
-    lines = [l.strip() for l in text.splitlines() if l.strip()]
-    i = 0
-    while i < len(lines):
-        line = lines[i]
-        sm = re.search(r'Spielnummer\s+(\d+)', line)
-        if sm:
-            spielnr = sm.group(1)
-            # Look backwards up to 10 lines for score "X : Y"
-            for j in range(max(0, i-10), i):
-                score_m = re.match(r'^(\d+)\s*:\s*(\d+)$', lines[j])
-                if score_m:
-                    hg, ag = int(score_m.group(1)), int(score_m.group(2))
-                    scores[spielnr] = {
-                        "score": f"{hg}:{ag}",
-                        "home_goals": hg,
-                        "away_goals": ag,
-                    }
-                    break
-        i += 1
-    print(f"  · scores found: {len(scores)}")
-    return scores
+from matchcenter import week_scores  # noqa: E402
