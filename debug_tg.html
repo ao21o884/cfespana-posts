@@ -1,0 +1,1899 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title id="PageTitle">Fussballverband Bern/Jura - Match center</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="index,follow" >
+    
+<link href="/include_2023/assets/plugins/owl-carousel/dist/assets/owl.theme.default.min.css" type="text/css" rel="stylesheet" media="all" />
+<link href="/include_2023/assets/plugins/owl-carousel/dist/assets/owl.carousel.min.css" type="text/css" rel="stylesheet" media="all" />
+<link href="/include_2023/assets/plugins/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all" />
+<link href="/include_2023/assets/plugins/bootstrap-icons/bootstrap-icons.css" type="text/css" rel="stylesheet" media="all" />
+<link href="/include_2023/assets/css/sfvNisRd.css" rel="stylesheet" />
+<link href="/include_2023/6/css/custom.css?v=20230130" type="text/css" rel="stylesheet" media="all" />
+<script src="/include_2023/assets/plugins/jquery/jquery-3.6.0.min.js"></script>
+<script src="/include_2023/assets/plugins/jquery-ui/jquery-ui.min.js"></script><link rel="stylesheet" type="text/css" href="/portaldata/1/nisRD/telegramm/css/telegramm.css?V20170831" /><link rel="stylesheet" type="text/css" href="/portaldata/1/nisRD/telegramm/css/MultyValueBarGraph.css" />
+    <!-- Google tag (gtag.js Matchcenter) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPPCMW0FHD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-QPPCMW0FHD');
+    </script>
+    <!-- Google tag (gtag.js SFV) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MPLZD3LXEQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-MPLZD3LXEQ');
+    </script>
+    <!-- Google tag (gtag.js) matchcenter.fvbj-afbj.ch -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7FM7NWWF9S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-7FM7NWWF9S');
+    </script>
+    <!-- Google tag (gtag.js) AL + RV -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JQLVSJ1N3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-6JQLVSJ1N3');
+    </script>
+    <!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
+    <script type="text/javascript" async=true>
+        (function () {
+            var host = 'www.football.ch';
+            var element = document.createElement('script');
+            var firstScript = document.getElementsByTagName('script')[0];
+            var url = 'https://cmp.inmobi.com'
+                .concat('/choice/', 'y8v3EUpJ-LcQy', '/', host, '/choice.js?tag_version=V3');
+            var uspTries = 0;
+            var uspTriesLimit = 3;
+            element.async = true;
+            element.type = 'text/javascript';
+            element.src = url;
+
+            firstScript.parentNode.insertBefore(element, firstScript);
+
+            function makeStub() {
+                var TCF_LOCATOR_NAME = '__tcfapiLocator';
+                var queue = [];
+                var win = window;
+                var cmpFrame;
+
+                function addFrame() {
+                    var doc = win.document;
+                    var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+                    if (!otherCMP) {
+                        if (doc.body) {
+                            var iframe = doc.createElement('iframe');
+
+                            iframe.style.cssText = 'display:none';
+                            iframe.name = TCF_LOCATOR_NAME;
+                            doc.body.appendChild(iframe);
+                        } else {
+                            setTimeout(addFrame, 5);
+                        }
+                    }
+                    return !otherCMP;
+                }
+
+                function tcfAPIHandler() {
+                    var gdprApplies;
+                    var args = arguments;
+
+                    if (!args.length) {
+                        return queue;
+                    } else if (args[0] === 'setGdprApplies') {
+                        if (
+                            args.length > 3 &&
+                            args[2] === 2 &&
+                            typeof args[3] === 'boolean'
+                        ) {
+                            gdprApplies = args[3];
+                            if (typeof args[2] === 'function') {
+                                args[2]('set', true);
+                            }
+                        }
+                    } else if (args[0] === 'ping') {
+                        var retr = {
+                            gdprApplies: gdprApplies,
+                            cmpLoaded: false,
+                            cmpStatus: 'stub'
+                        };
+
+                        if (typeof args[2] === 'function') {
+                            args[2](retr);
+                        }
+                    } else {
+                        if (args[0] === 'init' && typeof args[3] === 'object') {
+                            args[3] = Object.assign(args[3], { tag_version: 'V3' });
+                        }
+                        queue.push(args);
+                    }
+                }
+
+                function postMessageEventHandler(event) {
+                    var msgIsString = typeof event.data === 'string';
+                    var json = {};
+
+                    try {
+                        if (msgIsString) {
+                            json = JSON.parse(event.data);
+                        } else {
+                            json = event.data;
+                        }
+                    } catch (ignore) { }
+
+                    var payload = json.__tcfapiCall;
+
+                    if (payload) {
+                        window.__tcfapi(
+                            payload.command,
+                            payload.version,
+                            function (retValue, success) {
+                                var returnMsg = {
+                                    __tcfapiReturn: {
+                                        returnValue: retValue,
+                                        success: success,
+                                        callId: payload.callId
+                                    }
+                                };
+                                if (msgIsString) {
+                                    returnMsg = JSON.stringify(returnMsg);
+                                }
+                                if (event && event.source && event.source.postMessage) {
+                                    event.source.postMessage(returnMsg, '*');
+                                }
+                            },
+                            payload.parameter
+                        );
+                    }
+                }
+
+                while (win) {
+                    try {
+                        if (win.frames[TCF_LOCATOR_NAME]) {
+                            cmpFrame = win;
+                            break;
+                        }
+                    } catch (ignore) { }
+
+                    if (win === window.top) {
+                        break;
+                    }
+                    win = win.parent;
+                }
+                if (!cmpFrame) {
+                    addFrame();
+                    win.__tcfapi = tcfAPIHandler;
+                    win.addEventListener('message', postMessageEventHandler, false);
+                }
+            };
+
+            makeStub();
+
+            function makeGppStub() {
+                const CMP_ID = 10;
+                const SUPPORTED_APIS = [
+                    '2:tcfeuv2',
+                    '6:uspv1',
+                    '7:usnatv1',
+                    '8:usca',
+                    '9:usvav1',
+                    '10:uscov1',
+                    '11:usutv1',
+                    '12:usctv1'
+                ];
+
+                window.__gpp_addFrame = function (n) {
+                    if (!window.frames[n]) {
+                        if (document.body) {
+                            var i = document.createElement("iframe");
+                            i.style.cssText = "display:none";
+                            i.name = n;
+                            document.body.appendChild(i);
+                        } else {
+                            window.setTimeout(window.__gpp_addFrame, 10, n);
+                        }
+                    }
+                };
+                window.__gpp_stub = function () {
+                    var b = arguments;
+                    __gpp.queue = __gpp.queue || [];
+                    __gpp.events = __gpp.events || [];
+
+                    if (!b.length || (b.length == 1 && b[0] == "queue")) {
+                        return __gpp.queue;
+                    }
+
+                    if (b.length == 1 && b[0] == "events") {
+                        return __gpp.events;
+                    }
+
+                    var cmd = b[0];
+                    var clb = b.length > 1 ? b[1] : null;
+                    var par = b.length > 2 ? b[2] : null;
+                    if (cmd === "ping") {
+                        clb(
+                            {
+                                gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+                                cmpStatus: "stub", // possible values: stub, loading, loaded, error
+                                cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+                                signalStatus: "not ready", // possible values: not ready, ready
+                                supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+                                cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
+                                sectionList: [],
+                                applicableSections: [-1],
+                                gppString: "",
+                                parsedSections: {},
+                            },
+                            true
+                        );
+                    } else if (cmd === "addEventListener") {
+                        if (!("lastId" in __gpp)) {
+                            __gpp.lastId = 0;
+                        }
+                        __gpp.lastId++;
+                        var lnr = __gpp.lastId;
+                        __gpp.events.push({
+                            id: lnr,
+                            callback: clb,
+                            parameter: par,
+                        });
+                        clb(
+                            {
+                                eventName: "listenerRegistered",
+                                listenerId: lnr, // Registered ID of the listener
+                                data: true, // positive signal
+                                pingData: {
+                                    gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+                                    cmpStatus: "stub", // possible values: stub, loading, loaded, error
+                                    cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+                                    signalStatus: "not ready", // possible values: not ready, ready
+                                    supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+                                    cmpId: CMP_ID, // list of supported APIs
+                                    sectionList: [],
+                                    applicableSections: [-1],
+                                    gppString: "",
+                                    parsedSections: {},
+                                },
+                            },
+                            true
+                        );
+                    } else if (cmd === "removeEventListener") {
+                        var success = false;
+                        for (var i = 0; i < __gpp.events.length; i++) {
+                            if (__gpp.events[i].id == par) {
+                                __gpp.events.splice(i, 1);
+                                success = true;
+                                break;
+                            }
+                        }
+                        clb(
+                            {
+                                eventName: "listenerRemoved",
+                                listenerId: par, // Registered ID of the listener
+                                data: success, // status info
+                                pingData: {
+                                    gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+                                    cmpStatus: "stub", // possible values: stub, loading, loaded, error
+                                    cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+                                    signalStatus: "not ready", // possible values: not ready, ready
+                                    supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+                                    cmpId: CMP_ID, // CMP ID
+                                    sectionList: [],
+                                    applicableSections: [-1],
+                                    gppString: "",
+                                    parsedSections: {},
+                                },
+                            },
+                            true
+                        );
+                    } else if (cmd === "hasSection") {
+                        clb(false, true);
+                    } else if (cmd === "getSection" || cmd === "getField") {
+                        clb(null, true);
+                    }
+                    //queue all other commands
+                    else {
+                        __gpp.queue.push([].slice.apply(b));
+                    }
+                };
+                window.__gpp_msghandler = function (event) {
+                    var msgIsString = typeof event.data === "string";
+                    try {
+                        var json = msgIsString ? JSON.parse(event.data) : event.data;
+                    } catch (e) {
+                        var json = null;
+                    }
+                    if (typeof json === "object" && json !== null && "__gppCall" in json) {
+                        var i = json.__gppCall;
+                        window.__gpp(
+                            i.command,
+                            function (retValue, success) {
+                                var returnMsg = {
+                                    __gppReturn: {
+                                        returnValue: retValue,
+                                        success: success,
+                                        callId: i.callId,
+                                    },
+                                };
+                                event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
+                            },
+                            "parameter" in i ? i.parameter : null,
+                            "version" in i ? i.version : "1.1"
+                        );
+                    }
+                };
+                if (!("__gpp" in window) || typeof window.__gpp !== "function") {
+                    window.__gpp = window.__gpp_stub;
+                    window.addEventListener("message", window.__gpp_msghandler, false);
+                    window.__gpp_addFrame("__gppLocator");
+                }
+            };
+
+            makeGppStub();
+
+            var uspStubFunction = function () {
+                var arg = arguments;
+                if (typeof window.__uspapi !== uspStubFunction) {
+                    setTimeout(function () {
+                        if (typeof window.__uspapi !== 'undefined') {
+                            window.__uspapi.apply(window.__uspapi, arg);
+                        }
+                    }, 500);
+                }
+            };
+
+            var checkIfUspIsReady = function () {
+                uspTries++;
+                if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+                    console.warn('USP is not accessible');
+                } else {
+                    clearInterval(uspInterval);
+                }
+            };
+
+            if (typeof window.__uspapi === 'undefined') {
+                window.__uspapi = uspStubFunction;
+                var uspInterval = setInterval(checkIfUspIsReady, 6000);
+            }
+        })();
+    </script>
+    <script>
+        setTimeout(function () {
+            if ($('html').attr('lang') === 'fr') {
+                $('.qc-cmp2-summary-info > div > div').append('<p>&nbsp;</p><p><strong>Mentions legales</strong></p><p>Veuillez prendre connaissance des informations légales. Ceux-ci sont présumés acceptés, même si vous refusez les cookies.</p>');
+            } else if ($('html').attr('lang') === 'it') {
+                $('.qc-cmp2-summary-info > div > div').append('<p>&nbsp;</p><p><strong>Note legali</strong></p><p>Si prega di prendere nota delle informazioni legali. Si presume che questi siano accettati, anche se si rifiutano i cookie.</p>');
+            } else {
+                $('.qc-cmp2-summary-info > div > div').append('<p>&nbsp;</p><p><strong>Rechtliche Hinweise</strong></p><p>Bitte nehmen Sie Kenntnis der rechtlichen Hinweise. Diese werden als akzeptiert angenommen, auch wenn Sie die Cookies ablehnen.</p>');
+            }
+        }, 2000);
+    </script>
+    <!-- End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
+    <script>var siteBaseUrl = "https://www.fvbj-afbj.ch/"; orgId = "6"; ligaNr = "0"; vereinId = "1368";</script>
+    <script>
+        function send_ga_event(type, name, para1, para2) {
+            if (type !== "" && name !== "") {
+                try {
+                    if (gtag) {
+                        gtag(type, name, { 
+                          'send_to': ['G-7FM7NWWF9S'],
+                          'Action': para1, 
+                          'Organisation': para2
+                        }
+                      );
+                    }
+                } catch (e) {
+                    //console.log('gtag ist nicht geladen');
+                }
+            }
+        }
+    </script>
+    <style>
+        .qc-cmp2-publisher-logo-container .logo-container {
+            background-image: url('https://www.fvbj-afbj.ch/Portaldata/6/Resources/banner/FVBJ_Banner_def_(3).jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+        }
+    </style>
+</head>
+<body class="standard">
+    
+<div id="navOverlay" class="overlay text-white bg-darkred">
+    <div class="container mb-4 mb-lg-5">
+        <div class="row">
+            <div class="col-12 py-3 py-lg-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-8 col-lg-9 py-3 py-lg-2 d-flex align-items-center">
+                <div class="cursor-pointer py-3 pe-4 pe-lg-5" onclick="closeNav()"><i class="bi bi-x-lg fs-2"></i></div>
+            </div>
+            <div class="col-4 col-lg-3 d-flex justify-content-end align-items-center position-relative"></div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-lg-10 offset-lg-1"></div>
+        </div>
+    </div>
+</div>
+<div class="search-bar py-2 py-lg-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-3 d-none d-lg-flex align-items-center"></div>
+            <div class="col-9 col-lg-6">
+                <form method="post" action="./default.aspx?v=1368&amp;oid=6&amp;lng=1&amp;tg=4351351" id="frmSearch">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="7l3eYGmAjFuHNpQxoJa+tSWSkn4lz7vaonBXySKCF8CBEP7enIeWw2TbmBJPkPXvHL4n5lImloWuFQ6sYVNuqVzt1zNtkYOIiAZNBBoPIn51amZ3L/GNrg2MDlXZ/FNpyMCH+u2JWc2sse0eNmfN8cikvYJop1Ffs/7W6rwfLtc1/loL/Pjcsa9ICDRO7eQV+R+xks2YHLVHcbUsrwayP2sQFZO2ZxQ68p0Qi2hA3NW/PgcqKCFYgaip7ztEnuFevHEun+UVO1QGbrK1+aOey+WC+XGhtsP4GorWrfgTd3tupxUY11RGXerxCLHpC3dQVBQ1AUyb+QxVCSKIKFOXA/KlHAb48Fvm5QGGnz0KOO8q+/lf2386eFFxXBhXXVBYB8xO1f2gSppxBHvgte6iowKLeFcTmQzGRrfuU+SbYQxbE1/57ntEJ0BvQpg4JsF6GvM+Jb8ssUgDRGTO/mbiVVlJ7ZPpoNGmjJleNxFzphLtOyNcj8oW5tvyVYD+SZwGa/etiYsJgfKi/aEs2De2PRtcF984mA68nlA1IicQ/N4=" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+</div>
+                    <div class="input-group"><input name="ctl01$searchexpressplugin_query" type="text" id="ctl01_searchexpressplugin_query" class="form-control border border-red" placeholder="Suche Verein" /></div>
+                    <script>
+                        $(document).ready(function () {
+                            $("#ctl01_searchexpressplugin_query").autocomplete({
+                                minLength: 2,
+                                open: function () { $(this).autocomplete('widget').css('z-index', 1000); return false; },
+                                select: function (event, ui) { $("#ctl01_searchexpressplugin_query").blur(); document.location.href = ui.item.lk; },
+                                source: function (request, response) {
+                                    var strText = $("#ctl01_searchexpressplugin_query").val();
+                                    if (strText.toUpperCase() != 'FC ') {
+                                        $.ajax({
+                                            url: "/portaldata/1/nisRD/WebService/verein/VereinSearch.ashx?term=" + encodeURIComponent(strText) + '&sp=1',
+                                            dataType: "json",
+                                            contentType: "application/json; charset=utf-8",
+                                            dataFilter: function (data) { return data; },
+                                            success: function (data) {
+                                                response($.map(data, function (item) {
+                                                    return {
+                                                        label: item.label + ' (' + item.strKurzbezeichnung + ')',
+                                                        value: item.label,
+                                                        id: item.id,
+                                                        lk: item.lk
+                                                    }
+                                                }))
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                </form>
+            </div>
+            <div class="col-3 col-lg-3 d-flex justify-content-end align-items-center">
+                <div class="hstack gap-3">
+                    <div class="text-uppercase px-lg-2 noindex"><a class="text-decoration-none font-color-grey hover-font-color-red" href="https://matchcenter.fvbj-afbj.ch/default.aspx?v=1368&oid=6&lng=1&tg=4351351">DE</a></div>
+                    <div class="text-uppercase px-lg-2 noindex"><a class="text-decoration-none font-color-grey hover-font-color-red" href="https://matchcenter.fvbj-afbj.ch/default.aspx?v=1368&oid=6&lng=2&tg=4351351">FR</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container topbanner mb-2 mb-lg-3">
+	<div class="row">
+		<div class="col-12 px-0 px-lg-3" id="topbanner"></div>
+	</div>
+</div>
+<div class="bg-gradient-1 mb-2 mb-lg-3 py-2 py-lg-3">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-lg-2">
+				<div class="cursor-pointer py-1" onclick="openNav()"><img src="/include_2023/6/css/images/menu.png" alt=""></div>				
+			</div>
+			<div class="col-lg-10 d-none d-lg-flex justify-content-end align-items-center"></div>
+		</div>
+	</div>
+</div>
+<div class="container sponsors py-2 py-lg-3">
+	<div class="row">
+		<div class="col-12">
+            <div class="owl-carousel owl-theme" id="sponsor-slider"></div>
+		</div>
+	</div>
+</div>
+<div id="liga-banner"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div id="top_ad_1" class="ad-slot d-flex justify-content-center mt-3" data-ad-slot="top_ad_1" data-ad-size="994x250,994×560,970×250,800×250,994×118,728×90,300×250"></div>
+        </div>
+    </div>
+</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 content-main">
+                <div class="container py-2 py-lg-3 min-vh-75">
+            	    <div class="row">
+            		    <div class="col-12 mb-4">
+                            
+<h1>Verein</h1>
+<div class="border-bottom border-red border-12 mb-4"></div>
+            		    </div>
+            	    </div>
+            	    <div class="row content">
+                        <div class="col-12">
+                            
+<div class="row">
+    <div class="col-xs-12">
+        
+    <script type="text/javascript">
+        $(document).ready(function () {
+            pageLoad();
+        });
+    </script>
+
+<div class="nisTelegramm">
+    
+    <div class="nisTelegrammAjaxReload">
+    
+
+<div class="telegrammHeadAllDiv jumbotron">
+    <small class="shortSpielort">Meisterschaft - Junioren D-7 / MFV - Herbstrunde / Gruppe  5 - 23.08.2026 09:00 - <span style="white-space: nowrap;">Spielnummer: 137535</span><span class="hidden-xs"> - Weissenstein, Bern - Kunstrasenfeld Weissenstein</span></small>
+    <div class="telegrammHeaderDiv row">
+        <div class="telegrammHeaderTeamDiv col-5 col-xs-5">
+            <div class="shortTeamFlagHeim"><div class="Logo"><img id="ctl05_SpielTelegrammID_sfvTelegrammHead_imgHeimFlagVerband" class="Logo img-responsive" data-tid="77956" alt="C.F. España" title="C.F. España" src="https://blob.football.ch/logos/Verein/10336.gif" /></div></div>
+            <div class="shortTeamHeimDiv">
+                <div class="shortTeamHeim">C.F. España</div>
+                <table class="shortToreHome">
+                <tr><td class="shortTimeHome">7'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Lingde Chen
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">11'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Benaja Kethiswaran
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">18'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Nicolas Gerber
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">19'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Nicolas Gerber
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">30'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Benaja Kethiswaran
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">32'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Benaja Kethiswaran
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">34'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Benaja Kethiswaran
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">36'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Nicolas Gerber
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">40'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Nicolas Gerber
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">57'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Nicolas Gerber
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">70'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Nicolas Gerber
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeHome">75'</td>
+                    <td class="shortSpielerHome">
+                    
+                    <span>Nicolas Gerber
+                        
+                    </span></td></tr>
+                </table>
+            </div>
+        </div>
+        <div class="telegrammHeaderResultsDiv col-2 col-xs-2">
+            <div><span  class="shortResults">12:10</span></div>
+            <div id="ctl05_SpielTelegrammID_sfvTelegrammHead_divToreViertel">(4:3/9:4/10:6)</div>
+        </div>
+        <div class="telegrammHeaderTeamDiv col-5 col-xs-5">
+            <div class="shortTeamFlagGast"><div class="Logo"><img id="ctl05_SpielTelegrammID_sfvTelegrammHead_imgGastFlagVerband" class="Logo img-responsive" data-tid="72989" alt="Team Schlossmatt (AS Italiana) b" title="Team Schlossmatt (AS Italiana) b" src="https://blob.football.ch/logos/Verein/10333.gif" /></div></div>
+            <div class="shortTeamHeimDiv">
+                <div class="shortTeamGast">Team Schlossmatt (AS Italiana) b</div>
+                <table class="shortToreGast">
+                <tr><td class="shortTimeGast">5'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Raef Saeed
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">15'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Mahmut Yusuf Koyuncu
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">17'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Arsalan Noori
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">25'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Jaro Picozzi
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">48'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Raef Saeed
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">53'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Raef Saeed
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">61'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Mahmut Yusuf Koyuncu
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">68'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Noà Raphael Thomet
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">79'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Leander Marlin Wille
+                        
+                    </span></td></tr>
+                
+                <tr><td class="shortTimeGast">80'</td>
+                    <td class="shortSpielerGast">
+                    
+                    <span>Mahmut Yusuf Koyuncu
+                        
+                    </span></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div style="clear:both;width:100%;text-align:center;"></div>
+    
+</div>
+
+
+
+
+<div id="video_player">
+	<div id="video_container">
+		<video controls="controls" controlslist="nodownload" oncontextmenu="return false;" >
+			<source src="" type="video/mp4">
+		</video>
+        <div class="videoPanelTextPos">
+            <span class="videoPanelText"></span>
+        </div>
+	</div>
+    <div class="figcaption"><ul class="swipemod-swipecontainer"></ul></div>
+</div>
+
+
+<style>
+    .videoWdgetCode{}
+    .videoWdgetCode .panel{
+        margin-bottom:0px;
+    }
+    .videoWdgetCode .dropdown-menu{
+        background-color: #ffffff !important;
+    }
+
+    .videoPanelTextPos{
+        position: absolute;
+        /*bottom: 0;*/
+        top: 0px;
+        left: 0;
+        width: 100%;
+        /*height: 40px;*/
+        text-align: center;
+        z-index: 2147483647; /*wegen Vollbildmodus*/
+    }
+    .videoPanelText{
+        max-width: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #333333;
+        padding: 2px 40px 2px 20px;
+        /*padding: 16px 40px 16px 20px;
+        border-top-left-radius:20px;
+        border-top-right-radius:20px;*/
+        border-bottom-left-radius:10px;
+        border-bottom-right-radius:10px;
+        /*text-align:center;
+        margin:0 auto 0 auto;
+        height: 70px;*/
+        overflow:hidden;
+        font-size: 18px;
+    }
+    .videoPanelText .time{
+        /*background-color: #cccccc;*/
+        padding: 10px;
+        margin-right: 30px;
+        border-radius: 20px;
+    }
+
+@media (max-width: 767px) {
+    .videoPanelTextPos{
+        height: 26px;
+    }
+    .videoPanelText{
+        padding: 2px 8px 2px 8px;
+        border-radius:0;
+        font-size: 14px;
+    }
+    .videoPanelText .time{
+        background-color: transparent;
+        padding: 0px;
+        margin-right: 10px;
+        border-radius: 0px;
+    }
+}
+</style>
+<script id="template-video-list" type="text/template">
+    <li>
+        <a href="{{url}}">
+            
+    	    <img  class="teamLogo" src="{{logo}}" alt="{{result}}">
+            <span class="result">{{result}}</span>
+        </a>
+    </li>
+</script>
+<script id="template-video-headline" type="text/template">
+    <span class="videoPanelText"><span class="time">{{time}}</span> {{result}} {{team}}, {{pla}}</span>
+</script>
+<script>
+    $(document).ready(function () {
+        videoPlayList();
+    });
+
+    var video_player = null;
+    var eventsList = null;
+    var captionList = null;
+    var video_headline = null;
+    var video = null;
+    var videoBaseURL = 'https://blob.football.ch';
+    var source = null;
+    var currentVid = 0;
+    var bIntro = false;
+    var bOutro = true;
+    var bShowInOut = false;
+    var nTgId = 4351351;
+    function videoPlayList() {
+        strIntroVideo = '';
+        strOutroVideo = '';
+        //bShowInOut = (nTgId == 3078859 || nTgId == 3078860 || nTgId == 3078858 || nTgId == 3195064);
+        bShowInOut = ((strIntroVideo.length > 0) || (strOutroVideo.length > 0));
+        //eventsList = $("ul.bnEventsList > li[data-eid='1'][data-vid]").sort(sort_list) // read + sort elements;
+        eventsList = $("ul.bnEventsList > li[data-eid='1'][data-vid]").get().reverse(); // read + sort elements;
+        video_player = $("#video_player");
+        //console.log(eventsList)
+        //console.log(eventsList.length)
+        if (eventsList.length > 0 && video_player.length == 1) {
+            /////Videoliste generieren
+            // Cache of the template
+            var template = document.getElementById("template-video-list");
+            // Get the contents of the template
+            var templateHtml = template.innerHTML;
+            // Final HTML variable as empty string
+            var listHtml = "";
+
+            // Loop through dataObject, replace placeholder tags
+            // with actual data, and generate final HTML
+            $(eventsList).each(function () {
+                listHtml += templateHtml.replace(/{{url}}/g, videoBaseURL + $(this).attr("data-vid"))
+                    .replace(/{{time}}/g, $(this).attr("data-tim"))
+                    .replace(/{{logo}}/g, $("div.Logo > img[data-tid='" + $(this).attr("data-tid") + "']").attr('src'))
+                    .replace(/{{result}}/g, $(this).attr("data-sco"));
+            });
+
+            //Replace the HTML of #list with final HTML
+            //$("#video_player figcaption").html(listHtml);
+            $("#video_player div.figcaption ul").html(listHtml);
+
+            //Variablen initialisieren und erstes Video starten
+            video = $("#video_player video");
+            source = $("#video_player video source");
+            captionList = $("#video_player div.figcaption li");
+            //captionList = $("#video_player figcaption a");
+            video_headline = $("#video_player .videoPanelTextPos");
+            $(video_player).show(500);
+
+            //$("#video_player figcaption a:nth-child(1)").addClass("currentvid")
+            $("#video_player div.figcaption li:nth-child(1)").addClass("currentvid")
+
+            //videoHeadline(eventsList[currentVid])
+            //window.setTimeout(function () { videoPlay(eventsList[currentVid]); }, 2000);
+            ////videoPlay(eventsList[currentVid]);
+            if (strIntroVideo.length > 0) {
+                //source[0].src = videoBaseURL + "portaldata/1/nisRD/_video/nlaf/Intro_Outro_01.mp4";
+                source[0].src = strIntroVideo;
+                bIntro = false;
+                currentVid--;
+            }
+            else {
+                source[0].src = videoBaseURL + $(eventsList[currentVid]).attr("data-vid");
+                videoHeadline(eventsList[currentVid]);
+            }
+            $(video).get(0).load();
+
+            //Poster nach dem Start des ersten Videos entfernen
+            //$(video).each(function () {
+            //    this.removeAttribute("poster");
+            //});
+            $(video).on("ended", function () {
+                //Poster nach dem ersten Video entfernen
+                $(video).get(0).removeAttribute("poster");
+
+                //currentVid = (++currentVid) % eventsList.length;
+                currentVid = (++currentVid);
+                if (currentVid < eventsList.length) {
+
+                    captionList.removeClass("currentvid");
+                    //                $("#video_player figcaption a:nth-child("+ (currentVid+1) +")").addClass("currentvid")
+                    $("#video_player div.figcaption li:nth-child(" + (currentVid + 1) + ")").addClass("currentvid");
+                    //this.addClass("currentvid");
+                    videoHeadline(eventsList[currentVid]);
+                    videoPlay(eventsList[currentVid]);
+                }
+                else {
+                    if (bShowInOut) {
+                        if (bOutro && (strOutroVideo.length > 0)) {
+                            //Outro zeigen
+                            $(video_headline).html("");
+                            captionList.removeClass("currentvid");
+                            //source[0].src = videoBaseURL + "portaldata/1/nisRD/_video/nlaf/Intro_Outro_02.mp4";
+                            source[0].src = strOutroVideo;
+                            $(video).get(0).load();
+                            $(video).get(0).play();
+                            bIntro = true;
+                            bOutro = false;
+                        }
+                        else {
+                            //Nach dem Outro, das Intro laden
+                            //source[0].src = videoBaseURL + "portaldata/1/nisRD/_video/nlaf/Intro_Outro_01.mp4";
+                            source[0].src = strIntroVideo;
+                            $(video).get(0).load();
+                            bIntro = false;
+                            bOutro = true;
+                            currentVid = -1;
+
+                        }
+                    }
+                }
+            });
+            //$(video).on("mouseenter", function () {
+            //    $(video_headline).hide();
+            ////    //this.setAttribute("controls", "true");
+            //});
+
+            //$(video).on("mouseleave", function () {
+            //    $(video_headline).show();
+            ////    //this.removeAttribute("controls");
+            //});
+
+            //            $("#video_player figcaption a").click(function( event ) {
+            $("#video_player div.figcaption li").click(function (event) {
+                event.preventDefault();
+                currentVid = ($("#video_player div.figcaption li").index(this)) % eventsList.length;
+                captionList.removeClass("currentvid");
+                $(this).addClass("currentvid");
+                //$("#video_player figcaption").index(this)
+                videoHeadline(eventsList[currentVid])
+                videoPlay(eventsList[currentVid])
+            });
+        }
+    }
+    function sort_list(a, b) {
+        return ($(b).data('tim')) < ($(a).data('tim')) ? 1 : -1;
+    }
+
+    function videoPlay(oNode) {
+        source[0].src = videoBaseURL + $(oNode).attr("data-vid");
+        $(video).get(0).load();
+
+        var attrPoster = $(video).attr('poster');
+        // Wenn VideoPoster vorhanden, Videostart verzögern, damit es sichtbar ist
+        // For some browsers, `attrPoster` is undefined; for others, `attrPoster` is false.  Check for both.
+        if (typeof attrPoster !== typeof undefined && attrPoster !== false) {
+            window.setTimeout(function () { $(video).get(0).play(); }, 2000);
+        }
+        else {
+            $(video).get(0).play();
+        }
+    }
+    function videoHeadline(oNode) {
+        /////Videoheadline generieren
+        // Cache of the template
+        var template = document.getElementById("template-video-headline");
+        // Get the contents of the template
+        var templateHtml = template.innerHTML;
+        // Final HTML variable as empty string
+        var headlineHtml = "";
+
+        headlineHtml += templateHtml.replace(/{{team}}/g, $(oNode).attr("data-team"))
+            .replace(/{{pla}}/g, $(oNode).attr("data-pla"))
+            .replace(/{{time}}/g, $(oNode).attr("data-tim"))
+            .replace(/{{result}}/g, $(oNode).attr("data-sco"));
+        // Replace the HTML of #list with final HTML
+        $(video_headline).html(headlineHtml);
+    }
+</script>
+<style>
+    .videoButton {
+        max-height:24px;
+    }
+    #video_player {
+        background: #eee;
+        display: none;
+    }
+
+    #video_container {
+        position: relative;
+    }
+
+    #video_container video {
+        display: block;
+        width: 100%;
+        height: auto;
+        top: 0;
+    }
+
+    #video_player div.figcaption img.teamLogo {
+        height: 40px;
+        width: auto;
+    }
+
+    #video_player div.figcaption a {
+        text-decoration: none;
+    }
+
+    #video_player div.figcaption li {
+        opacity: .7;
+        transition: 1s opacity;
+        border-top: 4px solid #eeeeee;
+        text-align: center;
+    }
+
+    #video_player div.figcaption li.currentvid,
+    #video_player div.figcaption li:hover {
+        opacity: 1;
+        border-top: 4px solid #cc0000;
+    }
+
+    #video_player div.figcaption .result {
+        color: #666666;
+        font-size: 20px;
+    }
+
+.swipemod-swipecontainer {
+    list-style-type: none;
+    display: -webkit-flex;
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 24px;
+}
+    .swipemod-swipecontainer li {
+        margin-right: 4px;
+        padding: 2px 6px;
+        background-color: #ffffff;
+    }
+
+    @media (max-width: 767px) {
+        #video_player {
+            padding: 0px;
+        }
+
+            #video_player div.figcaption li {
+                text-align: center;
+            }
+    }
+</style>
+
+    
+    
+<script type="text/javascript">
+    function pageLoad() {
+        var tabClass = 'ui-tabs-vertical-VL';
+
+        //Live-Infobox
+        //Eintraege vorhanden?
+        if($('div[bn_NIS|="nisKaderLive"] > div[bn_pid]').length < $('tr[bn_pid]').length){
+            loadData();
+        }
+        if($('div[bn_NIS|="nisKaderLive"]').length == 1){
+            //Info-Box exitiert
+            if($('div[bn_NIS|="nisKaderLive"] > div[bn_pid]').length > 0){
+                //Daten vorhanden
+                $('tr[bn_rid]').addClass("KaderPLink");
+                if($('div[bn_liveAll]').length == 1){
+                    //Live-Info aktualisieren
+                    var idRolleAct = $('div[bn_liveAll]').attr("bn_liveAll");
+                    if(idRolleAct.length > 0){
+                        loadLiveStatistik(idRolleAct);
+                    }
+                }
+                $('tr[bn_rid]').click(function(){
+                    var idRolle = $(this).attr('bn_rid');
+                    var idPers = $('tr[bn_rid|="' + idRolle + '"][bn_pid]').attr('bn_pid');
+                    //Live-Statistik für Spieler erstellen
+                    $('span[bn_liveShort|="' + idPers + '"]').html($('tr[bn_pid|="' + idPers + '"] div[bn_stat]').html());
+                    $('div[bn_liveAll]').attr("bn_liveAll",idRolle);
+                    loadLiveStatistik(idRolle);
+
+                    //Statistik anzeigen
+                    $('div[bn_NIS|="nisKaderLive"] > div[bn_pid]').hide(300);
+                    $('div[bn_NIS|="nisKaderLive"] > div[bn_pid|="' + idPers + '"]').show(500);
+                });
+            }
+        }
+    }
+    function loadLiveStatistik(idRolle) {
+        //Live-Statistik für Spieler erstellen
+        $('div[bn_liveAll]').html($('table[bn_tab|="events"]').html());
+        $('div[bn_liveAll] tr').hide();
+        $('div[bn_live|="InfoText"]').hide();
+        $('div[bn_liveAll] tr[bn_rid|="' + idRolle + '"]').show();
+        $('div[bn_liveAll] tr[bn_rid1|="' + idRolle + '"]').show();
+    }
+    function loadData() {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/portaldata/1/nis/ajax/kader/kaderAuswahlKurz.asmx/KaderView",
+            data: "{ nSpielID: 4351351, nSpracheID: 1}",
+            success: handleHtml,
+            error: ajaxFailed
+        });
+    }
+    function handleHtml(data, status) {
+        $('div[bn_NIS|="nisKaderLiveTop"]').html(data.d);
+    }
+    function ajaxFailed(xmlRequest) {
+        alert(xmlRequest.status + ' \n\r ' +
+            xmlRequest.statusText + '\n\r' +
+            xmlRequest.responseText);
+    }
+</script>
+<div id="ctl05_SpielTelegrammID_sfvTelegrammBody_phTelegrammBody">
+	
+    <ul class="nav nav-tabs nav-tabs-round">
+        
+        <li id="ctl05_SpielTelegrammID_sfvTelegrammBody_TickerItem" class="nav-item"><a class="nav-link" href="#ctl05_SpielTelegrammID_sfvTelegrammBody_Ticker" data-toggle="tab" title="Verlauf<"><i class="fa fa-futbol-o">&nbsp;</i><span class="d-none d-sm-inline-block">Verlauf</span></a></li>
+        <li id="ctl05_SpielTelegrammID_sfvTelegrammBody_AufstellungItem" class="nav-item"><a class="nav-link" href="#ctl05_SpielTelegrammID_sfvTelegrammBody_Aufstellung" data-toggle="tab" title="Aufstellung"><i class="fa fa-list-alt">&nbsp;</i><span class="d-none d-sm-inline-block">Aufstellung</span></a></li>
+        
+        
+        
+    </ul>
+    <div class="tab-content">
+        
+        <div id="ctl05_SpielTelegrammID_sfvTelegrammBody_Ticker" class="tab-pane">
+            
+<div id="ctl05_SpielTelegrammID_sfvTelegrammBody_sfvTelegrammEvents_pnlBildergalerie">
+		
+
+<style>
+    #carousel-telegramm{
+        overflow: hidden;
+        height: 400px;
+        /*background-color:#dddddd;*/
+        margin-bottom: 30px;
+    }
+    #carousel-telegramm .carousel-inner > .item > img {
+        margin: 0 auto;
+        max-height: 400px;
+    }
+    #carousel-telegramm .item p {
+        background-color: #ffffff;
+        opacity:0.75;
+        color: #000000;
+    }
+    #carousel-telegramm .item .carousel-caption {
+        padding-bottom: 0px;
+        bottom: 0%;
+    }
+    @media only screen and (max-width: 767px){
+        #carousel-telegramm{
+            height: auto;
+        }
+        #carousel-telegramm .carousel-inner > .item > img {
+            max-height: 400px;
+        }
+        #carousel-telegramm .item .carousel-caption {
+            display:none;
+        }
+    }
+</style>
+
+
+	</div>
+<div id="ctl05_SpielTelegrammID_sfvTelegrammBody_sfvTelegrammEvents_pnlEvents">
+		<ul class="timeline-2 bnEventsList"><li data-rid="1783942" data-eid="1"><time class="timeline-time">80'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;12:10</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Mahmut Yusuf Koyuncu</div></div></div></li><li data-rid="1627685" data-eid="1"><time class="timeline-time">79'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;12:9</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Leander Marlin Wille</div></div></div></li><li data-rid="1781931" data-eid="1"><time class="timeline-time">75'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;12:8</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Nicolas Gerber</div></div></div></li><li data-rid="1781931" data-eid="1"><time class="timeline-time">70'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;11:8</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Nicolas Gerber</div></div></div></li><li data-rid="1781161" data-eid="1"><time class="timeline-time">68'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;10:8</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Noà Raphael Thomet</div></div></div></li><li data-rid="1783942" data-eid="1"><time class="timeline-time">61'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;10:7</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Mahmut Yusuf Koyuncu</div></div></div></li><li data-rid="1781931" data-eid="1"><time class="timeline-time">57'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;10:6</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Nicolas Gerber</div></div></div></li><li data-rid="1783885" data-eid="1"><time class="timeline-time">53'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;9:6</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Raef Saeed</div></div></div></li><li data-rid="1783885" data-eid="1"><time class="timeline-time">48'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;9:5</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Raef Saeed</div></div></div></li><li data-rid="1781931" data-eid="1"><time class="timeline-time">40'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;9:4</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Nicolas Gerber</div></div></div></li><li data-rid="1781931" data-eid="1"><time class="timeline-time">36'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;8:4</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Nicolas Gerber</div></div></div></li><li data-rid="1815802" data-eid="1"><time class="timeline-time">34'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;7:4</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Benaja Kethiswaran</div></div></div></li><li data-rid="1815802" data-eid="1"><time class="timeline-time">32'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;6:4</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Benaja Kethiswaran</div></div></div></li><li data-rid="1815802" data-eid="1"><time class="timeline-time">30'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;5:4</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Benaja Kethiswaran</div></div></div></li><li data-rid="1817201" data-eid="1"><time class="timeline-time">25'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;4:4</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Jaro Picozzi</div></div></div></li><li data-rid="1781931" data-eid="1"><time class="timeline-time">19'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;4:3</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Nicolas Gerber</div></div></div></li><li data-rid="1781931" data-eid="1"><time class="timeline-time">18'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;3:3</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Nicolas Gerber</div></div></div></li><li data-rid="1776002" data-eid="1"><time class="timeline-time">17'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;2:3</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Arsalan Noori</div></div></div></li><li data-rid="1783942" data-eid="1"><time class="timeline-time">15'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;2:2</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Mahmut Yusuf Koyuncu</div></div></div></li><li data-rid="1815802" data-eid="1"><time class="timeline-time">11'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;2:1</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Benaja Kethiswaran</div></div></div></li><li data-rid="1823378" data-eid="1"><time class="timeline-time">7'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;1:1</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; España</div>Torschütze Lingde Chen</div></div></div></li><li data-rid="1783885" data-eid="1"><time class="timeline-time">5'</time><i class="timeline-2-point"></i><div class="panel panel-default"><div class="panel-body row m-0"><div class="col-xs-8 col-sm-1 col-8"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" alt="Tor" title="Tor" />&nbsp;0:1</div><div class="col-xs-12 col-sm-11 col-12"><div class="eventlabel goal">Tor&nbsp;&nbsp; Italiana</div>Torschütze Raef Saeed</div></div></div></li></ul>
+	</div>
+
+
+<script>
+    //<![CDATA[
+    $(document).ready(function () {
+        $(".btn-hlvideo").click(function () {
+            var expanded = $(this).attr('aria-expanded');
+            var videoID = $(this).attr('aria-controls');
+            console.log(expanded);
+            console.log(videoID);
+            if (expanded == 'false') //close Video container
+            {
+                //console.log('pause');
+                $('video.' + videoID).get(0).pause();
+            }
+            else {
+                //console.log('play');
+                //Videos stoppen
+                $("video").each(function () {
+                    $(this).get(0).pause();
+                });
+                //Videos verbergen
+                $("div.div-hlvideo").each(function () {
+                    $(this).collapse('hide');
+                });
+
+                $('video.' + videoID).get(0).play();
+
+            }
+        });
+    });
+    function startVideo(oVideo) {
+        if (oVideo != null) {
+            oVideo.play();
+        }
+    }
+    //]]>
+</script>
+        </div>
+        <div id="ctl05_SpielTelegrammID_sfvTelegrammBody_Aufstellung" class="tab-pane">
+            <div id="ctl05_SpielTelegrammID_sfvTelegrammBody_phAufstellung" class="row">
+		
+                
+                <div class="col-sm-6">
+                    <h4 class="eventsTeamName em-primary">C.F. España</h4>
+                    
+    <div class="svg-container">
+        <svg version="1.1" id="svgFeld_h" viewBox="0 0 770 580" preserveAspectRatio="xMinYMin meet" class="svg-content">
+            <symbol id="icon-Trikot_h" viewBox="0 0 62 68">
+                <path d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+            </symbol>
+            <g style="display:inline">
+                <g><image class="svgVereinLogo" x="60" y="465" width="80px" height="80px" xlink:href="https://blob.football.ch/logos/Verein/10336.gif" /></g>
+                <g class="gRasen">
+                    <rect class="svgFeldDunkel" width="770" height="580" x="0" y="0" />
+                    <rect class="svgFeldHell" width="770" height="86" x="0" y="372" />
+                    <rect class="svgFeldHell" width="770" height="32" x="0" y="548" />
+                    <rect class="svgFeldHell" width="770" height="86" x="0" y="28" />
+                    <rect class="svgFeldHell" width="770" height="86" x="0" y="200" />
+                </g>
+                <g class="gMarkierung">
+                    <rect class="svgTornetz" width="74.548912" height="18.015404" x="347.72556" y="552.4057" />
+                    <path class="svgFeldMarkierung" d="m 286.14096,551.91391 0,-53.9612 197.71807,0 0,53.9612 0,0 0,0" />
+                    <path class="svgFeldMarkierung" d="m 185.02354,551.93331 0,-164.4765 399.95292,0 0,164.4765" />
+                    <circle class="svgFeldMarkierungPunkt" cx="385" cy="440" r="4" />
+                    <circle class="svgFeldMarkierung" cx="385" cy="11" r="90" />
+                    <path class="svgFeldMarkierung" d="m 9.9464582,543.18231 c 5.4951898,-0.01 9.2758198,3.8669 9.2305198,8.6134 l 5e-5,0.1639" />
+                    <path class="svgFeldMarkierung" d="m 758.93678,542.92081 c -5.49519,-0.01 -9.27582,3.8669 -9.23052,8.6134 l -5e-5,0.1639" />
+                    <circle class="svgFeldMarkierungPunkt" cx="384" cy="10" r="4" />
+                    <path class="svgFeldMarkierung" d="m 10,10 750,0" />
+                    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="m 347.50674,553.46211 0,17.4645 74.98652,0 0,-17.4645 0,0" />
+                    <path class="svgFeldMarkierung" d="m 311.86244,387.18451 c 42.9181,-56.6522 116.39428,-42.1916 146.24341,0.2925 l -0.29248,-0.1463" />
+                    <path class="svgFeldMarkierung" d="m 10,0 0,552 750,0 0,-552" />
+                </g>
+                <g>
+    
+                <g transform="translate(354,430)">
+                    <path class="svgTrikot tw" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">1</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Roman Rivero (C)</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(640,286)">
+                    <path class="svgTrikot" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">11</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Desvoignes</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(354,322)">
+                    <path class="svgTrikot" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">9</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Gerber</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(68,286)">
+                    <path class="svgTrikot" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">5</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Sabljic Torres</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(354,214)">
+                    <path class="svgTrikot" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">7</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Chen</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(588,142)">
+                    <path class="svgTrikot" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">8</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Bordon</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(120,142)">
+                    <path class="svgTrikot" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">10</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Kethiswaran</text>
+                    </g>
+                </g>
+    
+                </g>
+            </g>
+        </svg>
+    </div>
+    
+
+
+<div class="eventsTeamName em-primary"></div>
+<div class="aufstellungToggle">&nbsp;</div>
+<table class="table table-hover aufstellung" >
+    
+            <tr class="portraitClick" data-pid="1522453" data-rid="1809828">
+			<td class="eventsTime">1</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Iker Roman Rivero<span class="aufCaptain" title="Captain">(C)</span></div>
+                    <div class="aufPos">Tor</div>
+                </div>
+                <div class="right" data-stat="1"></div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1480336" data-rid="1754236">
+			<td class="eventsTime">11</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Marlon Desvoignes</div>
+                    <div class="aufPos">Verteidigung rechtsaussen</div>
+                </div>
+                <div class="right" data-stat="1"></div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1501054" data-rid="1781931">
+			<td class="eventsTime">9</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Nicolas Gerber</div>
+                    <div class="aufPos">Verteidigung mitte</div>
+                </div>
+                <div class="right" data-stat="1"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="75'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="70'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="57'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="40'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="36'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="19'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="18'" border="0" />&nbsp;</div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1523708" data-rid="1811411">
+			<td class="eventsTime">5</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Luis Mili Sabljic Torres</div>
+                    <div class="aufPos">Verteidigung linksaussen</div>
+                </div>
+                <div class="right" data-stat="1"></div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1533340" data-rid="1823378">
+			<td class="eventsTime">7</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Lingde Chen</div>
+                    <div class="aufPos">Mittelfeld defensiv</div>
+                </div>
+                <div class="right" data-stat="1"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="7'" border="0" />&nbsp;</div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1523656" data-rid="1811341">
+			<td class="eventsTime">8</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Lennie Bordon</div>
+                    <div class="aufPos">Mittelfeld rechts</div>
+                </div>
+                <div class="right" data-stat="1"></div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1527354" data-rid="1815802">
+			<td class="eventsTime">10</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Benaja Kethiswaran</div>
+                    <div class="aufPos">Mittelfeld links</div>
+                </div>
+                <div class="right" data-stat="1"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="34'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="32'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="30'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="11'" border="0" />&nbsp;</div>
+            </td>
+            </tr>
+            
+        
+    
+            <tr>
+                <td colspan="2" class="infoTitel">
+                    <div class="aufTitel em-primary">Ersatzspieler/in</div>
+                </td>
+            </tr>
+        
+            <tr class="portraitClick" data-pid="1525966" data-rid="1814107">
+				
+                <td class="eventsTime">13</td>
+				<td class="eventsText"><div class="left"><div class="aufName">Alexander Soenke Wanner</div></div>
+                    <div class="right" data-stat="1">
+                        
+                        
+                        
+                    </div>
+                </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1529113" data-rid="1818004">
+				
+                <td class="eventsTime">2</td>
+				<td class="eventsText"><div class="left"><div class="aufName">Aren Miran Sevinc</div></div>
+                    <div class="right" data-stat="1">
+                        
+                        
+                        
+                    </div>
+                </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1413607" data-rid="1667450">
+				
+                <td class="eventsTime">4</td>
+				<td class="eventsText"><div class="left"><div class="aufName">Nahuel Emilio Herrera</div></div>
+                    <div class="right" data-stat="1">
+                        
+                        
+                        
+                    </div>
+                </td>
+            </tr>
+            
+        
+            
+        
+    
+            <tr>
+                <td class="infoTitel" colspan="2">
+                    <div class="aufTitel em-primary">Trainer/in</div>
+                </td>
+            </tr>
+        
+            <tr data-pid="916191" data-rid="916191"><td class="eventsTime">&nbsp;</td><td  class="eventsText"><div class="aufName">Cristian Rodriguez Fernandez</div></td>
+            </tr>
+            <tr data-pid="247076" data-rid="247076"><td class="eventsTime">&nbsp;</td><td  class="eventsText"><div class="aufName">Daniel Alfonso Lopez</div></td>
+            </tr>
+    
+            <tr>
+                <td class="infoTitel" colspan="2">
+                    <div class="aufTitel em-primary">Abwesend</div>
+                </td>
+            </tr>
+        
+            <tr>
+                <td class="eventsText" colspan="2">
+                    <div class="aufAbwesendText aufName">Elias&nbsp;Wartenweiler</div>
+                </td>
+            </tr>
+        
+            <tr>
+                <td class="eventsText" colspan="2">
+                    <div class="aufAbwesendText aufName">Mohammed Oday Mohammed&nbsp;Al-Mashhadani</div>
+                </td>
+            </tr>
+        
+            <tr>
+                <td class="eventsText" colspan="2">
+                    <div class="aufAbwesendText aufName">Felix Hector&nbsp;Elmiger</div>
+                </td>
+            </tr>
+        
+            <tr>
+                <td class="eventsText" colspan="2">
+                    <div class="aufAbwesendText aufName">Rafael Luis&nbsp;Krojer</div>
+                </td>
+            </tr>
+        
+            <tr>
+                <td class="eventsText" colspan="2">
+                    <div class="aufAbwesendText aufName">Martin Gissa&nbsp;Gerber</div>
+                </td>
+            </tr>
+        
+</table>
+
+                </div>
+                <div class="col-sm-6">
+                    <h4 class="eventsTeamName em-primary">Team Schlossmatt (AS Italiana) b</h4>
+                    
+                    
+    <div class="svg-container">
+        <svg version="1.1" id="svgFeld_g" viewBox="0 0 770 580" preserveAspectRatio="xMinYMin meet" class="svg-content">
+            <symbol id="icon-Trikot_g" viewBox="0 0 62 68">
+                <path d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+            </symbol>
+            <g style="display:inline">
+                <g><image class="svgVereinLogo" x="60" y="465" width="80px" height="80px" xlink:href="https://blob.football.ch/logos/Verein/10333.gif" /></g>
+                <g class="gRasen">
+                    <rect class="svgFeldDunkel" width="770" height="580" x="0" y="0" />
+                    <rect class="svgFeldHell" width="770" height="86" x="0" y="372" />
+                    <rect class="svgFeldHell" width="770" height="32" x="0" y="548" />
+                    <rect class="svgFeldHell" width="770" height="86" x="0" y="28" />
+                    <rect class="svgFeldHell" width="770" height="86" x="0" y="200" />
+                </g>
+                <g class="gMarkierung">
+                    <rect class="svgTornetz" width="74.548912" height="18.015404" x="347.72556" y="552.4057" />
+                    <path class="svgFeldMarkierung" d="m 286.14096,551.91391 0,-53.9612 197.71807,0 0,53.9612 0,0 0,0" />
+                    <path class="svgFeldMarkierung" d="m 185.02354,551.93331 0,-164.4765 399.95292,0 0,164.4765" />
+                    <circle class="svgFeldMarkierungPunkt" cx="385" cy="440" r="4" />
+                    <circle class="svgFeldMarkierung" cx="385" cy="11" r="90" />
+                    <path class="svgFeldMarkierung" d="m 9.9464582,543.18231 c 5.4951898,-0.01 9.2758198,3.8669 9.2305198,8.6134 l 5e-5,0.1639" />
+                    <path class="svgFeldMarkierung" d="m 758.93678,542.92081 c -5.49519,-0.01 -9.27582,3.8669 -9.23052,8.6134 l -5e-5,0.1639" />
+                    <circle class="svgFeldMarkierungPunkt" cx="384" cy="10" r="4" />
+                    <path class="svgFeldMarkierung" d="m 10,10 750,0" />
+                    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="m 347.50674,553.46211 0,17.4645 74.98652,0 0,-17.4645 0,0" />
+                    <path class="svgFeldMarkierung" d="m 311.86244,387.18451 c 42.9181,-56.6522 116.39428,-42.1916 146.24341,0.2925 l -0.29248,-0.1463" />
+                    <path class="svgFeldMarkierung" d="m 10,0 0,552 750,0 0,-552" />
+                </g>
+                <g>
+    
+                <g transform="translate(354,430)">
+                    <path class="svgTrikot svgTrikot_g tw_g" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">12</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Frihi</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(536,322)">
+                    <path class="svgTrikot svgTrikot_g" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">4</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Thomet</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(172,322)">
+                    <path class="svgTrikot svgTrikot_g" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">15</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Glauser</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(354,322)">
+                    <path class="svgTrikot svgTrikot_g" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">16</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Rabduk</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(354,160)">
+                    <path class="svgTrikot svgTrikot_g" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">9</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Koyuncu</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(510,52)">
+                    <path class="svgTrikot svgTrikot_g" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">17</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Noori</text>
+                    </g>
+                </g>
+    
+                <g transform="translate(198,52)">
+                    <path class="svgTrikot svgTrikot_g" d="m 37.353243,68.144738 c -0.03045,-0.0305 -3.986405,-0.0798 -8.791022,-0.10967 -7.460656,-0.0464 -8.890542,-0.0845 -9.796825,-0.26084 -1.536968,-0.29913 -2.941113,-0.81087 -3.463177,-1.26216 l -0.452894,-0.3915 0.02622,-3.92274 c 0.02729,-4.08213 0.108011,-5.36537 0.521613,-8.29224 1.084139,-7.67194 1.154545,-10.59281 0.424311,-17.60286 -0.655058,-6.28838 -0.980855,-8.35945 -1.988437,-12.64034 -0.03636,-0.1545 -0.145943,-0.2809 -0.243511,-0.2809 -0.215939,0 -2.460933,2.56206 -3.855859,4.40044 -1.178041,1.55254 -1.243556,1.57776 -2.492031,0.95925 -2.425855,-1.20181 -5.55171,-3.75452 -6.753994,-5.51561 L 0,22.511288 1.062375,21.104958 c 2.982395,-3.94799 5.309824,-7.91525 6.647629,-11.3313504 0.940843,-2.40245 1.489386,-3.25768 2.674224,-4.1694 0.94039,-0.72361 2.208624,-1.23193 6.285798,-2.51941 4.076132,-1.28715 5.959476,-1.9979 6.04581,-2.28161001 0.254253,-0.83552 0.733142,-0.92909 3.514182,-0.68663 1.769299,0.15425 2.89619,0.17166 5.643885,0.0872 4.17312,-0.12824 7.436674,-0.0764 7.863966,0.12482 0.171035,0.0806 0.381271,0.29315 0.467193,0.47243 0.234225,0.48869001 1.428632,0.99801001 4.631632,1.97500001 4.571388,1.39438 5.275528,1.68882 6.781538,2.83568 1.17815,0.89719 1.72974,1.75642 2.67176,4.16189 1.33781,3.4161004 3.66524,7.3833604 6.64764,11.3313504 l 1.06237,1.40633 -0.48764,0.71428 c -1.20228,1.76109 -4.32814,4.3138 -6.75399,5.51561 -1.25184,0.62018 -1.31863,0.59445 -2.48981,-0.95898 -1.37136,-1.81897 -3.65835,-4.42355 -3.83457,-4.36706 -0.15448,0.0495 -0.52808,1.42176 -1.010532,3.71164 -0.515612,2.44731 -1.313747,9.08435 -1.625455,13.51677 -0.255109,3.62758 -0.04393,7.47541 0.687235,12.52206 0.479457,3.30932 0.637508,5.55415 0.65987,9.37215 0.02512,4.2867 0.08654,4.02756 -1.090139,4.59849 -0.877146,0.42559 -1.856434,0.65371 -3.755924,0.87493 -1.490894,0.17363 -4.815941,0.26342 -4.945807,0.13356 z" />
+                    <text class="svgRueckennummer" x="31" y="30">7</text>
+                    <g transform="translate(0,40)">
+                        <rect x="15" y="0" width="33" height="22" style="fill:#cccccc;stroke:none;opacity:0.6" />
+                        <text class="svgName" x="30" y="16">Saeed (C)</text>
+                    </g>
+                </g>
+    
+                </g>
+            </g>
+        </svg>
+    </div>
+    
+
+
+<div class="eventsTeamName em-primary"></div>
+<div class="aufstellungToggle">&nbsp;</div>
+<table class="table table-hover aufstellung" >
+    
+            <tr class="portraitClick" data-pid="1354001" data-rid="1594679">
+			<td class="eventsTime">12</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Ilyes Frihi</div>
+                    <div class="aufPos">Tor</div>
+                </div>
+                <div class="right" data-stat="1"></div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1500397" data-rid="1781161">
+			<td class="eventsTime">4</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Noà Raphael Thomet</div>
+                    <div class="aufPos">Verteidigung rechts</div>
+                </div>
+                <div class="right" data-stat="1"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="68'" border="0" />&nbsp;</div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1496934" data-rid="1776886">
+			<td class="eventsTime">15</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Maximilian Glauser</div>
+                    <div class="aufPos">Verteidigung links</div>
+                </div>
+                <div class="right" data-stat="1"></div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1480385" data-rid="1754299">
+			<td class="eventsTime">16</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Tenzin Choklha Rabduk</div>
+                    <div class="aufPos">Verteidigung mitte</div>
+                </div>
+                <div class="right" data-stat="1"></div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1502727" data-rid="1783942">
+			<td class="eventsTime">9</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Mahmut Yusuf Koyuncu</div>
+                    <div class="aufPos">Mittelfeld</div>
+                </div>
+                <div class="right" data-stat="1"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="80'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="61'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="15'" border="0" />&nbsp;</div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1496234" data-rid="1776002">
+			<td class="eventsTime">17</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Arsalan Noori</div>
+                    <div class="aufPos">Sturmspitze rechts</div>
+                </div>
+                <div class="right" data-stat="1"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="17'" border="0" />&nbsp;</div>
+            </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1502677" data-rid="1783885">
+			<td class="eventsTime">7</td>
+            <td class="eventsText">
+                <div class="left">
+                    <div class="aufName">Raef Saeed<span class="aufCaptain" title="Captain">(C)</span></div>
+                    <div class="aufPos">Sturmspitze links</div>
+                </div>
+                <div class="right" data-stat="1"><img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="53'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="48'" border="0" />&nbsp;<img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="5'" border="0" />&nbsp;</div>
+            </td>
+            </tr>
+            
+        
+    
+            <tr>
+                <td colspan="2" class="infoTitel">
+                    <div class="aufTitel em-primary">Ersatzspieler/in</div>
+                </td>
+            </tr>
+        
+            <tr class="portraitClick" data-pid="1381753" data-rid="1627685">
+				
+                <td class="eventsTime">18</td>
+				<td class="eventsText"><div class="left"><div class="aufName">Leander Marlin Wille</div></div>
+                    <div class="right" data-stat="1">
+                        
+                        <img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="79'" border="0" />&nbsp;
+                        
+                    </div>
+                </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1518838" data-rid="1805054">
+				
+                <td class="eventsTime">6</td>
+				<td class="eventsText"><div class="left"><div class="aufName">Sebastian Emil Kormann</div></div>
+                    <div class="right" data-stat="1">
+                        
+                        
+                        
+                    </div>
+                </td>
+            </tr>
+            
+        
+            <tr class="portraitClick" data-pid="1528459" data-rid="1817201">
+				
+                <td class="eventsTime">14</td>
+				<td class="eventsText"><div class="left"><div class="aufName">Jaro Picozzi</div></div>
+                    <div class="right" data-stat="1">
+                        
+                        <img src="/portaldata/1/nisRD/telegramm/images/tor.gif" class="fileicon" style="vertical-align:middle" title="25'" border="0" />&nbsp;
+                        
+                    </div>
+                </td>
+            </tr>
+            
+        
+            
+        
+    
+            <tr>
+                <td class="infoTitel" colspan="2">
+                    <div class="aufTitel em-primary">Trainer/in</div>
+                </td>
+            </tr>
+        
+            <tr data-pid="1090039" data-rid="1090039"><td class="eventsTime">&nbsp;</td><td  class="eventsText"><div class="aufName">Gioele Abegglen</div></td>
+            </tr>
+    
+            <tr>
+                <td class="infoTitel" colspan="2">
+                    <div class="aufTitel em-primary">Abwesend</div>
+                </td>
+            </tr>
+        
+            <tr>
+                <td class="eventsText" colspan="2">
+                    <div class="aufAbwesendText aufName">Aaron Quentin&nbsp;Gugger</div>
+                </td>
+            </tr>
+        
+</table>
+
+                </div>
+            
+	</div>
+        </div>
+        
+        
+        
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('ul.nav.nav-tabs li').first().addClass('active');
+            $('div.tab-content div.tab-pane').first().addClass('active');
+        });
+    </script>
+
+</div>
+    
+    </div>
+</div>
+    </div>
+</div>
+
+
+                        </div>
+            	    </div>
+                </div>
+            </div>
+            <div class="col-xxl-2 d-none content-right">
+                <div class="py-3 sticky-top">
+                    <div id="right_ad_1" class="ad-slot adm-empty" data-ad-slot="right_ad_1" data-ad-size="120x600,160x600,245x770,300x600,500x1000"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<footer id="footer" class="bg-darkred">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-lg-8 text-white py-4 py-lg-5 d-lg-flex align-items-center">
+				<p class="copyright m-0 text-center text-lg-left">2026 &copy;</p>
+			</div>
+			<div class="col-12 col-lg-4 text-white py-4 py-lg-5 d-flex align-items-center justify-content-center justify-content-lg-end"></div>
+		</div>
+	</div>
+</footer>
+    
+<script src="/include_2023/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/include_2023/assets/plugins/owl-carousel/dist/owl.carousel.min.js"></script>
+<script src="/include_2023/assets/js/nis.js?v=202608201602"></script>
+<script src="/include_2023/6/js/custom.js?v=202608201602"></script>
+    
+    <script>
+        (function(r,i,a,d,s) {
+            r.admTagMan = r.admTagMan || {}; r.admTagMan.q = r.admTagMan.q || [];
+            r.admTagMan.cq = r.admTagMan.cq || [];
+            const e = r.document.createElement('script');
+            e.src = 'https://cdn.ringier-advertising.ch/'+(s || 'prod')+'/tagmanager/'+i.toLowerCase()+'_'+a.toLowerCase()+'/'+d+'/atm.js';
+            r.document.head.appendChild(e);
+        })(window, 'football.ch', 'de', 'latest');
+        admTagMan.q.push(function() {
+            admTagMan.init({
+                platform: 'Desktop',
+                channel: 'FVBJ_Ticker',
+                targeting: {
+                    sfv_organisation_id: '6',
+                    sfv_league_id: '0',
+                    sfv_club_id: '1368'
+                }
+            });
+        });
+        async function loadConfig() {
+          const response = await fetch('/ads/config.txt');
+          return await response.json();
+        }
+        function registerSlots(config, device, page) {
+            if (!config || !config.placements) {
+                console.error("Konfiguration nicht geladen.");
+                return [];
+            }
+            const deviceConfig = config.placements[device];
+            if (!deviceConfig) {
+                console.warn(`Kein Device gefunden: ${device}`);
+                return [];
+            }
+            const pageConfig = deviceConfig[page];
+            if (!pageConfig) {
+                console.warn(`Keine Page gefunden: ${page}`);
+                return [];
+            }
+            Object.entries(pageConfig).forEach(([slotId, slotCfg]) => {
+                if (!slotCfg.enabled) return;
+                const containers = document.querySelectorAll(`[id="${slotId}"]`);
+                containers.forEach((el, index) => {
+                    const uniqueId = `${slotId}_${index}`;
+                    el.id = uniqueId;
+                    admTagMan.q.push(function() {
+                        admTagMan.registerSlot({
+                            slot: slotId,
+                            container: uniqueId
+                        });
+                    });
+                });
+            });
+            setTimeout(function () {
+                admTagMan.loadSlots();
+            }, 1000);
+        }
+        (async function initAdManager() {
+            $('div[data-ad-slot="index_ad_1"][data-typ="rl"]').last().remove();
+            const config = await loadConfig();
+            registerSlots(config, 'Desktop', 'FVBJ_Ticker');
+        })();
+    </script>
+    <script src="/include_2023/assets/js/global.js?v=202608201602"></script>
+    
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a304420e1ddd03a9',t:'MTc4NzU5NDQ0MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"b7e0b7581902456d8d775492b30bf57c"}' crossorigin="anonymous"></script>
+</body>
+</html>

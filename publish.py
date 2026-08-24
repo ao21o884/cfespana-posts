@@ -5,13 +5,17 @@ Modes:
   story_only → story sempre + post si hi ha canvis (dimecres/divendres)
   results    → email + post + story  (diumenge)
 
-CANVIS respecte de la versió anterior:
-  · buffer_create() ara detecta els errors GraphQL que arriben amb HTTP 200
-    i llança excepció en comptes d'imprimir "ok (id: None)".
+Canvis respecte de la versió antiga:
+  · buffer_create() detecta els errors GraphQL que arriben amb HTTP 200.
   · Si Imgur falla, el script surt amb codi != 0 en comptes de callar.
-  · has_changes() ja no assumeix "hi ha canvis" quan no pot comparar.
+  · La detecció de canvis usa cache/spielplan.json (calendari en viu),
+    no el CSV, que ja no és la font principal.
 """
 import os, sys, requests, base64, io, json, hashlib, shutil
+
+HERE      = os.path.dirname(os.path.abspath(__file__))
+CACHE_DIR = os.path.join(HERE, "cache")
+SPIELPLAN = os.path.join(CACHE_DIR, "spielplan.json")
 
 
 def send_email(png, caption):
@@ -44,9 +48,10 @@ def upload_to_imgur(png):
     img.save(buf, format="JPEG", quality=85, optimize=True)
     img_b64 = base64.b64encode(buf.getvalue()).decode()
     print(f"  · size: {len(buf.getvalue())//1024}KB")
+    client_id = os.environ.get("IMGUR_CLIENT_ID", "546c25a59c58ad7")
     r = requests.post(
         "https://api.imgur.com/3/image",
-        headers={"Authorization": f"Client-ID {os.environ.get('IMGUR_CLIENT_ID', '546c25a59c58ad7')}"},
+        headers={"Authorization": f"Client-ID {client_id}"},
         data={"image": img_b64, "type": "base64"}, timeout=60
     )
     if r.status_code == 200:
@@ -112,60 +117,51 @@ def buffer_create(channel_id, token, image_url, caption, is_story=False):
     return True
 
 
-def csv_fingerprint(path):
-    """Hash of match-relevant CSV fields."""
-    import csv as _csv, io as _io
-    if not os.path.exists(path): return None
+def spielplan_fingerprint(path):
+    """Hash dels camps rellevants del calendari."""
+    if not os.path.exists(path):
+        return None
     try:
-        text   = open(path, encoding="latin-1", errors="replace").read()
-        reader = _csv.DictReader(_io.StringIO(text), delimiter=';')
-        rows   = []
-        for row in reader:
-            rows.append("|".join([
-                row.get("Spieldatum","").strip(),
-                row.get("Spielzeit","").strip(),
-                row.get("Teamname A","").strip(),
-                row.get("Teamname B","").strip(),
-                row.get("Spielort","").strip(),
-            ]))
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+        rows = ["|".join([m.get("date",""), m.get("time",""), m.get("home",""),
+                          m.get("away",""), m.get("venue","")])
+                for m in data.get("matches", [])]
         return hashlib.md5("\n".join(sorted(rows)).encode()).hexdigest()
     except Exception as e:
-        print(f"  ! fingerprint error: {e}"); return None
+        print(f"  ! fingerprint error: {e}")
+        return None
 
 
 def has_changes():
     """
-    Compara el CSV actual amb la instantània de dimecres (o dilluns).
-    Si no es pot comparar, retorna False: publicar un post de canvis
-    fals cada setmana és pitjor que no publicar-lo.
+    Compara el calendari actual amb la instantània de dimecres (o dilluns).
+    Si no es pot comparar, retorna False: publicar un post de canvis fals
+    cada setmana és pitjor que no publicar-lo.
     """
-    here    = os.path.dirname(os.path.abspath(__file__))
-    current = os.path.join(here, "Verein-v1368.csv")
-    wed_snap = os.path.join(here, "cache", "Verein-v1368-wednesday.csv")
-    mon_snap = os.path.join(here, "cache", "Verein-v1368-monday.csv")
-    snapshot = wed_snap if os.path.exists(wed_snap) else mon_snap
-    cur_fp  = csv_fingerprint(current)
-    snap_fp = csv_fingerprint(snapshot)
+    wed = os.path.join(CACHE_DIR, "spielplan-wednesday.json")
+    mon = os.path.join(CACHE_DIR, "spielplan-monday.json")
+    snapshot = wed if os.path.exists(wed) else mon
+    cur_fp  = spielplan_fingerprint(SPIELPLAN)
+    snap_fp = spielplan_fingerprint(snapshot)
     print(f"  · current: {cur_fp}  snapshot: {snap_fp}")
     if cur_fp is None or snap_fp is None:
-        print("  ! no es pot comparar (falta CSV) — no es publica post de canvis")
+        print("  ! no es pot comparar — no es publica post de canvis")
         return False
     changed = cur_fp != snap_fp
-    print(f"  · changed: {changed}"); return changed
+    print(f"  · changed: {changed}")
+    return changed
 
 
 def save_snapshot(day):
-    """Save CSV snapshot for comparison. day = 'monday' or 'wednesday'."""
-    here     = os.path.dirname(os.path.abspath(__file__))
-    src      = os.path.join(here, "Verein-v1368.csv")
-    cache    = os.path.join(here, "cache")
-    os.makedirs(cache, exist_ok=True)
-    dst      = os.path.join(cache, f"Verein-v1368-{day}.csv")
-    if os.path.exists(src):
-        shutil.copy2(src, dst)
-        print(f"  · snapshot saved: cache/Verein-v1368-{day}.csv")
+    """day = 'monday' o 'wednesday'"""
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    dst = os.path.join(CACHE_DIR, f"spielplan-{day}.json")
+    if os.path.exists(SPIELPLAN):
+        shutil.copy2(SPIELPLAN, dst)
+        print(f"  · snapshot: cache/spielplan-{day}.json")
     else:
-        print("  ! no hi ha CSV per desar com a instantània")
+        print("  ! no hi ha spielplan.json per desar com a instantània")
 
 
 def main():
@@ -191,11 +187,11 @@ def main():
 
     elif mode == "story_only":
         if has_changes():
-            print("  · changes found — publishing post + story")
+            print("  · hi ha canvis — post + story")
             buffer_create(channel_id, token, image_url,
                           "🔄 Änderungen diese Woche!\n\n" + caption, is_story=False)
         else:
-            print("  · no changes — story only")
+            print("  · sense canvis — només story")
         buffer_create(channel_id, token, image_url, "", is_story=True)
         import datetime as dt
         if dt.datetime.now().weekday() == 2:

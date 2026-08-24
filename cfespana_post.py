@@ -3,12 +3,11 @@
 C.F. España — automatic Instagram matchday / results post generator.
 
   python cfespana_post.py preview            # this week's fixture post
-  python cfespana_post.py preview --results  # this week's results post
+  python cfespana_post.py results            # this week's results post
   python cfespana_post.py preview --week 2026-08-15
 
-Data source : FVBJ match center (Vereinsspielplan, club id v=1368)
+Data source : calendari local (CSV/ICS) + resultats via matchcenter.py
 Crests      : blob.football.ch/logos/Verein/<Vereinsnr>.gif
-              -> resolved by following the opponent's club page.
               If a crest cannot be resolved it is NEVER invented; a neutral
               monogram badge is drawn instead.
 """
@@ -31,7 +30,6 @@ CLUBS = os.path.join(HERE, "clubs.json")
 US = "C.F. España"
 
 
-# ---------------------------------------------------------------- scraping
 # ---------------------------------------------------------------- crests
 def club_numbers():
     """name -> Vereinsnr, from clubs.json"""
@@ -102,6 +100,8 @@ def outcome(m):
 # ---------------------------------------------------------------- captions
 DAY = {"Mo": "Montag", "Di": "Dienstag", "Mi": "Mittwoch", "Do": "Donnerstag",
        "Fr": "Freitag", "Sa": "Samstag", "So": "Sonntag"}
+
+
 def tidy_comp(c):
     """'Cup Berner Cup - Runde  1' -> 'Berner Cup - Runde 1'"""
     c = re.sub(r"^Cup\s+", "", c or "")
@@ -109,22 +109,26 @@ def tidy_comp(c):
 
 
 def _runde(comp):
-    import re
     m = re.search(r'Runde\s*(\d+)', comp or "", re.I)
     return int(m.group(1)) if m else None
 
+
 def _liga_short(comp):
-    import re
     m = re.search(r'(\d+)\.\s*Liga', comp or "", re.I)
-    if m: return f"{m.group(1)}. Liga"
-    if "Senioren 30" in (comp or ""): return "Senioren 30+"
-    if "Senioren 40" in (comp or ""): return "Senioren 40+"
-    if "Berner Cup" in (comp or ""): return "Berner Cup"
+    if m:
+        return f"{m.group(1)}. Liga"
+    if "Senioren 30" in (comp or ""):
+        return "Senioren 30+"
+    if "Senioren 40" in (comp or ""):
+        return "Senioren 40+"
+    if "Berner Cup" in (comp or ""):
+        return "Berner Cup"
     return tidy_comp(comp)
 
+
 def _match_context(m):
-    runde = _runde(m.get("competition",""))
-    liga  = _liga_short(m.get("competition",""))
+    runde = _runde(m.get("competition", ""))
+    liga  = _liga_short(m.get("competition", ""))
     opp   = m["away"] if m["home"].startswith(US) else m["home"]
     home  = m["home"].startswith(US)
     if runde == 1:
@@ -147,7 +151,7 @@ def caption_preview(ms):
     if len(real) == 1:
         m   = real[0]
         ctx = _match_context(m)
-        ort = render.fmt_venue(m.get("venue",""))
+        ort = render.fmt_venue(m.get("venue", ""))
         L = [
             "⚽ MATCH DAY", "",
             ctx, "",
@@ -173,9 +177,10 @@ def caption_preview(ms):
             if m.get("is_tournament"):
                 L.append(f"   ⏰ {m['time']} · {m.get('label','Turnier')} (Turnier)")
             else:
-                ort = render.fmt_venue(m.get("venue",""))
+                ort = render.fmt_venue(m.get("venue", ""))
                 L.append(f"   ⏰ {m['time']} · {m['home']} – {m['away']}")
-                if ort: L.append(f"      📍 {ort}")
+                if ort:
+                    L.append(f"      📍 {ort}")
         L += ["", "¡Vamos España! 🔴🟡"]
     return "\n".join(L)
 
@@ -190,18 +195,21 @@ def caption_results(ms):
     elif losses and not wins and not draws:
         mood = "Eine schwierige Woche liegt hinter uns. Aber wir stehen auf, analysieren und kommen stärker zurück."
     elif wins and losses:
-        mood = f"{len(wins)} Sieg{'e' if len(wins)>1 else ''}, {len(losses)} Niederlage{'n' if len(losses)>1 else ''} — gemischte Gefühle, aber der Kampfgeist bleibt."
+        mood = (f"{len(wins)} Sieg{'e' if len(wins)>1 else ''}, "
+                f"{len(losses)} Niederlage{'n' if len(losses)>1 else ''} — "
+                f"gemischte Gefühle, aber der Kampfgeist bleibt.")
     elif draws:
         mood = "Unentschieden liegen in der Luft — nah dran, aber noch nicht ganz. Weiter so!"
     else:
         mood = "Die Resultate der Woche — Danke an alle die dabei waren!"
     L = ["📊 RESULTATE DER WOCHE", "", mood, ""]
     for m in ms:
-        if m.get("is_tournament"): continue
+        if m.get("is_tournament"):
+            continue
         oc = outcome(m)
         if m.get("score"):
             ic   = {"W": "✅", "D": "➖", "L": "❌"}.get(oc, "⚽")
-            liga = _liga_short(m.get("competition",""))
+            liga = _liga_short(m.get("competition", ""))
             L.append(f"{ic} {m['home']} {m['score']} {m['away']}  ({liga})")
         else:
             L.append(f"⏳ {m['home']} – {m['away']} (noch kein Resultat)")
@@ -212,18 +220,16 @@ def caption_results(ms):
 # Photo background — stored in assets/pitch.jpg
 PITCH = os.path.join(HERE, "assets", "pitch.jpg")
 
-
 MAX_PER_POST = 6   # max rows per image; more → split into two posts
 
 
 def dedup_tournaments(matches):
     """Remove duplicate tournament entries: same day + same junior letter."""
-    import re
     seen = set()
     out  = []
     for m in matches:
         if m.get("is_tournament"):
-            label  = m.get("label","") or m.get("competition","")
+            label  = m.get("label", "") or m.get("competition", "")
             mt     = re.search(r'Jun(?:ioren)?[\.\s]*([A-G])', label, re.I)
             letter = mt.group(1).upper() if mt else "?"
             key    = (m["date"], letter)
@@ -243,7 +249,6 @@ def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_cres
         print("No matches this week — nothing to post.")
         return None, None
 
-    # Deduplicate tournament entries (same junior letter on same day)
     ms = dedup_tournaments(ms)
 
     real = [m for m in ms if not m.get("is_tournament")]
@@ -277,7 +282,6 @@ def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_cres
         if len(match_list) <= MAX_PER_POST:
             do_render(match_list, png, title, subtitle, is_results)
             return save_cap(txt, png)
-        # Split into two equal halves
         mid   = (len(match_list) + 1) // 2
         png_b = png.replace(".png", "_2.png")
         do_render(match_list[:mid], png,   title, subtitle + " (1/2)", is_results)
@@ -289,16 +293,23 @@ def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_cres
         return [png, png_b], cap_b
 
     if results:
-        # Load scores from web
-        scores = sources.week_scores()
+        # Resultats: matchcenter.py, via les pàgines de Telegramm.
+        scores = sources.week_scores([m.get("spielnummer", "") for m in ms])
         for m in ms:
-            spielnr = m.get("spielnummer","")
+            spielnr = m.get("spielnummer", "")
             if spielnr and spielnr in scores:
-                m["score"] = scores[spielnr]["score"]
+                m["score"]      = scores[spielnr]["score"]
                 m["home_goals"] = scores[spielnr]["home_goals"]
                 m["away_goals"] = scores[spielnr]["away_goals"]
             m["outcome"] = outcome(m)
+
         ms_results = [m for m in ms if not m.get("is_tournament")]
+
+        # Guard: sense cap resultat no es genera ni es publica res.
+        # Millor que el job peti a publicar una imatge plena de guionets.
+        if not any(m.get("score") for m in ms_results):
+            sys.exit("FATAL: cap resultat obtingut — no es genera cap imatge")
+
         txt = caption_results(ms_results)
         return maybe_split(ms_results, "RESULTATE", "UNSERE WOCHE", True, txt)
 
@@ -314,8 +325,6 @@ def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_cres
     else:
         txt = caption_preview(ms)
         return maybe_split(ms, "MATCH DAY", "SPIELE DER WOCHE", False, txt)
-
-
 
 
 if __name__ == "__main__":
