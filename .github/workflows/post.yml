@@ -69,6 +69,22 @@ jobs:
       - name: Generar imatge i text
         run: python cfespana_post.py ${{ steps.mode.outputs.gen }}
 
+      - name: Publicar les imatges al repositori
+        # Cal fer-ho ABANS de publicar: Buffer necessita un URL públic de la
+        # imatge, i el servim des del propi repo via raw.githubusercontent.
+        run: |
+          mkdir -p out cache
+          git config user.name  "cfespana-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -f out/ cache/
+          if git diff --staged --quiet; then
+            echo "res a desar"
+          else
+            git commit -m "imatges: ${{ steps.mode.outputs.mode }} $(date +%F) [skip ci]"
+            git pull --rebase --autostash
+            git push
+          fi
+
       - name: Enviar per email i publicar
         env:
           EMAIL_FROM:         ${{ secrets.EMAIL_FROM }}
@@ -77,6 +93,7 @@ jobs:
           BUFFER_TOKEN:       ${{ secrets.BUFFER_TOKEN }}
           BUFFER_CHANNEL_ID:  ${{ secrets.BUFFER_CHANNEL_ID }}
           IMGUR_CLIENT_ID:    ${{ secrets.IMGUR_CLIENT_ID }}
+          IMAGE_BASE_URL:     https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/out
         run: |
           shopt -s nullglob
           for f in out/*.png; do

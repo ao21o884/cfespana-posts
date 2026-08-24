@@ -91,6 +91,54 @@ def upload_to_imgur(png, tries=4):
     raise RuntimeError(f"Imgur ha fallat després de {tries} intents — {last}")
 
 
+def github_raw_url(png, tries=5):
+    """
+    URL pública de la imatge servida pel propi repositori.
+
+    Requereix que el PNG ja estigui commitejat i pujat, i que el repo sigui
+    públic. IMAGE_BASE_URL l'omple el workflow amb
+    https://raw.githubusercontent.com/<repo>/<branca>/out
+
+    Verifiquem que respon 200 abans de donar-la per bona: després d'un push
+    la CDN de GitHub pot trigar uns segons a servir el fitxer.
+    """
+    base = os.environ.get("IMAGE_BASE_URL", "").rstrip("/")
+    if not base:
+        return None
+
+    url = f"{base}/{os.path.basename(png)}"
+    for n in range(tries):
+        try:
+            r = requests.head(url, timeout=20, allow_redirects=True)
+            if r.status_code == 200:
+                print(f"  · github raw: {url}")
+                return url
+            last = r.status_code
+        except Exception as e:
+            last = e
+        if n + 1 < tries:
+            print(f"  · github raw encara no disponible ({last}) — espero 5s")
+            time.sleep(5)
+    print(f"  ! github raw no disponible: {url}")
+    return None
+
+
+def public_image_url(png):
+    """
+    URL pública per passar a Buffer.
+
+    Primer el repositori (gratuït, sense límits, i el fitxer ja hi és);
+    Imgur com a reserva. Imgur ha demostrat ser el punt fràgil de tota la
+    cadena: un 503 seu deixava la publicació sencera sense fer.
+    """
+    url = github_raw_url(png)
+    if url:
+        return url
+
+    print("  · provant Imgur com a reserva")
+    return upload_to_imgur(png)
+
+
 def buffer_create(channel_id, token, image_url, caption, is_story=False):
     """
     Crea un post a la cua de Buffer. Llança RuntimeError si no s'ha creat res.
@@ -209,7 +257,7 @@ def main():
         send_email(png, caption)
         raise SystemExit(1)
 
-    image_url = upload_to_imgur(png)
+    image_url = public_image_url(png)
 
     if mode == "results":
         send_email(png, caption)
