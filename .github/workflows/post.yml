@@ -3,22 +3,28 @@ name: C.F. España Instagram post
 on:
   schedule:
     - cron: '0 7 * * 1'   # Dilluns 09:00 Zúrich → post + story
-    - cron: '0 7 * * 3'   # Dimecres 09:00 Zúrich → post actualitzat + story
-    - cron: '0 7 * * 5'   # Divendres 09:00 Zúrich → post actualitzat + story
+    - cron: '0 7 * * 3'   # Dimecres 09:00 Zúrich → story + post si hi ha canvis
+    - cron: '0 7 * * 5'   # Divendres 09:00 Zúrich → story + post si hi ha canvis
     - cron: '0 19 * * 0'  # Diumenge 21:00 Zúrich → resultats
   workflow_dispatch:
     inputs:
       mode:
-        description: 'preview, results o story'
+        description: 'Què vols publicar'
+        type: choice
+        options: [preview, results, story_only]
         default: preview
         required: true
+
+# Evita que dues execucions es trepitgin el push del cache
+concurrency:
+  group: cfespana-post
+  cancel-in-progress: false
 
 jobs:
   post:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - uses: actions/checkout@v4
 
@@ -26,36 +32,40 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Instalar dependencias
-        run: pip install pillow requests beautifulsoup4
+      - name: Instal·lar dependències
+        # curl_cffi és imprescindible: el matchcenter bloqueja python-requests
+        # per l'empremta TLS i retorna 403 abans de mirar cap capçalera.
+        run: pip install pillow requests beautifulsoup4 curl_cffi
 
-      - name: Descarregar CSV actualitzat
-        run: |
-          curl -L -o Verein-v1368.csv \
-            "https://matchcenter.fvbj-afbj.ch/default.aspx?v=1368&oid=6&lng=1&a=vs&format=csv" \
-            -H "User-Agent: Mozilla/5.0" || echo "CSV web failed, using local file"
-
-      - name: Decidir modo
+      - name: Decidir mode
         id: mode
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
+            MODE="${{ inputs.mode }}"
           elif [ "${{ github.event.schedule }}" = "0 19 * * 0" ]; then
-            echo "mode=results" >> $GITHUB_OUTPUT
+            MODE="results"
+          elif [ "${{ github.event.schedule }}" = "0 7 * * 1" ]; then
+            MODE="preview"
           else
-            echo "mode=preview" >> $GITHUB_OUTPUT
+            MODE="story_only"
           fi
+          echo "mode=$MODE" >> $GITHUB_OUTPUT
+          # cfespana_post.py només accepta preview o results;
+          # story_only reutilitza la imatge de preview.
+          if [ "$MODE" = "results" ]; then
+            echo "gen=results" >> $GITHUB_OUTPUT
+          else
+            echo "gen=preview" >> $GITHUB_OUTPUT
+          fi
+          echo "Mode: $MODE"
 
-      - name: Generar imagen y texto
-        run: python cfespana_post.py ${{ steps.mode.outputs.mode }}
+      - name: Netejar sortides anteriors
+        # Sense això, out/*.png acumula els PNG de totes les setmanes
+        # anteriors i el bucle de publicació els torna a penjar tots.
+        run: rm -f out/*.png out/*.txt
 
-      - name: Guardar en repositorio
-        run: |
-          git config user.name  "cfespana-bot"
-          git config user.email "bot@users.noreply.github.com"
-          git add -f out/ cache/ Verein-v1368.csv || true
-          git commit -m "post: ${{ steps.mode.outputs.mode }} $(date +%F)" || true
-          git push
+      - name: Generar imatge i text
+        run: python cfespana_post.py ${{ steps.mode.outputs.gen }}
 
       - name: Enviar per email i publicar
         env:
@@ -64,13 +74,27 @@ jobs:
           EMAIL_TO:           ${{ secrets.EMAIL_TO }}
           BUFFER_TOKEN:       ${{ secrets.BUFFER_TOKEN }}
           BUFFER_CHANNEL_ID:  ${{ secrets.BUFFER_CHANNEL_ID }}
+          IMGUR_CLIENT_ID:    ${{ secrets.IMGUR_CLIENT_ID }}
         run: |
+          shopt -s nullglob
           for f in out/*.png; do
-            if [ "${{ steps.mode.outputs.mode }}" = "results" ]; then
-              python publish.py "$f" results
-            elif [ "${{ github.event.schedule }}" = "0 7 * * 1" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-              python publish.py "$f" preview
-            else
-              python publish.py "$f" story_only
-            fi
+            python publish.py "$f" "${{ steps.mode.outputs.mode }}"
           done
+
+      - name: Desar cache al repositori
+        # Va al final i amb always(): el cache d'actes i les instantànies
+        # del calendari es guarden encara que la publicació hagi petat.
+        # Sense aquest commit el cache s'esborra entre execucions i es
+        # perden els partits de principi de setmana.
+        if: always()
+        run: |
+          git config user.name  "cfespana-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -f cache/ out/
+          if git diff --staged --quiet; then
+            echo "res a desar"
+          else
+            git commit -m "cache: ${{ steps.mode.outputs.mode }} $(date +%F) [skip ci]"
+            git pull --rebase --autostash
+            git push
+          fi
