@@ -150,13 +150,19 @@ def buffer_create(channel_id, token, image_url, caption, is_story=False):
     url     = "https://api.buffer.com"
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     mtype   = "story" if is_story else "post"
+    # shouldShareToFeed és obligatori des d'un canvi de l'API de Buffer.
+    # Per a un post normal va a true; per a una story, false (si no,
+    # la story es duplicaria al feed).
+    share_to_feed = "false" if is_story else "true"
+
     mutation = """mutation CreatePost {
       createPost(input: {
         text: """ + json.dumps(caption if not is_story else "") + """
         channelId: """ + json.dumps(channel_id) + """
         schedulingType: automatic
         mode: addToQueue
-        metadata: { instagram: { type: """ + mtype + """ } }
+        metadata: { instagram: { type: """ + mtype + """
+                                 shouldShareToFeed: """ + share_to_feed + """ } }
         assets: [{ image: { url: """ + json.dumps(image_url) + """ } }]
       }) {
         __typename
