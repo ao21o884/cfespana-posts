@@ -37,6 +37,7 @@ HERE      = os.path.dirname(os.path.abspath(__file__))
 CACHE_DIR = os.path.join(HERE, "cache")
 TG_MAP    = os.path.join(CACHE_DIR, "tg_map.json")
 SPIELPLAN = os.path.join(CACHE_DIR, "spielplan.json")
+MANUAL    = os.path.join(CACHE_DIR, "manual_scores.json")
 
 BASE = "https://matchcenter.fvbj-afbj.ch/default.aspx"
 CLUB = {"v": "1368", "oid": "6", "lng": "1"}
@@ -400,17 +401,55 @@ def telegram_score(tg):
     return None
 
 
+def load_manual_scores():
+    """Marcadors introduïts a mà: cache/manual_scores.json"""
+    if not os.path.exists(MANUAL):
+        return {}
+    try:
+        with open(MANUAL, encoding="utf-8") as fh:
+            return json.load(fh)
+    except Exception as e:
+        print(f"  ! manual_scores.json il·legible: {e}")
+        return {}
+
+
+def set_manual_score(spielnummer, score):
+    """
+    Fixa un marcador a mà, per als partits l'acta dels quals ja no és
+    accessible. score en format 'X:Y'. Té prioritat sobre l'acta.
+    """
+    hg, ag = (int(x) for x in str(score).split(":"))
+    data = load_manual_scores()
+    data[str(spielnummer).strip()] = f"{hg}:{ag}"
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    with open(MANUAL, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, indent=1, sort_keys=True)
+    print(f"  ✓ marcador manual {spielnummer} = {hg}:{ag}")
+    return data
+
+
 def week_scores(spielnummern):
     """
     spielnummern: llista de Spielnummer (str).
     Retorna dict spielnummer -> {'score','home_goals','away_goals'}.
+
+    Ordre de prioritat: marcador manual > acta del partit.
     """
     mapping = refresh_tg_map()
-    scores = {}
+    manual  = load_manual_scores()
+    scores  = {}
+
     for nr in spielnummern:
         nr = str(nr).strip()
         if not nr:
             continue
+
+        if nr in manual:
+            hg, ag = (int(x) for x in manual[nr].split(":"))
+            scores[nr] = {"score": f"{hg}:{ag}", "home_goals": hg, "away_goals": ag}
+            print(f"  · {nr}: {hg}:{ag} (manual)")
+            continue
+
         tg = mapping.get(nr)
         if not tg:
             print(f"  · {nr}: sense acta coneguda")
@@ -422,6 +461,7 @@ def week_scores(spielnummern):
         hg, ag = res
         scores[nr] = {"score": f"{hg}:{ag}", "home_goals": hg, "away_goals": ag}
         print(f"  · {nr}: {hg}:{ag}")
+
     print(f"  · scores found: {len(scores)}")
     return scores
 
@@ -451,6 +491,9 @@ if __name__ == "__main__":
         for m in refresh_calendar()[:40]:
             print(f"  {m['dow']} {m['date']} {m['time']:>5}  "
                   f"{m['home']} - {m['away']}  [{m['spielnummer']}]")
+    elif cmd == "setscore":
+        # py matchcenter.py setscore 127259 6:2
+        set_manual_score(sys.argv[2], sys.argv[3])
     elif cmd == "scores":
         mapping = refresh_tg_map()
         for nr, tg in sorted(mapping.items()):

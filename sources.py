@@ -147,15 +147,26 @@ def _local_matches():
     return _load_from_ics()
 
 
-def load_matches(offline=False):
-    """
-    Calendari complet = cache acumulat (web en viu) + fitxers locals.
+def _date_of(m):
+    try:
+        d, mo, y = m.get("date", "").split(".")
+        return dt.date(int(y), int(mo), int(d))
+    except Exception:
+        return None
 
-    El matchcenter només publica partits d'avui endavant, tant al
-    Vereinsspielplan com a 'Aktuelle Spiele'. El cache va acumulant tot el
-    que s'ha vist, i els fitxers locals (CSV/ICS) tapen els forats
-    d'històric que el cache encara no cobreix. Els partits del cache tenen
-    prioritat, perquè són els més actualitzats.
+
+def load_matches(offline=False, today=None):
+    """
+    Calendari complet = cache acumulat (web) + fitxers locals NOMÉS d'històric.
+
+    El matchcenter només publica partits d'avui endavant. El cache acumula
+    tot el que s'ha vist, i els fitxers locals (CSV/ICS) tapen els forats
+    d'històric anteriors al cache.
+
+    Els fitxers locals NO aporten partits futurs. Són instantànies velles:
+    si un partit s'ha anul·lat, s'ha mogut d'hora o ha canviat de camp des
+    que es van descarregar, encara hi surt com era abans. Deixar-los aportar
+    futur vol dir publicar partits fantasma que ja no existeixen.
     """
     if offline:
         web = matchcenter.cached_calendar()
@@ -163,14 +174,21 @@ def load_matches(offline=False):
         web = matchcenter.refresh_calendar()
 
     local = _local_matches()
+    today = today or dt.date.today()
 
     if not web:
-        print(f"  · només fitxers locals: {len(local)} partits")
+        print(f"  ! sense calendari web — s'usen els fitxers locals sencers "
+              f"({len(local)} partits), poden estar desactualitzats")
         return local
 
-    merged = matchcenter.merge_matches(local, web)
+    past_local = [m for m in local
+                  if (_date_of(m) is not None and _date_of(m) < today)]
+    dropped = len(local) - len(past_local)
+
+    merged = matchcenter.merge_matches(past_local, web)
     print(f"  ✓ calendari final: {len(merged)} partits "
-          f"({len(web)} del cache, {len(local)} locals)")
+          f"({len(web)} del web/cache, {len(past_local)} històrics locals, "
+          f"{dropped} futurs locals descartats)")
     return merged
 
 

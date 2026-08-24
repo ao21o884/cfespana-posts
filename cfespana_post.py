@@ -223,6 +223,45 @@ PITCH = os.path.join(HERE, "assets", "pitch.jpg")
 MAX_PER_POST = 6   # max rows per image; more → split into two posts
 
 
+# Marc quadrat amb els laterals difuminats: el cartell és 1080x1350 i
+# Instagram el retalla o el mostra amb bandes. Amplia el llenç a 1350x1350
+# i omple els costats amb una versió desenfocada i enfosquida del mateix
+# cartell, com als posts anteriors.
+# Marc quadrat amb els laterals difuminats.
+#
+# Aquest és l'algorisme original (recuperat de la conversa on es va dissenyar):
+# el cartell de 1080x1350 s'ESTIRA a 1350x1350 — deformant-lo a propòsit —
+# es difumina amb radi 40 i s'enfosqueix al 50%. Després s'hi enganxa el
+# cartell original centrat. Un retall proporcional amb zoom dona un
+# enquadrament diferent i no s'assembla.
+#
+# Vivia a render.py com add_instagram_sides() i es va perdre en una
+# repujada del fitxer. Ara viu aquí perquè no es torni a perdre.
+BLURRED_SIDES = True
+SIDE_CANVAS   = 1350
+SIDE_BLUR     = 40
+SIDE_DIM      = 0.5
+
+
+def add_blurred_sides(png_path, canvas=SIDE_CANVAS,
+                      blur=SIDE_BLUR, dim=SIDE_DIM, **kw):
+    """Amplia el PNG a un llenç quadrat amb els costats difuminats. In-place."""
+    from PIL import Image, ImageFilter, ImageEnhance
+
+    img = Image.open(png_path).convert("RGB")
+    w, h = img.size
+    if w >= canvas:
+        return png_path                      # ja és prou ample
+
+    bg = img.resize((canvas, canvas), Image.LANCZOS)
+    bg = bg.filter(ImageFilter.GaussianBlur(radius=blur))
+    bg = ImageEnhance.Brightness(bg).enhance(dim)
+
+    bg.paste(img, ((canvas - w) // 2, (canvas - h) // 2))
+    bg.save(png_path, quality=95)
+    return png_path
+
+
 def dedup_tournaments(matches):
     """Remove duplicate tournament entries: same day + same junior letter."""
     seen = set()
@@ -270,6 +309,8 @@ def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_cres
         render.render_list_photo(match_list, out_path, photo_path=PITCH,
                                  title=title, subtitle=subtitle,
                                  daterange=rng, results=is_results)
+        if BLURRED_SIDES:
+            add_blurred_sides(out_path)
 
     def save_cap(txt, base_png):
         cap = base_png.replace(".png", ".txt")
@@ -319,6 +360,8 @@ def build(all_m, anchor=None, results=False, outdir=None, photo=None, fetch_cres
         m["home_crest"] = None
         m["away_crest"] = None
         render.render_single_photo(m, png, photo_path=PITCH)
+        if BLURRED_SIDES:
+            add_blurred_sides(png)
         txt = caption_preview(ms)
         return save_cap(txt, png)
 
