@@ -11,7 +11,7 @@ Canvis respecte de la versió antiga:
   · La detecció de canvis usa cache/spielplan.json (calendari en viu),
     no el CSV, que ja no és la font principal.
 """
-import os, sys, requests, base64, io, json, hashlib, shutil
+import os, sys, time, requests, base64, io, json, hashlib, shutil
 
 HERE      = os.path.dirname(os.path.abspath(__file__))
 CACHE_DIR = os.path.join(HERE, "cache")
@@ -41,23 +41,54 @@ def send_email(png, caption):
     print(f"  → email sent to {recipient}"); return True
 
 
-def upload_to_imgur(png):
+def upload_to_imgur(png, tries=4):
+    """
+    Puja la imatge a Imgur i retorna l'URL públic.
+
+    Imgur dona 503 i 429 amb certa freqüència sense que hi hagi res mal fet,
+    així que reintentem amb espera creixent. Només els errors permanents
+    (401, 403, imatge invàlida) fallen a la primera.
+    """
     from PIL import Image
     img = Image.open(png).convert("RGB")
     buf = io.BytesIO()
     img.save(buf, format="JPEG", quality=85, optimize=True)
     img_b64 = base64.b64encode(buf.getvalue()).decode()
     print(f"  · size: {len(buf.getvalue())//1024}KB")
+
     client_id = os.environ.get("IMGUR_CLIENT_ID", "546c25a59c58ad7")
-    r = requests.post(
-        "https://api.imgur.com/3/image",
-        headers={"Authorization": f"Client-ID {client_id}"},
-        data={"image": img_b64, "type": "base64"}, timeout=60
-    )
-    if r.status_code == 200:
-        url = r.json()["data"]["link"]
-        print(f"  · imgur: {url}"); return url
-    raise RuntimeError(f"Imgur {r.status_code}: {r.text[:400]}")
+    transient = {429, 500, 502, 503, 504}
+    last = ""
+
+    for n in range(tries):
+        try:
+            r = requests.post(
+                "https://api.imgur.com/3/image",
+                headers={"Authorization": f"Client-ID {client_id}"},
+                data={"image": img_b64, "type": "base64"}, timeout=60
+            )
+        except Exception as e:
+            last = f"excepció: {e}"
+            if n + 1 < tries:
+                wait = 5 * (n + 1)
+                print(f"  · imgur {last} — reintent en {wait}s")
+                time.sleep(wait)
+            continue
+
+        if r.status_code == 200:
+            url = r.json()["data"]["link"]
+            print(f"  · imgur: {url}")
+            return url
+
+        last = f"{r.status_code}: {r.text[:200]}"
+        if r.status_code in transient and n + 1 < tries:
+            wait = 5 * (n + 1)
+            print(f"  · imgur {r.status_code} — reintent en {wait}s")
+            time.sleep(wait)
+            continue
+        break
+
+    raise RuntimeError(f"Imgur ha fallat després de {tries} intents — {last}")
 
 
 def buffer_create(channel_id, token, image_url, caption, is_story=False):
