@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-26T07:38:19",
+ "fetched": "2026-08-30T21:47:59",
  "matches": [
   {
    "dow": "Mo",
@@ -160,6 +160,22 @@
    "home_v": null,
    "away_v": null,
    "uid": "137552"
+  },
+  {
+   "dow": "So",
+   "date": "06.09.2026",
+   "time": "10:00",
+   "home": "C.F. España",
+   "away": "",
+   "competition": "Turnier",
+   "label": "Turnier Jun.F",
+   "venue": "Weissenstein - Fussballfeld Weissenstein 3, Bern",
+   "is_tournament": true,
+   "spielnummer": "",
+   "score": null,
+   "home_v": null,
+   "away_v": null,
+   "uid": "06.09.2026_10:00_C.F. E"
   },
   {
    "dow": "So",
