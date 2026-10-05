@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-31T14:51:25",
+ "fetched": "2026-09-27T21:48:13",
  "matches": [
   {
    "dow": "Mo",
@@ -228,7 +228,7 @@
   {
    "dow": "Fr",
    "date": "11.09.2026",
-   "time": "19:30",
+   "time": "19:00",
    "home": "SC Münchenbuchsee / Ittigen",
    "away": "C.F. España / Italiana",
    "competition": "Meisterschaft Senioren 40+ - MFV - Gruppe 2",
@@ -329,7 +329,7 @@
    "away": "C.F. España",
    "competition": "Meisterschaft 4. Liga - Gruppe 3",
    "label": "",
-   "venue": "Bodenweid - Kunstrasenfeld Bodenweid 3, Bern",
+   "venue": "Allmend Bern - Kunstrasenfeld Allmend 1, Bern",
    "is_tournament": false,
    "spielnummer": "126081",
    "score": null,
@@ -724,7 +724,7 @@
   {
    "dow": "Fr",
    "date": "30.10.2026",
-   "time": "18:45",
+   "time": "19:30",
    "home": "SC Worb",
    "away": "C.F. España / Italiana",
    "competition": "Meisterschaft Senioren 40+ - MFV - Gruppe 2",
