@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-27T21:48:13",
+ "fetched": "2026-10-11T22:37:59",
  "matches": [
   {
    "dow": "Mo",
@@ -450,22 +450,6 @@
    "uid": "126104"
   },
   {
-   "dow": "So",
-   "date": "11.10.2026",
-   "time": "13:30",
-   "home": "C.F. España",
-   "away": "FC Länggasse",
-   "competition": "Meisterschaft 5. Liga - Gruppe 3",
-   "label": "",
-   "venue": "Weissenstein - Fussballfeld Weissenstein 3, Bern",
-   "is_tournament": false,
-   "spielnummer": "128470",
-   "score": null,
-   "home_v": null,
-   "away_v": null,
-   "uid": "128470"
-  },
-  {
    "dow": "Mo",
    "date": "12.10.2026",
    "time": "19:30",
@@ -608,6 +592,22 @@
    "home_v": null,
    "away_v": null,
    "uid": "127355"
+  },
+  {
+   "dow": "Do",
+   "date": "22.10.2026",
+   "time": "20:15",
+   "home": "C.F. España",
+   "away": "FC Länggasse",
+   "competition": "Meisterschaft 5. Liga - Gruppe 3",
+   "label": "",
+   "venue": "Bodenweid - Kunstrasenfeld Bodenweid 3, Bern",
+   "is_tournament": false,
+   "spielnummer": "128470",
+   "score": null,
+   "home_v": null,
+   "away_v": null,
+   "uid": "128470"
   },
   {
    "dow": "Fr",
@@ -784,6 +784,38 @@
    "home_v": null,
    "away_v": null,
    "uid": "137578"
+  },
+  {
+   "dow": "Sa",
+   "date": "14.11.2026",
+   "time": "13:00",
+   "home": "C.F. España",
+   "away": "",
+   "competition": "Turnier",
+   "label": "Turnier Jun.E",
+   "venue": "",
+   "is_tournament": true,
+   "spielnummer": "",
+   "score": null,
+   "home_v": null,
+   "away_v": null,
+   "uid": "14.11.2026_13:00_C.F. E"
+  },
+  {
+   "dow": "Sa",
+   "date": "12.12.2026",
+   "time": "15:30",
+   "home": "C.F. España",
+   "away": "",
+   "competition": "Turnier",
+   "label": "Turnier Jun.E",
+   "venue": "",
+   "is_tournament": true,
+   "spielnummer": "",
+   "score": null,
+   "home_v": null,
+   "away_v": null,
+   "uid": "12.12.2026_15:30_C.F. E"
   },
   {
    "dow": "Sa",
